@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="project.swapstuff"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <permission
+        android:name="project.swapstuff.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="project.swapstuff.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/swap_logo"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="project.swapstuff.MainActivitySwapStuff"
+            android:label="@string/app_name"
+            android:screenOrientation="sensorPortrait" >
+        </activity>
+        <activity
+            android:name="project.swapstuff.SplashScreen"
+            android:label="@string/title_activity_splash_screen"
+            android:screenOrientation="sensorPortrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="project.swapstuff.Login"
+            android:label="@string/title_activity_login"
+            android:screenOrientation="sensorPortrait" >
+        </activity>
+        <activity
+            android:name="project.swapstuff.ProfileCreate"
+            android:label="@string/title_activity_profile_create"
+            android:screenOrientation="sensorPortrait" >
+        </activity>
+        <activity
+            android:name="project.swapstuff.ChatScreen_"
+            android:label="@string/title_activity_chat_screen_"
+            android:screenOrientation="sensorPortrait" >
+        </activity>
+        <activity
+            android:name="project.swapstuff.OtherUserInfo"
+            android:label="@string/title_activity_other_user_info"
+            android:screenOrientation="sensorPortrait" >
+        </activity>
+        <activity
+            android:name="project.swapstuff.model.FacebookConnect"
+            android:label="@string/app_name"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@android:style/Theme.Dialog" 
+            >
+        </activity>
+
+        <!-- <service -->
+        <!-- android:name="project.swapstuff.BackgroundchatFetch" -->
+        <!-- android:enabled="true" /> -->
+
+        <activity
+            android:name="project.swapstuff.CropImage"
+            android:label="@string/title_activity_crop_image" >
+        </activity>
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="project.swapstuff" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="project.swapstuff.GCMIntentService" />
+
+        
+        <service android:name="project.swapstuff.GPSTracker" />
+        <activity
+            android:name="project.swapstuff.Contact_For_Report"
+            android:label="@string/title_activity_contact__for__report" 
+            android:screenOrientation="sensorPortrait">
+        </activity>
+    </application>
+
+</manifest>
