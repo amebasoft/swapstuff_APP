@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:layout_margin="22dp"
+    android:background="#7F000000">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="There is a Match..!"
+        android:layout_gravity="center"  
+        android:textSize="25sp"
+        android:textColor="@android:color/white"
+        android:textStyle="italic"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="10dp"
+        android:padding="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#7Fffffff"
+        >
+
+        <ImageView
+            android:id="@+id/uiCimgVitem1"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/com_facebook_profile_picture_blank_square" />
+
+        <ImageView
+            android:id="@+id/uiCimgVitemMiddle"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+           android:layout_gravity="center"
+            android:src="@drawable/matcher_icon" />
+
+        <ImageView
+            android:id="@+id/uiCimgVitem2"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:src="@drawable/com_facebook_profile_picture_blank_square"
+            android:layout_marginLeft="10dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/uiCbtnsendMsgMatch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send a Message"
+        android:layout_marginRight="40dp" 
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+         android:textColor="#000000"
+        />
+
+    <Button
+        android:id="@+id/uiCbtnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_marginRight="40dp" 
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp" 
+         android:textColor="#000000"/>
+
+</LinearLayout>

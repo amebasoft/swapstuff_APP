@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:context=".Login" 
+    android:background="@drawable/login_bg"
+    >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+    android:orientation="vertical">
+       
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_logo" />
+
+    <Button
+        android:id="@+id/uiC_btnfb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/facebook_icon"
+        android:text=""
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:textColor="@android:color/white"
+          android:textSize="22sp"
+        android:text="Login" />
+
+    <Button
+        android:id="@+id/uiC_btnguest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      
+        android:background="@android:color/transparent"
+        android:text="Start as a Guest"
+        android:textSize="27sp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:background="#ffffff" />
+
+    
+     </LinearLayout>
+    </ScrollView>
+    
+</LinearLayout>

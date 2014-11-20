@@ -1,0 +1,7 @@
+CREATE TABLE userdetails (
+ itemid VARCHAR NOT NULL,
+ id VARCHAR NOT NULL,
+ title VARCHAR NOT NULL,
+ desc VARCHAR NOT NULL,
+ imgdp VARCHAR NOT NULL
+);

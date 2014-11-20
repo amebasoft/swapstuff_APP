@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+  >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:weightSum="10" >
+
+        <FrameLayout
+            android:id="@+id/Layout_frame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="05" >
+
+            <TextView
+                android:id="@+id/uiC_txtVSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="No new nearby items available.."
+                android:textSize="40dp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/uiC_imgVMatchingScreen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+              android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:src="@null" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+              
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/uiC_imgbtn_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dislike" 
+                    android:background="@drawable/dislike_bg"/>
+
+                <ImageButton
+                    android:id="@+id/uiC_imgbtnReportAbuse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/report"
+                    android:background="@null" />
+
+                <ImageButton
+                    android:id="@+id/uiC_imgbtn_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/like_btn"
+                    android:background="@drawable/like_bg" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="05"
+            android:orientation="vertical" >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" 
+                    
+                       android:layout_margin="10dp"
+                      
+                       android:id="@+id/uiClayoutDetailContainer"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                          android:background="#CCCCCC">
+
+                        <TextView
+                            android:id="@+id/uiC_txtVtitlematching"
+                           android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                           android:layout_margin="10dp"
+                        android:layout_weight="1"
+                            android:gravity="left"
+                            android:text="Title"
+                            android:textSize="25dp"
+                     
+                            android:textStyle="bold" 
+                            
+                            />
+  
+                         <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                       
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                          android:background="#CCCCCC">
+                        <TextView
+                            android:id="@+id/uiC_txtvKMmatching"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="right"
+                         android:layout_gravity="center"
+                            android:text="Km away"
+                            android:textStyle="italic"
+                            android:paddingRight="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    
+                      <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal" 
+                          android:background="#CCCCCC">
+                    
+                    
+                    <TextView
+                        android:id="@+id/uiC_txtvdescMatching"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Description" 
+                          android:textSize="17dp"
+                           
+                            android:paddingBottom="40dp"
+                              />
+                    </LinearLayout>
+                      
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

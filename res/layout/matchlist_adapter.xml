@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:weightSum="10"
+    android:id="@+id/layoutadapter">
+
+    
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:layout_weight="9"
+    android:weightSum="10"
+    android:id="@+id/uiC_layoutGotoChat">
+
+    
+    
+    <ImageView
+        android:id="@+id/uiC_imgVThumbnail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pages"
+        android:layout_weight="03" 
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:paddingLeft="5dp"
+        
+        android:layout_gravity="center_vertical"
+        android:layout_weight="07">
+
+        <TextView
+            android:id="@+id/uiC_txtvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Name" />
+
+        <TextView
+            android:id="@+id/uiC_txtvmachedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:text="Mached on .." />
+
+    </LinearLayout>
+
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/uiC_imgbtncancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|end|center_vertical"
+        android:src="@drawable/minus_btn" 
+        android:background="@null"
+      android:layout_marginRight="10dp"
+     
+        android:layout_weight="01"/>
+
+</LinearLayout>

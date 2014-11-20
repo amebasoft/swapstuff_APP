@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/uiC_layoutChatleft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="left|center">
+
+        <ImageView
+            android:id="@+id/uiC_imgVMsgLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_photos" />
+
+        <TextView
+            android:id="@+id/uiC_txtvMsgleft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+    </LinearLayout>
+ <LinearLayout
+        android:id="@+id/uiC_layoutChatRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="right|center" >
+
+     <TextView
+         android:id="@+id/uiC_txtvMsgRight"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="TextView" />
+
+     <ImageView
+         android:id="@+id/uiC_imgVMsgRight"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ic_photos" />
+
+    </LinearLayout>
+    
+ 
+ 
+ 
+ 
+ 
+</LinearLayout>

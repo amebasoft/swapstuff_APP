@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:weightSum="10" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="05" >
+            
+              <ImageView
+            android:id="@+id/uiC_imgVDPCreateProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+ 
+            android:src="@drawable/dummy_img"
+            android:layout_margin="7dp" />
+              
+              <TextView
+                        android:id="@+id/uiC_txtvuploaddCreateProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                       android:layout_gravity="bottom|right"
+                      android:layout_margin="20dp"
+                      android:textSize="20dp"
+                      android:background="#CCCCCC"
+                      android:textColor="#ffffff"
+                      android:textStyle="bold"
+                        android:text="Upload Image" 
+                        android:visibility="invisible"/>
+              
+        </FrameLayout>
+
+      
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="05"
+            android:orientation="vertical" >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" 
+                    android:focusableInTouchMode="true">
+
+                    <TextView
+                        android:id="@+id/uiC_txtvEditTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Enter Title" />
+
+                    <EditText
+                        android:id="@+id/uiC_edTitleCreateProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/et_background_border"
+                        android:ems="10"
+                        android:maxLength="20"
+                        android:imeOptions="actionNext"
+                        >
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/uiC_txtvdesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Enter Description" />
+
+                    <EditText
+                        android:id="@+id/uiC_edDescCreateProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/et_background_border"
+                          android:imeOptions="actionDone"
+                        android:ems="10" >
+                    </EditText>
+
+                    <Button
+                        android:id="@+id/uiC_btnCreateProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="Done"
+                        android:background="@drawable/btn_background" 
+                        android:textColor="@android:color/white"
+                        />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
