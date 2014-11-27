@@ -20,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.loopj.android.image.SmartImageView;
+
 import project.swapstuff.model.Utills;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -29,7 +31,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -55,7 +56,7 @@ public class ChatScreen_ extends Activity {
 
 	int abTitleId;
 
-	static String otherItemID,distnce, otherprofileid,imgThumbnail,titleItemS;
+	static String otherItemID,distnce, otherprofileid,titleItemS;
 
 	Button uiC_btnSend;
 	EditText uiC_edChatmsg;
@@ -147,7 +148,9 @@ public class ChatScreen_ extends Activity {
 		getActionBar().setBackgroundDrawable(
 				new ColorDrawable(Color.parseColor("#0B90A8")));
 		Intent getinten = getIntent();
-		// getActionBar().setTitle(getinten.getStringExtra("Title"));
+		getActionBar().setIcon(
+				new ColorDrawable(getResources().getColor(
+						android.R.color.transparent)));
 		
 		
 		Utills.chatActive=true;
@@ -170,19 +173,17 @@ public class ChatScreen_ extends Activity {
 //		MAtchid = getinten.getStringExtra("matchid");
 		distnce = getinten.getStringExtra("km");
 		otherprofileid = getinten.getStringExtra("pid");
-		imgThumbnail=Utills.Imagebytee;
-//		RoundedCornerBitmap roundround=new RoundedCornerBitmap(ChatScreen_.this);
-//		
-		try {
-			Bitmap bitmp=Utills.StringToBitMap(imgThumbnail);
-			
-			Drawable drawIncon=new BitmapDrawable(bitmp);
-			getActionBar().setIcon(drawIncon);
-			getActionBar().setHomeButtonEnabled(true);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+//		try {
+//			Bitmap bitmp=Utills.StringToBitMap(imgThumbnail);
+//			
+//			Drawable drawIncon=new BitmapDrawable(bitmp);
+//			getActionBar().setIcon(drawIncon);
+//			getActionBar().setHomeButtonEnabled(true);
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 		
 		
@@ -222,6 +223,7 @@ public class ChatScreen_ extends Activity {
 			final TextView customKM = (TextView) customView
 					.findViewById(R.id.actionbarKM);
 			ImageButton btnCloseChat=(ImageButton)customView.findViewById(R.id.uiC_imgbtnCloseChat);
+			SmartImageView imgThumbnail=(SmartImageView)customView.findViewById(R.id.imgThumbnail);
 //			ImageView uiC_imgVThumbnail=(ImageView)customView.findViewById(R.id.uiC_imgVChatThumbnail);
 			
 			LinearLayout layoutTitle = (LinearLayout) customView
@@ -233,7 +235,7 @@ public class ChatScreen_ extends Activity {
 //			Bitmap bitmp=Utills.StringToBitMap(imgThumbnail);
 //			
 //			uiC_imgVThumbnail.setImageBitmap(roundround.getCroppedBitmap(bitmp, 60));
-			
+			imgThumbnail.setImageUrl(Utills.Imagebytee);
 			
 			customTitle.setText(titleItemS+"");
 			customKM.setText(distnce + "-km away");
@@ -243,7 +245,21 @@ public class ChatScreen_ extends Activity {
 			// Change the font family (optional)
 //			customTitle.setTypeface(Typeface.DEFAULT);
 			
-			
+			imgThumbnail.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Utills.chatActive=false;
+					Log.e("request json", "" + otherItemID + distnce);
+					Intent goto_others_info = new Intent(ChatScreen_.this,
+							OtherUserInfo.class);
+					goto_others_info.putExtra("itemid", otherItemID);
+					goto_others_info.putExtra("km", distnce);
+					goto_others_info.putExtra("title", titleItemS+"");
+					startActivity(goto_others_info);
+					
+				}
+			});
 			btnCloseChat.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -256,18 +272,7 @@ public class ChatScreen_ extends Activity {
 				}
 			});
 			
-//			layoutTitle.setOnClickListener(new View.OnClickListener() {
-//				@Override
-//				public void onClick(View v) 
-//				{
-//					
-////					Utills.chatActive=false;
-////					Refresh=false;
-////					
-////					finish();
-//				}
-//			});
-			// SEt the custom view
+
 			
 			
 			 ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
@@ -337,15 +342,7 @@ public class ChatScreen_ extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			
-			Utills.chatActive=false;
-			Log.e("request json", "" + otherItemID + distnce);
-			Intent goto_others_info = new Intent(ChatScreen_.this,
-					OtherUserInfo.class);
-			goto_others_info.putExtra("itemid", otherItemID);
-			goto_others_info.putExtra("km", distnce);
-			goto_others_info.putExtra("title", titleItemS+"");
-//			goto_others_info.putExtra("match", MAtchid+"");
-			startActivity(goto_others_info);
+		
 		
 			break;
 
@@ -455,12 +452,17 @@ public class ChatScreen_ extends Activity {
 			{
 				DateTemp=formattedDate;
 				
-				TextView tvdate = new TextView(ChatScreen_.this);
-				tvdate.setText(formattedDate+"");
-				tvdate.setTextSize(22);
-				tvdate.setPadding(0, 10, 0, 10);
+				LinearLayout.LayoutParams lpDate = new LinearLayout.LayoutParams(
+						LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT);
+				lpDate.gravity=Gravity.CENTER;
 				
-				tvdate.setBackgroundColor(Color.parseColor("#CCCCCC"));
+				TextView tvdate = new TextView(ChatScreen_.this);
+				tvdate.setLayoutParams(lpDate);
+				tvdate.setText(formattedDate + "");
+				tvdate.setTextSize(22);
+				tvdate.setPadding(5, 5, 5, 5);
+
 				tvdate.setGravity(Gravity.CENTER);
 				uiC_layoutChat.addView(tvdate);
 			}
@@ -607,12 +609,17 @@ public class ChatScreen_ extends Activity {
 				}
 				else
 				{
-					TextView tvdate = new TextView(ChatScreen_.this);
-					tvdate.setText(formtDate+"");
-					tvdate.setTextSize(22);
-					tvdate.setPadding(0, 10, 0, 10);
+					LinearLayout.LayoutParams lpDate = new LinearLayout.LayoutParams(
+							LayoutParams.WRAP_CONTENT,
+							LayoutParams.WRAP_CONTENT);
+					lpDate.gravity=Gravity.CENTER;
 					
-					tvdate.setBackgroundColor(Color.parseColor("#CCCCCC"));
+					TextView tvdate = new TextView(ChatScreen_.this);
+					tvdate.setLayoutParams(lpDate);
+					tvdate.setText(formtDate + "");
+					tvdate.setTextSize(22);
+					tvdate.setPadding(5, 5, 5, 5);
+
 					tvdate.setGravity(Gravity.CENTER);
 					uiC_layoutChat.addView(tvdate);
 				}
@@ -819,12 +826,16 @@ public class ChatScreen_ extends Activity {
 				}
 				else
 				{
-					TextView tvdate = new TextView(ChatScreen_.this);
-					tvdate.setText(formtDate+"");
-					tvdate.setTextSize(22);
-					tvdate.setPadding(0, 10, 0, 10);
+					LinearLayout.LayoutParams lpDate = new LinearLayout.LayoutParams(
+							LayoutParams.WRAP_CONTENT,
+							LayoutParams.WRAP_CONTENT);
+					lpDate.gravity=Gravity.CENTER;
 					
-					tvdate.setBackgroundColor(Color.parseColor("#CCCCCC"));
+					TextView tvdate = new TextView(ChatScreen_.this);
+					tvdate.setLayoutParams(lpDate);
+					tvdate.setText(formtDate + "");
+					tvdate.setTextSize(22);
+					tvdate.setPadding(5, 5, 5, 5);
 					tvdate.setGravity(Gravity.CENTER);
 					uiC_layoutChat.addView(tvdate);
 				}

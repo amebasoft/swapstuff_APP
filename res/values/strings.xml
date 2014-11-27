@@ -13,7 +13,7 @@
         <item>\t \t   My Matches</item>
         <item>\t \t   My items</item>
         <item>\t \t   Settings</item>
-        <item>\t \t   About Us</item>
+        <item>\t \t   About</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -40,5 +40,6 @@
     <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
     <string name="gcm_deleted">gcm_deleted</string>
     <string name="title_activity_contact__for__report">Contact us</string>
+    <string name="title_activity_privacy_policy">Privacy_policy</string>
 
 </resources>

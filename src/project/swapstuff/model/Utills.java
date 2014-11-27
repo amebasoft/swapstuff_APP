@@ -144,6 +144,9 @@ public class Utills {
 				
 				e.printStackTrace();
 			}
+		  catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		  return temp;
     }

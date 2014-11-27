@@ -4,10 +4,12 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="lib" path="D:/NEW]/ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar"/>
-	<classpathentry exported="true" kind="lib" path="D:/NEW]/gcm.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/NEW]/GAgan docs(messanger)/gcm.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="lib" path="/android-support-v7-appcompat/libs/android-support-v4.jar"/>
 	<classpathentry exported="true" kind="lib" path="/google-play-services_lib/libs/google-play-services.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/NEW]/android-smart-image-view-1.0.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Ameba/Downloads/universal-image-loader-1.7.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

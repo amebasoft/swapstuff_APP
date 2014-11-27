@@ -46,6 +46,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.os.TransactionTooLargeException;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -142,25 +143,9 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				new ColorDrawable(getResources().getColor(
 						android.R.color.transparent)));
 
-		// if(savedInstanceState!=null)
-		// {
-		// imgbytes= savedInstanceState.getString("img");
-
-		// uiC_imgV_DP.setImageBitmap(Utills.StringToBitMap(imgbytes));
-		// ArrayList<Profile_info> infoToinsert = new ArrayList<Profile_info>();
-		//
-		// Profile_info p_info = new Profile_info();
-		// p_info.setTitle("");
-		// p_info.setDesc("");
-		//
-		// p_info.setImgDp(imgbytes);
-		// p_info.setUser_id("1");
-		// p_info.setItem_id("1");
-		//
-		// infoToinsert.add(p_info);
-		// ControlDB.deleteuserdetails(ProfileCreate.this);
-		// ControlDB.insertUserdetails(ProfileCreate.this, infoToinsert);
-		// }
+		getActionBar().setTitle((Html.fromHtml("<font color='#ffffff'>Create Profile</font>")));
+		
+		
 
 		uiC_imgV_DP = (ImageView) findViewById(R.id.uiC_imgVDPCreateProfile);
 		uiC_btndone = (Button) findViewById(R.id.uiC_btnCreateProfile);
@@ -198,14 +183,7 @@ public class ProfileCreate extends Activity implements OnClickListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				dialogLoader.dismiss();
-				
-//				Intent photoPickerIntent = new Intent(Intent.ACTION_PICK,
-//				        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//				photoPickerIntent.setType("image/*");
-//				photoPickerIntent.putExtra("crop", "true");
-//				photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
-//				photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-//				startActivityForResult(photoPickerIntent, REQ_CODE_PICK_IMAGE);
+
 				Intent pickPhoto = new Intent(Intent.ACTION_PICK );
 //				pickPhoto.setPackage("com.android.gallery3d");
 				pickPhoto.setType("image/*");
@@ -214,19 +192,6 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
 				pickPhoto.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 				startActivityForResult(pickPhoto, 22);
-//				startActivityForResult(Intent.createChooser(targetedShareIntents.remove(0), "Select a picture"), 22);
-//				Intent pickPhototemp = new Intent(Intent.ACTION_PICK );
-//				pickPhototemp.setType("image/*");
-//				pickPhoto.putExtra("crop", "true");
-//				pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
-//				pickPhoto.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-				
-//				pickPhoto.putExtra(Intent.EXTRA_INITIAL_INTENTS, "com.android.gallery3d");
-//				pickPhoto.setPackage(packageName);
-				
-				
-			
-				
 
 				
 				
@@ -340,10 +305,7 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				
 			}
 
-			// Intent gotomainmenu=new
-			// Intent(ProfileCreate.this,MainActivitySwapStuff.class);
-			// startActivity(gotomainmenu);
-			// finish();
+		
 		}
 
 	}
@@ -397,53 +359,7 @@ public class ProfileCreate extends Activity implements OnClickListener {
                   
                   if (tempFile.exists()) tempFile.delete();
                   
-//			    if (selectedImage != null) {
-//			        String filemanagerstring = selectedImage.getPath();
-//			        
-//			        String selectedImagePath = getPath(selectedImage);
-//				
-//			        if (selectedImagePath != null) {
-//			            filePath = selectedImagePath;
-//			            finalPicturePath = selectedImagePath;
-//			           } else if (filemanagerstring != null) {
-//			            filePath = filemanagerstring;
-//			            finalPicturePath = filemanagerstring;
-//			           } else {
-//			          
-//			            Log.e("Bitmap", "Unknown path");
-//			           }
-//			           System.out.println("file path---333---->" + filePath);
-//			           if (filePath != null) {
-//			            decodeFile(filePath);
-//			           } else {
-//			            bitmap = null;
-//			           }
-//			          }
-				
-//				String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-//				Cursor cursor = getContentResolver().query(selectedImage,
-//						filePathColumn, null, null, null);
-//				cursor.moveToFirst();
-//
-//				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//
-//				String filePath = cursor.getString(columnIndex);
-//				cursor.close();
-//
-//				// Log.i("file path", filePath+"");
-//				Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-//				Bitmap photo = Bitmap.createScaledBitmap(yourSelectedImage,
-//						450, 400, false);
-//
-//				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//				photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//				uiC_imgV_DP.setImageBitmap(photo);
-//
-//				imgbytes = Utills.BitMapToString(photo);
-
-				// byte [] b=baos.toByteArray();
-				// imgbytes=Base64.encodeToString(b, Base64.DEFAULT);
 
 			}
 

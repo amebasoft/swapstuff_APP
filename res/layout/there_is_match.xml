@@ -24,7 +24,7 @@
         android:padding="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="#7Fffffff"
+        android:background="#D9ffffff"
         >
 
         <ImageView
@@ -42,12 +42,12 @@
            android:layout_gravity="center"
             android:src="@drawable/matcher_icon" />
 
-        <ImageView
+       <com.loopj.android.image.SmartImageView
             android:id="@+id/uiCimgVitem2"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:src="@drawable/com_facebook_profile_picture_blank_square"
+            android:src="@drawable/loding_img"
             android:layout_marginLeft="10dp" />
 
     </LinearLayout>

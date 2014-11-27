@@ -53,7 +53,7 @@
         android:layout_margin="7dp" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tvnmatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -85,7 +85,7 @@
         android:layout_margin="7dp" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tvmsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -124,12 +124,13 @@
     
     
     <RelativeLayout
+          android:id="@+id/uiC_txtvPrivacy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="7dp" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/uiC_txtvPrivacyTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

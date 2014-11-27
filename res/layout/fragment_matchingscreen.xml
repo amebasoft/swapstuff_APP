@@ -31,14 +31,25 @@
                 android:gravity="center"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/uiC_imgVMatchingScreen"
+<!--             <ImageView -->
+<!--                 android:id="@+id/uiC_imgVMatchingScreen" -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="match_parent" -->
+<!--                 android:layout_gravity="center" -->
+<!--               android:layout_marginBottom="20dp" -->
+<!--                 android:layout_marginTop="10dp" -->
+<!--                 android:src="@null" /> -->
+            
+            <com.loopj.android.image.SmartImageView
+                
+                 android:id="@+id/uiC_imgVMatchingScreen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
               android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"
-                android:src="@null" />
+                android:src="@drawable/loding_img"
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -68,6 +79,15 @@
                     android:src="@drawable/like_btn"
                     android:background="@drawable/like_bg" />
             </LinearLayout>
+
+<!--             <ProgressBar -->
+<!--                 android:id="@+id/progressBar1" -->
+<!--                 style="?android:attr/progressBarStyleLarge" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content"  -->
+<!--                 android:layout_gravity="center" -->
+<!--                 /> -->
+
         </FrameLayout>
 
         <LinearLayout

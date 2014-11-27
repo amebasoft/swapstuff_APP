@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -104,8 +105,11 @@ public class GCMIntentService extends GCMBaseIntentService {
 	private static void generateNotification(Context context, String message) {
 		int icon = R.drawable.swap_logo;
 
-		
-		
+		int noti_no=0;
+		if(message.contains("You"))
+		{
+			noti_no=1;
+		}
 		
 		
 		
@@ -117,7 +121,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
 		PendingIntent intent = PendingIntent.getActivity(context, 0,
-				notificationIntent, 0);
+				notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+//		PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		 Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		 
 		 if(defaultSound == null){
@@ -136,7 +141,15 @@ public class GCMIntentService extends GCMBaseIntentService {
 		
 		not.defaults |= Notification.DEFAULT_VIBRATE;
 		not.defaults |= Notification.DEFAULT_SOUND;
-		notificationManager.notify(0, not);
+		notificationManager.notify(noti_no, not);
+		
+//		 if(Build.VERSION.SDK_INT<16){
+//	            /*build notification for HoneyComb to ICS*/
+//	            notificationManager.notify(1, not);
+//	        }if(Build.VERSION.SDK_INT>15){
+//	            /*Notification for Jellybean and above*/
+//	            notificationManager.notify(1, not.);
+//	        }
 
 	}
 }

@@ -18,6 +18,9 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import project.swapstuff.model.ControlDB;
 import project.swapstuff.model.GPSTracker;
@@ -34,6 +37,7 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -47,6 +51,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -98,11 +103,12 @@ public class AppSettingsFragment extends Fragment {
 	}
 
 	SeekBar uiC_seekDistance;
-	TextView uiC_txtvDistance;
+	TextView uiC_txtvDistance,uiC_txtvNeedHelp;
+	RelativeLayout uiC_txtvPrivacy;
 	Context con;
 	Button uiC_btnDelprofile;
 	SharedPreferences shared;
-	String profileID = "";
+	String profileID = "",NotificationEnabled,MatchNotificationEnabled;
 	int km;
 
 	ToggleButton uiC_tgbtnNotify;
@@ -141,6 +147,11 @@ public class AppSettingsFragment extends Fragment {
 		layoutParams.rightMargin = 22;
 		tView.setLayoutParams(layoutParams);
 		actionBar.setCustomView(tView);
+		
+		NotificationEnabled=Utills.NotificationEnabled;
+		MatchNotificationEnabled=Utills.MatchNotificationEnabled;
+		
+		
 		tView.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -152,6 +163,8 @@ public class AppSettingsFragment extends Fragment {
 						Utills.km = km;
 						Utills.latitud = gpsTracker.getLatitude();
 						Utills.longitud = gpsTracker.getLongitude();
+						Utills.NotificationEnabled=NotificationEnabled;
+						Utills.MatchNotificationEnabled=MatchNotificationEnabled;
 						
 						new asyncUpdateKM().execute();
 						
@@ -159,8 +172,8 @@ public class AppSettingsFragment extends Fragment {
 								.getSharedPreferences("", Context.MODE_PRIVATE);
 						Editor ed = shared.edit();
 						ed.putInt("km", km);
-						ed.putString("noti", Utills.NotificationEnabled+"");
-						ed.putString("matchnoti", Utills.MatchNotificationEnabled+"");
+						ed.putString("noti", NotificationEnabled+"");
+						ed.putString("matchnoti",MatchNotificationEnabled+"");
 						ed.commit();
 						
 						
@@ -211,6 +224,17 @@ public class AppSettingsFragment extends Fragment {
 		StrictMode.ThreadPolicy pol = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(pol);
+		
+		
+		if(Utills.haveNetworkConnection(getActivity()))
+		{
+			new GetmaxDistance().execute();
+		}
+		else
+		{
+			uiC_seekDistance.setMax(100);
+		}
+		
 
 		gpsTracker = new GPSTracker(getActivity());
 
@@ -225,6 +249,9 @@ public class AppSettingsFragment extends Fragment {
 		uiC_seekDistance = (SeekBar) rootView
 				.findViewById(R.id.uiC_seekdistance);
 		uiC_txtvDistance = (TextView) rootView.findViewById(R.id.uiC_txtvKm);
+		uiC_txtvNeedHelp = (TextView) rootView.findViewById(R.id.uiC_txtvneedhelp);
+		uiC_txtvPrivacy= (RelativeLayout) rootView.findViewById(R.id.uiC_txtvPrivacy);
+		
 		uiC_btnDelprofile = (Button) rootView.findViewById(R.id.uiC_btndel);
 		uiC_tgbtnNotify = (ToggleButton) rootView
 				.findViewById(R.id.uiC_tgbtnmsgs);
@@ -345,7 +372,7 @@ public class AppSettingsFragment extends Fragment {
 							Utills.latitud = gpsTracker.getLatitude();
 							Utills.longitud = gpsTracker.getLongitude();
 							if (isChecked) {
-								Utills.NotificationEnabled = "1";
+								NotificationEnabled = "1";
 //								new asyncUpdateKM().execute();
 //
 //								SharedPreferences shared = getActivity()
@@ -355,7 +382,7 @@ public class AppSettingsFragment extends Fragment {
 //								ed.putString("noti", "1");
 //								ed.commit();
 							} else {
-								Utills.NotificationEnabled = "0";
+								NotificationEnabled = "0";
 //								new asyncUpdateKM().execute();
 //
 //								SharedPreferences shared = getActivity()
@@ -384,7 +411,7 @@ public class AppSettingsFragment extends Fragment {
 							Utills.latitud = gpsTracker.getLatitude();
 							Utills.longitud = gpsTracker.getLongitude();
 							if (checked) {
-								Utills.MatchNotificationEnabled = "1";
+								MatchNotificationEnabled = "1";
 //								new asyncUpdateKM().execute();
 //
 //								SharedPreferences shared = getActivity()
@@ -395,7 +422,7 @@ public class AppSettingsFragment extends Fragment {
 //								ed.commit();
 
 							} else {
-								Utills.MatchNotificationEnabled = "0";
+							MatchNotificationEnabled = "0";
 //								new asyncUpdateKM().execute();
 //
 //								SharedPreferences shared = getActivity()
@@ -411,6 +438,35 @@ public class AppSettingsFragment extends Fragment {
 
 					}
 				});
+		
+		
+		
+		
+		uiC_txtvNeedHelp.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.swapstff.com/"));
+				startActivity(browserIntent);
+				
+			}
+		});
+		
+		
+		uiC_txtvPrivacy.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				Intent gotoPrivacyPolicy=new Intent(getActivity(),Privacy_policy.class);
+				startActivity(gotoPrivacyPolicy);
+			}
+		});
+		
+		
+		
+		
 
 		return rootView;
 	}
@@ -587,34 +643,113 @@ public class AppSettingsFragment extends Fragment {
 
 	}
 
-	// get lattitude and longitude)
-	public class GetLatitude2 implements LocationListener {
+
+	
+	
+	
+	
+	
+	
+//	get max distance
+	class GetmaxDistance extends AsyncTask<Void, Void, Void> {
+
+		String ResponseString = "g";
+		String MAXdistance="";
+		ProgressDialog pd;
 
 		@Override
-		public void onLocationChanged(Location loc) {
-
-			double latitud = loc.getLatitude();
-			double longitud = loc.getLongitude();
+		protected void onPreExecute() {
+			pd = ProgressDialog.show(getActivity(), "", "Please wait..");
+			super.onPreExecute();
 		}
 
 		@Override
-		public void onProviderDisabled(String arg0) {
-			// TODO Auto-generated method stub
+		protected Void doInBackground(Void... params) {
 
+			try {
+
+			
+
+				DefaultHttpClient httpclient = new DefaultHttpClient();
+
+				HttpGet httppost = new HttpGet(
+						"http://116.193.163.158:8083/AppSettings/GetAppSettings");
+				
+				httppost.setHeader("Content-type", "application/json");
+				// httppost.setHeader("Accept", "application/json");
+
+				HttpResponse response = httpclient.execute(httppost);
+				HttpEntity entity = response.getEntity();
+
+				if (entity != null) {
+					String retSrc = EntityUtils.toString(entity);
+					// parsing JSON
+					 JSONArray resultjson = new JSONArray(retSrc); //Convert
+					// String to JSON Object
+					 JSONObject resJSon=resultjson.getJSONObject(0);
+					  MAXdistance=resJSon.getString("MaxDistance");
+					
+					
+
+					// JSONArray tokenList = result.getJSONArray("names");
+					// JSONObject oj = tokenList.getJSONObject(0);
+					// String token = oj.getString("Username");
+				}
+
+			} catch (UnsupportedEncodingException e) {
+
+				ResponseString = "ERROR";
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+
+				ResponseString = "ERROR";
+				e.printStackTrace();
+			} catch (IOException e) {
+				ResponseString = "ERROR";
+
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return null;
 		}
 
 		@Override
-		public void onProviderEnabled(String arg0) {
-			// TODO Auto-generated method stub
+		protected void onPostExecute(Void result) {
 
-		}
+			int maxdis;
+			try {
+				
+			
+			pd.dismiss();
+			
+			 maxdis=Integer.parseInt(MAXdistance);
+			
+			
+			if(maxdis<10)
+			{
+				maxdis=100;
+			}
+			
+			
+			
+			} catch (Exception e) {
+				maxdis=100;
+			}
+			uiC_seekDistance.setMax(maxdis);
+			 uiC_seekDistance.setProgress(Utills.km);
 
-		@Override
-		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-			// TODO Auto-generated method stub
-
+			super.onPostExecute(result);
 		}
 
 	}
+//	
+	
+	
+	
+	
+	
 
 }

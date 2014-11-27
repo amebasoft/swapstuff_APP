@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  
+    tools:context="project.swapstuff.Privacy_policy" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+     >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:text="Swapstff allows for anonymous use. If you chose to share your personal details, you do so under your own discretion and responsibility. Please be cautious when using this app. Swapstff cannot guarantee the safety of its users when meeting other users outside the app. Swapstff is not responsible for any unfair trade, disrespectful behavior or any other malicious acts. The users of this app are private individuals and the developers of the app are not responsible for any of their actions. If you notice an item or user behaving inappropriately please report them by using the report button. If you run into any problems, read the About section or visit swapstff.com. The items, people and images are uploaded by the apps users and are not affiliated in any way to swapstff. If you chose to use this app you do so under your personal discretion. " />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -2,26 +2,16 @@ package project.swapstuff;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import project.swapstuff.ChatScreen_.asyncReceiveMsg;
 import project.swapstuff.model.Utills;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -30,7 +20,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,14 +30,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.image.SmartImageView;
+
 public class OtherUserInfo extends Activity {
 
-	ImageView uiC_imgDp_other;
+	SmartImageView uiC_imgDp_other;
 	TextView uiC_tvTitle, uiC_tvKM, uiC_tvDesc;
 	// ImageButton uiC_imgbtnLike, uiC_imgbtnDislike;
 
@@ -94,7 +84,7 @@ public class OtherUserInfo extends Activity {
 		// findViewById(R.id.uiC_imgbtn_likeDetails);
 		// uiC_imgbtnDislike = (ImageButton)
 		// findViewById(R.id.uiC_imgbtn_closeDetails);
-		uiC_imgDp_other = (ImageView) findViewById(R.id.uiC_imgVother_user_info);
+		uiC_imgDp_other = (SmartImageView) findViewById(R.id.uiC_imgVother_user_info);
 		uiC_tvTitle = (TextView) findViewById(R.id.uiC_txtvtitleother_user_info);
 		uiC_tvDesc = (TextView) findViewById(R.id.uiC_txtvdesc_other_user_info);
 		uiC_tvKM = (TextView) findViewById(R.id.uiC_txtvKMother_user_info);
@@ -277,7 +267,9 @@ public class OtherUserInfo extends Activity {
 
 			uiC_tvTitle.setText(title);
 			uiC_tvDesc.setText(Html.fromHtml(htmlText));
-			uiC_imgDp_other.setImageBitmap(Utills.StringToBitMap(imgb));
+			
+//			uiC_imgDp_other.setImageBitmap(Utills.StringToBitMap(imgb));
+			uiC_imgDp_other.setImageUrl(imgb);
 
 			super.onPostExecute(result);
 		}

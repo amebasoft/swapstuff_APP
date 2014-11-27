@@ -1,6 +1,10 @@
 package project.swapstuff;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,25 +22,28 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import project.swapstuff.AppSettingsFragment.asyncUpdateKM;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import project.swapstuff.adapter.RoundedCornerBitmap;
 import project.swapstuff.model.Utills;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings.Global;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -67,8 +74,8 @@ public class YourMatchFragment extends Fragment {
 	ImageView uic_txtVv;
 	static String[] itmID, Distance, DateTimeCreated, itemName,
 			othersPRofileid, MatchID, imgs, ChatMessage,MessageCount;
-
-	
+	static String []imgbytes;
+	ProgressDialog pdialog;
 	SharedPreferences shared ;
 	
 	Toast toast;
@@ -260,10 +267,29 @@ public class YourMatchFragment extends Fragment {
 				uiC_txtvDate.setTypeface(null,Typeface.BOLD);
 			}
 			
-			 Bitmap bitmap =Utills.StringToBitMap(imgs[position]);
+			
+			try {
+				
+				int rounded_value = 100;    
+
+				DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().displayer(new RoundedBitmapDisplayer(rounded_value)).build();
+
+				
+				ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity()).defaultDisplayImageOptions(options).build(); 
+				ImageLoader.getInstance().init(config);                 
+				ImageLoader.getInstance().displayImage(imgs[position], uiC_imgV,options);
+//			 Bitmap bitmap =Utills.StringToBitMap(imgbytes[position]);
 //			 uiC_imgV.setImageBitmap(Utills.StringToBitMap(imgs[position]));
 
-			 uiC_imgV.setImageBitmap(rounded.getCroppedBitmap(bitmap, 90));
+//			 uiC_imgV.setImageBitmap(rounded.getCroppedBitmap(bitmap, 90));
+			 
+			 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			catch (OutOfMemoryError e) {
+				// TODO: handle exception
+			}
 			// Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
 			// Bitmap photo = Bitmap.createScaledBitmap(yourSelectedImage, 300,
 			// 300, false);
@@ -349,12 +375,12 @@ public class YourMatchFragment extends Fragment {
 	// ----------------Get list of your matching items
 	class asyncMatchList extends AsyncTask<Void, Void, Void> {
 
-		ProgressDialog pd;
+		
 
 		@Override
 		protected void onPreExecute() {
 
-			pd=ProgressDialog.show(getActivity(), "", "Loading..");
+			pdialog=ProgressDialog.show(getActivity(), "", "Loading..");
 			
 			super.onPreExecute();
 		}
@@ -372,24 +398,7 @@ public class YourMatchFragment extends Fragment {
 
 			try {
 				List<NameValuePair> params1 = new LinkedList<NameValuePair>();
-				//
-				// "ItemMatchID": 1,
-				// "ItemID": 1,
-				// "ProfileIdBy": 13,
-				// "Distance": 0,
-				// "IsLikeDislikeAbuseBy": 1,
-				// "DateTimeCreated": "2014-09-23T17:30:35.8"
-//				 "ItemMatchID": 275,
-//			        "ItemID": 140,
-//			        "ProfileIdBy": 222,
-//			        "Distance": 0,
-//			        "IsLikeDislikeAbuseBy": 1,
-//			        "DateTimeCreated": "2014-10-11T11:46:21.35",
-//			        "ChatMessage": null,
-//			        "MessageCount": null,
-//			        "ItemTitle": null,
-//			        "ItemImage": null
-//				 String.valueOf(Utills.km)+""
+
 
 				params1.add(new BasicNameValuePair("ItemMatchID", "-1"));
 				params1.add(new BasicNameValuePair("ItemID", (Utills.itemid).replace("\"", "")));
@@ -477,11 +486,15 @@ public class YourMatchFragment extends Fragment {
 		@Override
 		protected void onPostExecute(Void result) {
 
-			pd.dismiss();
 			
+			try {
+				
+				pdialog.dismiss();
 			
 			if(imgs.length<=0)
 			{
+				
+				
 				uiC_listVmatch.setVisibility(View.GONE);
 				uic_txtVv.setVisibility(View.VISIBLE);
 				
@@ -489,9 +502,20 @@ public class YourMatchFragment extends Fragment {
 			else
 			{
 				uic_txtVv.setVisibility(View.GONE);
+				
+//				new LoadImage().execute();
 				adaptermatchlist adapter = new adaptermatchlist();
 				uiC_listVmatch.setAdapter(adapter);
-
+			}
+			
+			
+			
+			} catch (Exception e) {
+				pdialog.dismiss();
+				
+				uiC_listVmatch.setVisibility(View.GONE);
+				uic_txtVv.setVisibility(View.VISIBLE);
+				e.printStackTrace();
 			}
 			
 			super.onPostExecute(result);
@@ -588,6 +612,73 @@ public class YourMatchFragment extends Fragment {
 		}
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	class LoadImage extends AsyncTask<String, String, String> {
+		
+		Bitmap bitmap;
+		
+	    @Override
+	        protected void onPreExecute() {
+	            super.onPreExecute();
+	           
+	    }
+	       protected String doInBackground(String... args) {
+	    	  
+	    	   try {
+	    	   
+	    	   imgbytes=new String[imgs.length];
+	    	   
+	    	   for (int g = 0; g < imgs.length; g++) {
+				
+			
+	    	   
+	        
+	        	 URL ur = new URL("" + imgs[g]);
+	             HttpURLConnection connection = (HttpURLConnection) ur
+	               .openConnection();
+	             connection.setDoInput(true);
+	             connection.connect();
+	             InputStream input = connection.getInputStream();
+
+	             Bitmap mIcon_val = BitmapFactory.decodeStream(input);
+	             
+	             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	             mIcon_val.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+	             
+	             imgbytes[g] = Utills.BitMapToString(mIcon_val);
+	        } 
+	    	   }catch (Exception e) {
+	              e.printStackTrace();
+	        }catch (OutOfMemoryError e) {
+	        	 e.printStackTrace();
+			}
+	    	   
+	         
+	    	   
+	         
+	         
+	      return imgbytes[0];
+	       }
+	    
+	       
+	       @Override
+	    protected void onPostExecute(String result) {
+	    	   
+	    	   pdialog.dismiss();
+	    	   
+	    	   adaptermatchlist adapter = new adaptermatchlist();
+				uiC_listVmatch.setAdapter(adapter);
+				
+	    	super.onPostExecute(result);
+	    }
+	   }
 	
 	
 	
