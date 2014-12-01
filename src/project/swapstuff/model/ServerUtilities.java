@@ -50,7 +50,7 @@ public final class ServerUtilities {
                 // Here we are simplifying and retrying on any error; in a real
                 // application, it should retry only on unrecoverable errors
                 // (like HTTP error code 503).
-                Log.e(TAG, "Failed to register on attempt " + i + ":" + e);
+//                Log.e(TAG, "Failed to register on attempt " + i + ":" + e);
                 if (i == MAX_ATTEMPTS) {
                     break;
                 }
@@ -130,7 +130,7 @@ public final class ServerUtilities {
         byte[] bytes = body.getBytes();
         HttpURLConnection conn = null;
         try {
-        	Log.e("URL", "> " + url);
+//        	Log.e("URL", "> " + url);
             conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
             conn.setUseCaches(false);

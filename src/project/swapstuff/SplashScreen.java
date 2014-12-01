@@ -157,7 +157,7 @@ public class SplashScreen extends Activity {
 				params1.add(new BasicNameValuePair("ChatNotification",
 						Utills.NotificationEnabled + ""));
 
-				Log.e("Response update km", params1.toString() + "");
+			
 
 				httpPost.setHeader("Content-Type",
 						"application/x-www-form-urlencoded");
@@ -169,15 +169,13 @@ public class SplashScreen extends Activity {
 				ResponseHandler<String> handler = new BasicResponseHandler();
 				result = httpClient.execute(httpPost, handler);
 
-				Log.e("Response", result + "");
+			
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
+				
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
+				
 			}
 
 			return null;

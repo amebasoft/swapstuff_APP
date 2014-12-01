@@ -143,13 +143,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		not.defaults |= Notification.DEFAULT_SOUND;
 		notificationManager.notify(noti_no, not);
 		
-//		 if(Build.VERSION.SDK_INT<16){
-//	            /*build notification for HoneyComb to ICS*/
-//	            notificationManager.notify(1, not);
-//	        }if(Build.VERSION.SDK_INT>15){
-//	            /*Notification for Jellybean and above*/
-//	            notificationManager.notify(1, not.);
-//	        }
+
 
 	}
 }

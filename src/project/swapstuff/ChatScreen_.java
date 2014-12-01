@@ -189,7 +189,7 @@ public class ChatScreen_ extends Activity {
 		
 
 //		
-		Log.e("request json", "" + otherItemID + distnce);
+	
 		
 		uiC_scroll = ((ScrollView) findViewById(R.id.uiC_scrllView));
 		
@@ -250,7 +250,7 @@ public class ChatScreen_ extends Activity {
 				@Override
 				public void onClick(View v) {
 					Utills.chatActive=false;
-					Log.e("request json", "" + otherItemID + distnce);
+					
 					Intent goto_others_info = new Intent(ChatScreen_.this,
 							OtherUserInfo.class);
 					goto_others_info.putExtra("itemid", otherItemID);
@@ -410,17 +410,13 @@ public class ChatScreen_ extends Activity {
 				ResponseHandler<String> handlermatch = new BasicResponseHandler();
 				result = httpClient.execute(httpPost, handlermatch);
 
-				Log.i("json response", "" + result.toString());
-
-				Log.e("TAG", "" + result);
+				
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
+				
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
+				
 			}
 
 			return null;
@@ -537,7 +533,7 @@ public class ChatScreen_ extends Activity {
 				params1.add(new BasicNameValuePair("ChatContent",""));
 				params1.add(new BasicNameValuePair("DateTimeCreated", ""));
 
-				Log.i("json request", "" + params1.toString());
+				
 
 				httpPost.setHeader("Content-Type",
 						"application/x-www-form-urlencoded");
@@ -550,19 +546,17 @@ public class ChatScreen_ extends Activity {
 				ResponseHandler<String> handlermatch = new BasicResponseHandler();
 				resultchat = httpClient.execute(httpPost, handlermatch);
 
-				Log.i("json response get chat", "" + resultchat.toString());
+			
 
 			
 				
 				
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
+				
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
+			
 			}
 			
 			
@@ -751,7 +745,7 @@ public class ChatScreen_ extends Activity {
 				params1.add(new BasicNameValuePair("ChatContent",""));
 				params1.add(new BasicNameValuePair("DateTimeCreated", ""));
 
-				Log.i("json request chatRefresh", "" + params1.toString());
+			
 
 				httpPost.setHeader("Content-Type",
 						"application/x-www-form-urlencoded");
@@ -764,19 +758,17 @@ public class ChatScreen_ extends Activity {
 				ResponseHandler<String> handlermatch = new BasicResponseHandler();
 				resultchatR = httpClient.execute(httpPost, handlermatch);
 
-				Log.i("json response get chat", "" + resultchatR.toString());
+				
 
 			
 				
 				
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
+			
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
+				
 			}
 			catch (Exception e) {
 				e.printStackTrace();

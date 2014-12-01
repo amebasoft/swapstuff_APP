@@ -80,26 +80,7 @@ public class YourMatchFragment extends Fragment {
 	
 	Toast toast;
 	
-//	@Override
-//	public void onResume() {
-//		 getActivity().registerReceiver(mMessageReceiver, new IntentFilter("unique_name"));
-//		super.onResume();
-//	}
-//	public void onPause() {
-//		super.onPause();
-//		 getActivity().unregisterReceiver(mMessageReceiver);
-//	};
-//	 
-//	 BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-//		    @Override
-//		    public void onReceive(Context context, Intent intent) {
-//
-//		        // Extract data included in the Intent
-//		        String message = intent.getStringExtra("message");
-//System.out.println("msg is"+message);
-//		        //do other stuff here
-//		    }
-//		};
+
 	@Override
 	public void onDestroy() {
 		getActivity().getActionBar().setDisplayShowCustomEnabled(false);
@@ -243,7 +224,7 @@ public class YourMatchFragment extends Fragment {
 			ImageView uiC_imgV = (ImageView) vu
 					.findViewById(R.id.uiC_imgVThumbnail);
 
-			RoundedCornerBitmap rounded = new RoundedCornerBitmap(con);
+		
 
 			// Bitmap bitmap = ((BitmapDrawable)
 			// getResources().getDrawable(R.drawable.img)).getBitmap();
@@ -252,7 +233,7 @@ public class YourMatchFragment extends Fragment {
 			
 			String dateFormatted=Utills.parseDateToddMMyyyy(dateS);
 			
-			Log.i("json response", "" + itemName[position]);
+			
 			uiC_txtvName.setText(itemName[position]);
 			
 			if(MessageCount[position].equals("0") ^ MessageCount[position].equals(""))
@@ -290,11 +271,7 @@ public class YourMatchFragment extends Fragment {
 			catch (OutOfMemoryError e) {
 				// TODO: handle exception
 			}
-			// Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-			// Bitmap photo = Bitmap.createScaledBitmap(yourSelectedImage, 300,
-			// 300, false);
-			// ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-			// photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+		
 
 			 uiC_imgbtnCancel.setOnClickListener(new OnClickListener() {
 				
@@ -390,7 +367,7 @@ public class YourMatchFragment extends Fragment {
 			String result = "";
 
 			String HostUrl = "http://116.193.163.158:8083/ItemMatchs/GetItemMatchList";
-//			String HostUrl = "http://116.193.163.156:8012/ItemMatchs/GetItemMatchList";
+
 		
 
 			HttpClient httpClient = new DefaultHttpClient();
@@ -412,7 +389,6 @@ public class YourMatchFragment extends Fragment {
 				params1.add(new BasicNameValuePair("ItemImage", ""));
 				
 				
-				Log.i("json request", "" + params1.toString());
 
 				httpPost.setHeader("Content-Type",
 						"application/x-www-form-urlencoded");
@@ -426,9 +402,7 @@ public class YourMatchFragment extends Fragment {
 				result = httpClient.execute(httpPost, handlermatch);
 
 				Log.i("json response", "" + result.toString());
-				// parsing JSON
-				// JSONObject jsonResponse = new JSONObject(result); //Convert
-				// String to JSON Object
+			
 
 				JSONArray jsnArray = new JSONArray(result);
 
@@ -468,12 +442,10 @@ public class YourMatchFragment extends Fragment {
 			
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
+			
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
+				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -571,7 +543,7 @@ public class YourMatchFragment extends Fragment {
 		       params1.add(new BasicNameValuePair("IsLikeDislikeAbuseBy","2"));
 		       params1.add(new BasicNameValuePair("DateTimeCreated",""));
 
-		       Log.i("json response", ""+params1.toString());
+		     
 		       
 		       httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
 		       httpPost.setHeader("Accept", "application/json");
@@ -584,16 +556,16 @@ public class YourMatchFragment extends Fragment {
 		       
 		       
 		       
-		       Log.i("json response", ""+result.toString());
+		      
 		     }catch (ClientProtocolException e)
 		             {  
 		                 e.printStackTrace();
-		                 Log.e("TAG", "ClientProtocolException in callWebService(). " + e.getMessage());
+		               
 		             }
 		             catch (IOException e)
 		             {  
 		                 e.printStackTrace();
-		                 Log.e("TAG", "IOException in callWebService(). " + e.getMessage());
+		                
 		             }
 
 		   return null;

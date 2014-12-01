@@ -40,7 +40,7 @@ public class OtherUserInfo extends Activity {
 
 	SmartImageView uiC_imgDp_other;
 	TextView uiC_tvTitle, uiC_tvKM, uiC_tvDesc;
-	// ImageButton uiC_imgbtnLike, uiC_imgbtnDislike;
+	
 
 	String itemID, DisTance, ItemTitle;
 
@@ -75,15 +75,7 @@ public class OtherUserInfo extends Activity {
 		DisTance = getintentchat.getStringExtra("km");
 		ItemTitle = getintentchat.getStringExtra("title");
 //		matchIID= getintentchat.getStringExtra("match");
-		
-//		Log.e("id other user", ItemTitle + itemID +matchIID+ "");
-		// this.overridePendingTransition(R.anim.left_to_right_in,
-		// R.anim.left_to_right_out);
 
-		// uiC_imgbtnLike = (ImageButton)
-		// findViewById(R.id.uiC_imgbtn_likeDetails);
-		// uiC_imgbtnDislike = (ImageButton)
-		// findViewById(R.id.uiC_imgbtn_closeDetails);
 		uiC_imgDp_other = (SmartImageView) findViewById(R.id.uiC_imgVother_user_info);
 		uiC_tvTitle = (TextView) findViewById(R.id.uiC_txtvtitleother_user_info);
 		uiC_tvDesc = (TextView) findViewById(R.id.uiC_txtvdesc_other_user_info);
@@ -209,33 +201,29 @@ public class OtherUserInfo extends Activity {
 
 				HttpGet httppost = new HttpGet(
 						"http://116.193.163.158:8083/Items/GetItem/" + itemID);
-				Log.e("request json",
-						"http://116.193.163.158:8083/Items/GetItem/" + itemID
-								+ "");
+				
 
 				httppost.setHeader("Content-type", "application/json");
-				// httppost.setHeader("Accept", "application/json");
+				
 
 				HttpResponse response = httpclient.execute(httppost);
 				HttpEntity entity = response.getEntity();
 
 				if (entity != null) {
 					String retSrc = EntityUtils.toString(entity);
-					Log.e("returned json", retSrc + "");
+					
 					// parsing JSON
 					JSONObject resultJson = new JSONObject(retSrc); // Convert
 
 					title = "" + resultJson.getString("ItemTitle");
-					Log.e("returned json", title + "");
+					
 
 					htmlText = "<body><b>Description:</b><br><i>"
 							+ resultJson.getString("ItemDescription")
 							+ "</i></body>";
 					imgb = resultJson.getString("ItemImage");
 
-					// JSONArray tokenList = result.getJSONArray("names");
-					// JSONObject oj = tokenList.getJSONObject(0);
-					// String token = oj.getString("Username");
+				
 				}
 
 			} catch (UnsupportedEncodingException e) {

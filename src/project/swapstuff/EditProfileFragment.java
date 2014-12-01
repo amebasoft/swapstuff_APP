@@ -351,21 +351,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				// PackageManager pm =getActivity().getPackageManager();
-				// try {
-				// PackageInfo info = pm.getPackageInfo(targetPackage,
-				// PackageManager.GET_META_DATA);
-				// } catch (NameNotFoundException e) {
-				// Intent pickPhoto = new Intent(Intent.ACTION_PICK );
-				// pickPhoto.setPackage("com.android.gallery3d");
-				// pickPhoto.setType("image/*");
-				// pickPhoto.putExtra("crop", "true");
-				// pickPhoto.putExtra("return-data", false);
-				// pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
-				// pickPhoto.putExtra("outputFormat",
-				// Bitmap.CompressFormat.JPEG.toString());
-				// startActivityForResult(pickPhoto, 22);
-				// }
+			
 				dialogLoader.dismiss();
 
 				Intent pickPhoto = new Intent(Intent.ACTION_PICK);
@@ -580,15 +566,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 			try {
 				ImageChanged = true;
 				DeleteFirst = 1;
-//				Bitmap photoPreview = (Bitmap) data.getExtras().get("data");
 
-				// Bitmap photo = Bitmap.createScaledBitmap(photoPreview,
-				// 450,400, false);
-
-//				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//				photoPreview.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//				uiC_imgDP.setImageBitmap(photoPreview);
-//				imgbytes = Utills.BitMapToString(photoPreview);
 				
 				String finalPicturePath;
 				String filePath = null;
@@ -768,7 +746,15 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 				Utills.showToast(con, "Error");
 			} else {
 
-				Utills.itemid = result;
+				if(result.equals(""))
+				{
+					
+				}
+				else
+				{
+					Utills.itemid = result;
+				}
+				
 				System.out.println(Utills.itemid + "itemid");
 				SharedPreferences shared = getActivity().getSharedPreferences(
 						"", getActivity().MODE_PRIVATE);
@@ -779,20 +765,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 				ed.putString("imgDESC", uiC_edDesc.getText().toString() + "");
 				ed.commit();
 
-				// ArrayList<Profile_info> infoToinsert = new
-				// ArrayList<Profile_info>();
-				//
-				// Profile_info p_info = new Profile_info();
-				// p_info.setTitle(uiC_edTitle.getText().toString());
-				// p_info.setDesc(uiC_edDesc.getText().toString());
-				//
-				// p_info.setImgDp(imgbytes);
-				// p_info.setUser_id("1");
-				// p_info.setItem_id("1");
-				//
-				// infoToinsert.add(p_info);
-				// ControlDB.deleteuserdetails(con);
-				// ControlDB.insertUserdetails(con, infoToinsert);
+			
 
 				setValuesDB();
 

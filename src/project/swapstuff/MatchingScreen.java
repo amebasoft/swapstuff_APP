@@ -230,14 +230,7 @@ public class MatchingScreen extends Fragment {
 									public void onClick(DialogInterface dialog,
 											int which) {
 
-										// likeDislike="3";
-										// Animation myRotation =
-										// AnimationUtils.loadAnimation(getActivity(),
-										// R.anim.left_to_right_in);
-										// uiC_imgVMatchingDP.startAnimation(myRotation);
-										// uiC_imgVMatchingDP.setImageBitmap(Utills.StringToBitMap(imgs[itemposition]));
-										// new asyncLikeDislike().execute();
-
+										
 										Intent gotoContactscreen = new Intent(
 												getActivity(),
 												Contact_For_Report.class);
@@ -272,73 +265,6 @@ public class MatchingScreen extends Fragment {
 			}
 		});
 
-		// uiC_imgVMatchingDP.setOnTouchListener(new OnSwipeTouchListener() {
-		// public void onSwipeTop() {
-		// // Toast.makeText(con, "top", Toast.LENGTH_SHORT).show();
-		// }
-		//
-		// public void onSwipeRight() {
-		//
-		// Toast.makeText(con, "Like", Toast.LENGTH_SHORT).show();
-		// // uiC_imgbtnLike.setBackgroundColor(Color.parseColor("#3366AB"));
-		// // uiC_imgbtnDislike.setBackgroundColor(Color.TRANSPARENT);
-		// likeDislike="1";
-		//
-		// // ShowAnim();
-		//
-		// Animation myRotation = AnimationUtils.loadAnimation(getActivity(),
-		// R.anim.left_to_right_in);
-		// uiC_imgVMatchingDP.startAnimation(myRotation);
-		//
-		// uiC_imgVMatchingDP.setImageBitmap(Utills.StringToBitMap(imgs[itemposition]));
-		//
-		// new asyncLikeDislike().execute();
-		//
-		//
-		// }
-		//
-		// public void onSwipeLeft() {
-		// Toast.makeText(con, "Dislike", Toast.LENGTH_SHORT).show();
-		// // uiC_imgbtnDislike.setBackgroundColor(Color.parseColor("#3366AB"));
-		// // uiC_imgbtnLike.setBackgroundColor(Color.TRANSPARENT);
-		// likeDislike="2";
-		//
-		//
-		// // ShowAnim();
-		// Animation myRotation = AnimationUtils.loadAnimation(getActivity(),
-		// R.anim.right_to_left);
-		// uiC_imgVMatchingDP.startAnimation(myRotation);
-		//
-		// uiC_imgVMatchingDP.setImageBitmap(Utills.StringToBitMap(imgs[itemposition]));
-		//
-		// new asyncLikeDislike().execute();
-		// // if((itemName.length-1)>itemposition)
-		// // {
-		// // itemposition++;
-		// // new asyncLikeDislike().execute();
-		// // }
-		// // else
-		// // {
-		// // uiC_imgbtnLike.setVisibility(View.GONE);
-		// // uiC_imgbtnDislike.setVisibility(View.GONE);
-		// // uiC_txtvTitle .setVisibility(View.GONE);
-		// // uiC_txtvDesc .setVisibility(View.GONE);
-		// // uiC_txtvKM.setVisibility(View.GONE);
-		// // uiC_imgVMatchingDP.setVisibility(View.GONE);
-		// // uiC_txtvSearch.setVisibility(View.VISIBLE);
-		// // }
-		//
-		//
-		// }
-		//
-		// public void onSwipeBottom() {
-		// // Toast.makeText(con, "bottom", Toast.LENGTH_SHORT).show();
-		// }
-		//
-		// public boolean onTouch(View v, MotionEvent event) {
-		// return gestureDetector.onTouchEvent(event);
-		// }
-		// });
 
 		uiC_imgVMatchingDP.setOnTouchListener(new OnSwipeTouchListener() {
 
@@ -357,15 +283,7 @@ public class MatchingScreen extends Fragment {
 			}
 
 			public boolean onTouch(View view, MotionEvent event) {
-				PointF StartPT = new PointF();
-
-				// if(Math.abs(positionX)-Math.abs(StartPT.x) >100)
-				// {
-				// Toast.makeText(getActivity(), "right",
-				// Toast.LENGTH_SHORT).show();
-				// System.out.println("right");
-				// }
-
+				
 				ClipData data = ClipData.newPlainText("", "");
 				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
 						view);
@@ -453,28 +371,18 @@ public class MatchingScreen extends Fragment {
 		@Override
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 
-			// PointF StartPT = new PointF();
-			// positionX=StartPT.x;
-
-			// if(Math.abs(positionX)-Math.abs(StartPT.x) >70)
-			// {
-			// Toast.makeText(getActivity(), "right",
-			// Toast.LENGTH_SHORT).show();
-			// System.out.println("right");
-			// }
+			
 
 			//
 			return false;
-			// } else {
-			// return false;
-			// }
+			
 		}
 	}
 
 	// ----------------------Class to get list of near by users
 	class asyncNearbyUsers extends AsyncTask<Void, Void, Void> {
 
-		ProgressDialog pd;
+		
 
 		TransparentProgressDialog progressdialog = new TransparentProgressDialog(
 				getActivity(), R.drawable.ic_search);
@@ -524,8 +432,7 @@ public class MatchingScreen extends Fragment {
 				params1.add(new BasicNameValuePair("ItemDateTimeCreated", ""));
 				params1.add(new BasicNameValuePair("IsActive", "true"));
 
-				Log.i("json request", "" + params1.toString());
-
+				
 				httpPost.setHeader("Content-Type",
 						"application/x-www-form-urlencoded");
 				httpPost.setHeader("Accept", "application/json");
@@ -537,10 +444,7 @@ public class MatchingScreen extends Fragment {
 				ResponseHandler<String> handlermatch = new BasicResponseHandler();
 				result = httpClient.execute(httpPost, handlermatch);
 
-				Log.i("json response", "" + result.toString());
-				// parsing JSON
-				// JSONObject jsonResponse = new JSONObject(result); //Convert
-				// String to JSON Object
+			
 
 				jsnArray = new JSONArray(result);
 
@@ -572,20 +476,16 @@ public class MatchingScreen extends Fragment {
 				}
 				itemposition = 0;
 
-				Log.e("TAG", "" + itemName[0]);
+				
 
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
-
+				
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
-				;
+			
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -713,7 +613,7 @@ public class MatchingScreen extends Fragment {
 						likeDislike));
 				params1.add(new BasicNameValuePair("DateTimeCreated", ""));
 
-				Log.i("json response", "" + params1.toString());
+				
 
 				httpPost.setHeader("Content-Type",
 						"application/x-www-form-urlencoded");
@@ -726,18 +626,16 @@ public class MatchingScreen extends Fragment {
 				ResponseHandler<String> handlerlike = new BasicResponseHandler();
 				result = httpClient.execute(httpPost, handlerlike);
 
-				Log.i("json response", "" + result.toString());
+			
 
 				resuluresponse = result.toString().replace("\"", "");
 
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
+				
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -932,26 +830,7 @@ public class MatchingScreen extends Fragment {
 				System.out.println("exited");
 
 				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
-				// uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
-				// if(Math.abs(endX)-Math.abs(positionX)>100)
-				// {
-				// Toast.makeText(con, "left", Toast.LENGTH_SHORT).show();
-				// System.out.println("leftp");
-				//
-				// likeDislike="1";
-				// uiC_imgVMatchingDP.setImageBitmap(Utills.StringToBitMap(imgs[itemposition]));
-				// new asyncLikeDislike().execute();
-				// }
-				// else if(Math.abs(endX)<Math.abs(positionX))
-				// {
-				// Toast.makeText(con, "right", Toast.LENGTH_SHORT).show();
-				// System.out.println("rightp");
-				//
-				// likeDislike="2";
-				// uiC_imgVMatchingDP.setImageBitmap(Utills.StringToBitMap(imgs[itemposition]));
-				// new asyncLikeDislike().execute();
-				//
-				// }
+				
 				System.out.println("exited ended" + Math.abs(endX)
 						+ Math.abs(positionX) + "");
 				break;
@@ -987,15 +866,9 @@ public class MatchingScreen extends Fragment {
 						}
 
 					}
-					System.out.println("drop ended" + Math.abs(endX)
-							+ Math.abs(positionX) + "");
+					
 
-					// View view = (View) event.getLocalState();
-					// ViewGroup owner = (ViewGroup) view.getParent();
-					// owner.removeView(view);
-					// LinearLayout container = (LinearLayout) v;
-					// container.addView(view);
-					// view.setVisibility(View.VISIBLE);
+				
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -1003,10 +876,10 @@ public class MatchingScreen extends Fragment {
 
 			case DragEvent.ACTION_DRAG_LOCATION:
 
-				System.out.println("loc drag");
+				
 
 				positionX = event.getX();
-				System.out.println("loc drag" + positionX + "end" + endX);
+//				System.out.println("loc drag" + positionX + "end" + endX);
 				if (Math.abs(endX) - Math.abs(positionX) > 150) {
 					if (toast != null) {
 						toast.cancel();
@@ -1019,7 +892,7 @@ public class MatchingScreen extends Fragment {
 					if (toast != null) {
 						toast.cancel();
 					}
-					System.out.println("rightp");
+					
 					showCustomAlert(R.drawable.like_toast);
 					lk_dlk = true;
 
@@ -1028,8 +901,7 @@ public class MatchingScreen extends Fragment {
 						toast.cancel();
 					}
 				}
-				System.out.println("drop ended" + Math.abs(endX)
-						+ Math.abs(positionX) + "");
+				
 
 				break;
 
@@ -1040,8 +912,7 @@ public class MatchingScreen extends Fragment {
 				if (toast != null) {
 					toast.cancel();
 				}
-				System.out.println("drag ended" + Math.abs(endX)
-						+ Math.abs(positionX) + "");
+				
 
 			default:
 				break;
@@ -1129,12 +1000,7 @@ public class MatchingScreen extends Fragment {
 			ani_1.setFillAfter(true);
 			ani_1.setAnimationListener(animationListener);
 
-			// Animation anim= new MyAnimation(iv, 90);
-
-			// anim.setInterpolator(new LinearInterpolator());
-			// anim.setRepeatCount(Animation.INFINITE);
-			// anim.setDuration(700);
-			// iv.setAnimation(anim);
+			
 			iv.startAnimation(ani_0);
 		}
 	}

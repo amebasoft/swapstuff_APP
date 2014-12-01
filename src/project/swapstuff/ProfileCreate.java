@@ -493,7 +493,7 @@ public class ProfileCreate extends Activity implements OnClickListener {
 						"application/x-www-form-urlencoded");
 				httpPost.setHeader("Accept", "application/json");
 
-				Log.e("Response", params1.toString() + "");
+//				Log.e("Response", params1.toString() + "");
 
 				HttpEntity entity2 = new UrlEncodedFormEntity(params1, "UTF-8");
 				httpPost.setEntity(entity2);
@@ -505,12 +505,10 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				Log.e("Response", itemID + "");
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
+				
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
+				
 			}
 			catch (Exception e) {
 				e.printStackTrace();

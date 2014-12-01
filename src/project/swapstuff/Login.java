@@ -43,12 +43,6 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 public class Login extends Activity implements OnClickListener {
 
 	Button uiC_btnGuest, uiC_btnFb;
-//	LocationListener milocListener = null;
-//	LocationManager milocManager = null;
-//	Double latitud = 1.1;
-//	Double longitud = 1.1;
-//	private String proveedor;
-//	Location location; // location
 	SharedPreferences shared;
 	String profileID="";
 	 GPSTracker gpsTracker;
@@ -58,6 +52,7 @@ public class Login extends Activity implements OnClickListener {
 	 
 	 Toast toast;
 
+	 GoogleCloudMessaging gcm;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,21 +60,8 @@ public class Login extends Activity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.activity_login);
-//		getActionBar().setBackgroundDrawable(
-//				new ColorDrawable(Color.parseColor("#0B90A8")));
-//		getActionBar().setIcon(
-//				new ColorDrawable(getResources().getColor(
-//						android.R.color.transparent)));
-		
-//		 int titleId;
-//		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//		      titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-//		  } else {
-//		      titleId = android.R.id.title;
-//		  }
-//		TextView uiCtv=(TextView)findViewById(titleId);
-//		uiCtv.setTextColor(Color.WHITE);
-//		getActionBar().setTitle(titleId);
+
+
 		
 		uiC_btnGuest = (Button) findViewById(R.id.uiC_btnguest);
 		uiC_btnFb = (Button) findViewById(R.id.uiC_btnfb);
@@ -89,16 +71,6 @@ public class Login extends Activity implements OnClickListener {
 		
 		
 		
-		
-		
-//		milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//		Criteria req = new Criteria();
-//		req.setCostAllowed(false); 
-//		req.setAltitudeRequired(false);
-//		req.setAccuracy(Criteria.ACCURACY_FINE);
-//		proveedor = milocManager.getBestProvider(req, true);
-//		milocListener = new GetLatitude();
-//		milocManager.requestLocationUpdates(proveedor, 0, 0, milocListener);
 
 		StrictMode.ThreadPolicy pol = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
@@ -107,39 +79,12 @@ public class Login extends Activity implements OnClickListener {
 		
 		
 		
-		registerClient();
+//		registerClient();
+		getRegisterationID();
 
 	}
 
-	// get lattitude and longitude)
-	public class GetLatitude implements LocationListener {
-
-		@Override
-		public void onLocationChanged(Location loc) {
-
-			double latitud = loc.getLatitude();
-			double longitud = loc.getLongitude();
-		}
-
-		@Override
-		public void onProviderDisabled(String arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onProviderEnabled(String arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
+	
 
 	@Override
 	public void onClick(View v) {
@@ -147,7 +92,7 @@ public class Login extends Activity implements OnClickListener {
 
 		
 		gpsTracker=new GPSTracker(Login.this);
-//		Utills.CreateDB(Login.this);
+
 		Utills.CreateDB(Login.this);
 		if (Utills.haveNetworkConnection(Login.this))
 		{
@@ -158,7 +103,6 @@ public class Login extends Activity implements OnClickListener {
 
 			if (v == uiC_btnGuest) {
 
-//				new asyncSaveProfile().execute();
 				
 				if (!gpsTracker.canGetLocation()) 
 				{
@@ -170,23 +114,14 @@ public class Login extends Activity implements OnClickListener {
 					Utills.lati=gpsTracker.getLatitude()+"";
 					Utills.longi=gpsTracker.getLongitude()+"";
 					
-					
-					 String SENDER_ID = "326171808899";
-
-						GoogleCloudMessaging gcm = GoogleCloudMessaging
-								.getInstance(Login.this);
-
-						GCMRegistrar.register(Login.this, SENDER_ID);
-
-						String regId = GCMRegistrar
-								.getRegistrationId(Login.this)+"";
-						Log.i("gcm", regId+"");
+						
 					
 						if(regId.equals(""))
 						{
+							getRegisterationID();
 							Log.e("gcm", regId+"");	
 							Toast.makeText(Login.this, "Please wait...and try again..!", Toast.LENGTH_SHORT).show();
-//							new asyncSaveProfile().execute();
+
 						}
 						else
 						{
@@ -197,7 +132,7 @@ public class Login extends Activity implements OnClickListener {
 						}
 						
 						
-//					Log.i("response", insertLocationDetails()+"");
+
 				
 				}
 
@@ -216,23 +151,11 @@ public class Login extends Activity implements OnClickListener {
 					Utills.lati=gpsTracker.getLatitude()+"";
 					Utills.longi=gpsTracker.getLongitude()+"";
 
-					 String SENDER_ID = "326171808899";
 
-						GoogleCloudMessaging gcm = GoogleCloudMessaging
-								.getInstance(Login.this);
-
-						GCMRegistrar.register(Login.this, SENDER_ID);
-
-						String regId = GCMRegistrar
-								.getRegistrationId(Login.this)+"";
-						
-						CommonUtilities.GCM_ID=regId;
-						Log.i("gcm", regId+"");
-					
 						if(regId.equals(""))
 						{
+							getRegisterationID();
 							
-							Log.e("gcm", regId+"");	
 						}
 						else
 						{
@@ -337,15 +260,15 @@ public class Login extends Activity implements OnClickListener {
 		                         }
 		             catch (ClientProtocolException e)
 		             {  
-		                 e.printStackTrace();
+//		                 e.printStackTrace();
 		                 Error=true;
 		                 
-		                 Log.e("TAG", "ClientProtocolException in callWebService(). " + e.getMessage());
+		                 
 		             }
 		             catch (IOException e)
 		             {  
-		                 e.printStackTrace();
-		                 Log.e("TAG", "IOException in callWebService(). " + e.getMessage());
+//		                 e.printStackTrace();
+		                
 		             }
 
 		   return null;
@@ -429,53 +352,81 @@ public class Login extends Activity implements OnClickListener {
 	 
 	 
 //-------------------------
-		public void registerClient() {
-		try {
-			// Check that the device supports GCM (should be in a try / catch)
-			GCMRegistrar.checkDevice(this);
-
-			// Check the manifest to be sure this app has all the required
-			// permissions.
-			GCMRegistrar.checkManifest(this);
-
-			// Get the existing registration id, if it exists.
-			regId = GCMRegistrar.getRegistrationId(this);
-
-			System.out
-					.println("******************************************************************");
-			Log.v("Dashboard", "Device Id -> " + regId);
-			System.out
-					.println("******************************************************************");
-			if (regId.equals("")) {
-
-				registrationStatus = "Registering...";
-				Log.e("status", "Exception ->" +registrationStatus);
-				// register this device for this project
-				GCMRegistrar.register(this, CommonUtilities.SENDER_ID);
-				regId = GCMRegistrar.getRegistrationId(this);
-
-				registrationStatus = "Registration Acquired";
-				Log.e("status", "Exception ->" +registrationStatus);
-			} else {
-				GCMRegistrar.register(this, CommonUtilities.SENDER_ID);
-				regId = GCMRegistrar.getRegistrationId(this);
-				registrationStatus = "Already registered";
-				Log.e("status", "Exception ->" +registrationStatus);
-			}
-
-		} catch (Exception e) {
-			Log.e("Dashboard", "Exception -> " + e.toString());
-			registrationStatus = e.getMessage();
-		}
-		Log.e("status", "Exception ->" +registrationStatus);
-	}
+//		public void registerClient() {
+//		try {
+//			// Check that the device supports GCM (should be in a try / catch)
+//			GCMRegistrar.checkDevice(this);
+//
+//			// Check the manifest to be sure this app has all the required
+//			// permissions.
+//			GCMRegistrar.checkManifest(this);
+//
+//			// Get the existing registration id, if it exists.
+//			regId = GCMRegistrar.getRegistrationId(this);
+//
+//			System.out
+//					.println("******************************************************************");
+//			Log.v("Dashboard", "Device Id -> " + regId);
+//			System.out
+//					.println("******************************************************************");
+//			if (regId.equals("")) {
+//
+//				registrationStatus = "Registering...";
+//				
+//				// register this device for this project
+//				GCMRegistrar.register(this, CommonUtilities.SENDER_ID);
+//				regId = GCMRegistrar.getRegistrationId(this);
+//
+//				registrationStatus = "Registration Acquired";
+//			
+//			} else {
+//				GCMRegistrar.register(this, CommonUtilities.SENDER_ID);
+//				regId = GCMRegistrar.getRegistrationId(this);
+//				registrationStatus = "Already registered";
+//			
+//			}
+//
+//		} catch (Exception e) {
+//			
+//			registrationStatus = e.getMessage();
+//		}
+//	
+//	}
 //	------------------------
 	
 	
 	
+		
 	
-	
-	
+	@SuppressWarnings("unchecked")
+	public void getRegisterationID() {
+		
+		  new AsyncTask() {
+			   @Override
+			   protected Object doInBackground(Object... params) {
+			    // TODO Auto-generated method stub
+			    String msg = "";
+			    try {
+			     if (gcm == null) {
+			      gcm = GoogleCloudMessaging.getInstance(Login.this);
+			     }
+			     regId = gcm.register(CommonUtilities.SENDER_ID);
+			     Log.d("in async task", regId);
+			  
+			         // try
+			     msg = "Device registered, registration ID=" + regId;
+			    
+			    } catch (IOException ex) {
+			     msg = "Error :" + ex.getMessage();
+			     // If there is an error, don't just keep trying to register.
+			     // Require the user to click a button again, or perform
+			     // exponential back-off.
+			    }
+			    return msg;
+			   }
+			  }.execute(null, null, null);
+		
+	}
 	
 	
 	

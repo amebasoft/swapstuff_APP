@@ -63,31 +63,6 @@ public class AppSettingsFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		Log.e("destroy", "hiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-
-		// if (Utills.km != km) {
-		// Utills.km = km;
-		//
-		// Utills.latitud = gpsTracker.getLatitude();
-		// Utills.longitud = gpsTracker.getLongitude();
-		// if(Utills.haveNetworkConnection(getActivity()))
-		// {
-		// new asyncUpdateKM().execute();
-		// }
-		// else
-		// {
-		// Utills.showToast(getActivity(), "No network connection..!");
-		// }
-		//
-		//
-		// gpsTracker.stopUsingGPS();
-		//
-		// SharedPreferences shared = getActivity().getSharedPreferences("",
-		// Context.MODE_PRIVATE);
-		// Editor ed = shared.edit();
-		// ed.putInt("km", km);
-		// ed.commit();
-		// }
 
 		getActivity().getActionBar().setDisplayShowCustomEnabled(false);
 
@@ -103,25 +78,19 @@ public class AppSettingsFragment extends Fragment {
 	}
 
 	SeekBar uiC_seekDistance;
-	TextView uiC_txtvDistance,uiC_txtvNeedHelp;
+	TextView uiC_txtvDistance, uiC_txtvNeedHelp;
 	RelativeLayout uiC_txtvPrivacy;
 	Context con;
 	Button uiC_btnDelprofile;
 	SharedPreferences shared;
-	String profileID = "",NotificationEnabled,MatchNotificationEnabled;
+	String profileID = "", NotificationEnabled, MatchNotificationEnabled;
 	int km;
 
 	ToggleButton uiC_tgbtnNotify;
 	ToggleButton uiC_tgbtnMatchNotify;
 
-	// LocationListener milocListener = null;
-	// LocationManager milocManager = null;
-	// static Double latitud = 1.1;
-	// static Double longitud = 1.1;
-	// private String proveedor;
-	// Location location; // location
 	GPSTracker gpsTracker;
-	
+
 	Toast toast;
 
 	@Override
@@ -139,7 +108,7 @@ public class AppSettingsFragment extends Fragment {
 		tView.setText("Save");
 		tView.setTextSize(20);
 		tView.setTextColor(Color.WHITE);
-//		tView.setBackgroundResource(R.drawable.savebtn_bg);
+		// tView.setBackgroundResource(R.drawable.savebtn_bg);
 		ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(
 				ActionBar.LayoutParams.WRAP_CONTENT,
 				ActionBar.LayoutParams.WRAP_CONTENT, Gravity.RIGHT
@@ -147,71 +116,52 @@ public class AppSettingsFragment extends Fragment {
 		layoutParams.rightMargin = 22;
 		tView.setLayoutParams(layoutParams);
 		actionBar.setCustomView(tView);
-		
-		NotificationEnabled=Utills.NotificationEnabled;
-		MatchNotificationEnabled=Utills.MatchNotificationEnabled;
-		
-		
+
+		NotificationEnabled = Utills.NotificationEnabled;
+		MatchNotificationEnabled = Utills.MatchNotificationEnabled;
+
 		tView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-			
-					
-					if (Utills.haveNetworkConnection(getActivity())) 
-					{
-						Utills.km = km;
-						Utills.latitud = gpsTracker.getLatitude();
-						Utills.longitud = gpsTracker.getLongitude();
-						Utills.NotificationEnabled=NotificationEnabled;
-						Utills.MatchNotificationEnabled=MatchNotificationEnabled;
-						
-						new asyncUpdateKM().execute();
-						
-						SharedPreferences shared = getActivity()
-								.getSharedPreferences("", Context.MODE_PRIVATE);
-						Editor ed = shared.edit();
-						ed.putInt("km", km);
-						ed.putString("noti", NotificationEnabled+"");
-						ed.putString("matchnoti",MatchNotificationEnabled+"");
-						ed.commit();
-						
-						
-						if(toast!=null)
-						{
-							toast.cancel();
-						}
-						
-						toast=Toast.makeText(getActivity(), "Settings Saved ..!", Toast.LENGTH_SHORT);
-						toast.setGravity(Gravity.CENTER,0, 0);
-						toast.show();
-						
-						
-						
-					} else
-					{
-						if(toast!=null)
-						{
-							toast.cancel();
-						}
-						
-						toast=Toast.makeText(getActivity(), "No network connection..!", Toast.LENGTH_SHORT);
-						toast.setGravity(Gravity.CENTER,0, 0);
-						toast.show();
-					}
-					gpsTracker.stopUsingGPS();
 
-					
-					
-//					SharedPreferences shared = getActivity()
-//							.getSharedPreferences("",
-//									Context.MODE_PRIVATE);
-//					Editor ed = shared.edit();
-//					ed.putString("noti", "0");
-//					ed.commit();
-					
-//					Utills.showToast(getActivity(), "Settings Saved ..!");
-				
+				if (Utills.haveNetworkConnection(getActivity())) {
+					Utills.km = km;
+					Utills.latitud = gpsTracker.getLatitude();
+					Utills.longitud = gpsTracker.getLongitude();
+					Utills.NotificationEnabled = NotificationEnabled;
+					Utills.MatchNotificationEnabled = MatchNotificationEnabled;
+
+					new asyncUpdateKM().execute();
+
+					SharedPreferences shared = getActivity()
+							.getSharedPreferences("", Context.MODE_PRIVATE);
+					Editor ed = shared.edit();
+					ed.putInt("km", km);
+					ed.putString("noti", NotificationEnabled + "");
+					ed.putString("matchnoti", MatchNotificationEnabled + "");
+					ed.commit();
+
+					if (toast != null) {
+						toast.cancel();
+					}
+
+					toast = Toast.makeText(getActivity(), "Settings Saved ..!",
+							Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+
+				} else {
+					if (toast != null) {
+						toast.cancel();
+					}
+
+					toast = Toast.makeText(getActivity(),
+							"No network connection..!", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}
+				gpsTracker.stopUsingGPS();
 
 			}
 		});
@@ -224,17 +174,12 @@ public class AppSettingsFragment extends Fragment {
 		StrictMode.ThreadPolicy pol = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(pol);
-		
-		
-		if(Utills.haveNetworkConnection(getActivity()))
-		{
+
+		if (Utills.haveNetworkConnection(getActivity())) {
 			new GetmaxDistance().execute();
-		}
-		else
-		{
+		} else {
 			uiC_seekDistance.setMax(100);
 		}
-		
 
 		gpsTracker = new GPSTracker(getActivity());
 
@@ -244,14 +189,14 @@ public class AppSettingsFragment extends Fragment {
 			gpsTracker.showSettingsAlert();
 		}
 
-
-
 		uiC_seekDistance = (SeekBar) rootView
 				.findViewById(R.id.uiC_seekdistance);
 		uiC_txtvDistance = (TextView) rootView.findViewById(R.id.uiC_txtvKm);
-		uiC_txtvNeedHelp = (TextView) rootView.findViewById(R.id.uiC_txtvneedhelp);
-		uiC_txtvPrivacy= (RelativeLayout) rootView.findViewById(R.id.uiC_txtvPrivacy);
-		
+		uiC_txtvNeedHelp = (TextView) rootView
+				.findViewById(R.id.uiC_txtvneedhelp);
+		uiC_txtvPrivacy = (RelativeLayout) rootView
+				.findViewById(R.id.uiC_txtvPrivacy);
+
 		uiC_btnDelprofile = (Button) rootView.findViewById(R.id.uiC_btndel);
 		uiC_tgbtnNotify = (ToggleButton) rootView
 				.findViewById(R.id.uiC_tgbtnmsgs);
@@ -289,59 +234,62 @@ public class AppSettingsFragment extends Fragment {
 			public void onClick(View arg0) {
 				if (Utills.haveNetworkConnection(getActivity())) {
 
-					
-					
 					new AlertDialog.Builder(getActivity())
-				    .setTitle("Warning !")
-				    .setMessage("Are you sure,You want to delete account ?")
-				    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				        public void onClick(DialogInterface dialog, int which) { 
-			
-//				        -------------
-				        	if (Utills.FbID.equals("test"))
-							{
-								new deleteProfile().execute();
-							}
-							else
-							{
-								shared = getActivity().getSharedPreferences("",
-										Context.MODE_PRIVATE);
-								Editor ed = shared.edit();
-								ed.clear();
-								ed.commit();
-								ControlDB.deleteuserdetails(getActivity());
-								Utills.FbID = "test";
-								Utills.showToast(getActivity(),
-										"Profile deleted Successfully !");
+							.setTitle("Warning !")
+							.setMessage(
+									"Are you sure,You want to delete account ?")
+							.setPositiveButton("Yes",
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog,
+												int which) {
 
-								Intent gotologin = new Intent(getActivity(),
-										SplashScreen.class);
-								getActivity().startActivity(gotologin);
-								getActivity().finish();
+											// -------------
+											if (Utills.FbID.equals("test")) {
+												new deleteProfile().execute();
+											} else {
+												shared = getActivity()
+														.getSharedPreferences(
+																"",
+																Context.MODE_PRIVATE);
+												Editor ed = shared.edit();
+												ed.clear();
+												ed.commit();
+												ControlDB
+														.deleteuserdetails(getActivity());
+												Utills.FbID = "test";
+												Utills.showToast(getActivity(),
+														"Profile deleted Successfully !");
 
-							}
-//				        	-------------
-				        }
-				     })
-				    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-				        public void onClick(DialogInterface dialog, int which) { 
-				           dialog.dismiss();
-				        }
-				     })
-				    .setIcon(android.R.drawable.ic_dialog_alert)
-				     .show();
-					
-					
-					
+												Intent gotologin = new Intent(
+														getActivity(),
+														SplashScreen.class);
+												getActivity().startActivity(
+														gotologin);
+												getActivity().finish();
+
+											}
+											// -------------
+										}
+									})
+							.setNegativeButton("No",
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog,
+												int which) {
+											dialog.dismiss();
+										}
+									})
+							.setIcon(android.R.drawable.ic_dialog_alert).show();
 
 				} else {
-					if(toast!=null)
-					{
+					if (toast != null) {
 						toast.cancel();
 					}
-					
-					toast=Toast.makeText(getActivity(), "No network connection..!", Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.CENTER,0, 0);
+
+					toast = Toast.makeText(getActivity(),
+							"No network connection..!", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}
 
@@ -368,33 +316,15 @@ public class AppSettingsFragment extends Fragment {
 							boolean isChecked) {
 						// TODO Auto-generated method stub
 
-					
-							Utills.latitud = gpsTracker.getLatitude();
-							Utills.longitud = gpsTracker.getLongitude();
-							if (isChecked) {
-								NotificationEnabled = "1";
-//								new asyncUpdateKM().execute();
-//
-//								SharedPreferences shared = getActivity()
-//										.getSharedPreferences("",
-//												Context.MODE_PRIVATE);
-//								Editor ed = shared.edit();
-//								ed.putString("noti", "1");
-//								ed.commit();
-							} else {
-								NotificationEnabled = "0";
-//								new asyncUpdateKM().execute();
-//
-//								SharedPreferences shared = getActivity()
-//										.getSharedPreferences("",
-//												Context.MODE_PRIVATE);
-//								Editor ed = shared.edit();
-//								ed.putString("noti", "0");
-//								ed.commit();
+						Utills.latitud = gpsTracker.getLatitude();
+						Utills.longitud = gpsTracker.getLongitude();
+						if (isChecked) {
+							NotificationEnabled = "1";
+						} else {
+							NotificationEnabled = "0";
 
-							}
+						}
 
-					
 					}
 				});
 
@@ -406,67 +336,40 @@ public class AppSettingsFragment extends Fragment {
 							boolean checked) {
 						// TODO Auto-generated method stub
 
-						
-
-							Utills.latitud = gpsTracker.getLatitude();
-							Utills.longitud = gpsTracker.getLongitude();
-							if (checked) {
-								MatchNotificationEnabled = "1";
-//								new asyncUpdateKM().execute();
-//
-//								SharedPreferences shared = getActivity()
-//										.getSharedPreferences("",
-//												Context.MODE_PRIVATE);
-//								Editor ed = shared.edit();
-//								ed.putString("matchnoti", "1");
-//								ed.commit();
-
-							} else {
+						Utills.latitud = gpsTracker.getLatitude();
+						Utills.longitud = gpsTracker.getLongitude();
+						if (checked) {
+							MatchNotificationEnabled = "1";
+						} else {
 							MatchNotificationEnabled = "0";
-//								new asyncUpdateKM().execute();
-//
-//								SharedPreferences shared = getActivity()
-//										.getSharedPreferences("",
-//												Context.MODE_PRIVATE);
-//								Editor ed = shared.edit();
-//								ed.putString("matchnoti", "0");
-//								ed.commit();
 
-							}
-
-					
+						}
 
 					}
 				});
-		
-		
-		
-		
+
 		uiC_txtvNeedHelp.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.swapstff.com/"));
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse("http://www.swapstff.com/"));
 				startActivity(browserIntent);
-				
+
 			}
 		});
-		
-		
+
 		uiC_txtvPrivacy.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
-				Intent gotoPrivacyPolicy=new Intent(getActivity(),Privacy_policy.class);
+
+				Intent gotoPrivacyPolicy = new Intent(getActivity(),
+						Privacy_policy.class);
 				startActivity(gotoPrivacyPolicy);
 			}
 		});
-		
-		
-		
-		
 
 		return rootView;
 	}
@@ -511,7 +414,7 @@ public class AppSettingsFragment extends Fragment {
 					// JSONObject result = new JSONObject(retSrc); //Convert
 					// String to JSON Object
 
-					Log.e("returned json", retSrc + "");
+				
 
 					if (retSrc.equals("ERROR")) {
 						ResponseString = "ERROR";
@@ -554,7 +457,7 @@ public class AppSettingsFragment extends Fragment {
 				Editor ed = shared.edit();
 				ed.clear();
 				ed.commit();
-//				ControlDB.deleteuserdetails(getActivity());
+				// ControlDB.deleteuserdetails(getActivity());
 
 				Utills.FbID = "test";
 
@@ -623,12 +526,10 @@ public class AppSettingsFragment extends Fragment {
 				Log.e("Response", result + "");
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				Log.e("TAG", "ClientProtocolException in callWebService(). "
-						+ e.getMessage());
+			
 			} catch (IOException e) {
 				e.printStackTrace();
-				Log.e("TAG",
-						"IOException in callWebService(). " + e.getMessage());
+				
 			}
 
 			return null;
@@ -643,18 +544,11 @@ public class AppSettingsFragment extends Fragment {
 
 	}
 
-
-	
-	
-	
-	
-	
-	
-//	get max distance
+	// get max distance
 	class GetmaxDistance extends AsyncTask<Void, Void, Void> {
 
 		String ResponseString = "g";
-		String MAXdistance="";
+		String MAXdistance = "";
 		ProgressDialog pd;
 
 		@Override
@@ -668,13 +562,11 @@ public class AppSettingsFragment extends Fragment {
 
 			try {
 
-			
-
 				DefaultHttpClient httpclient = new DefaultHttpClient();
 
 				HttpGet httppost = new HttpGet(
 						"http://116.193.163.158:8083/AppSettings/GetAppSettings");
-				
+
 				httppost.setHeader("Content-type", "application/json");
 				// httppost.setHeader("Accept", "application/json");
 
@@ -684,12 +576,10 @@ public class AppSettingsFragment extends Fragment {
 				if (entity != null) {
 					String retSrc = EntityUtils.toString(entity);
 					// parsing JSON
-					 JSONArray resultjson = new JSONArray(retSrc); //Convert
+					JSONArray resultjson = new JSONArray(retSrc); // Convert
 					// String to JSON Object
-					 JSONObject resJSon=resultjson.getJSONObject(0);
-					  MAXdistance=resJSon.getString("MaxDistance");
-					
-					
+					JSONObject resJSon = resultjson.getJSONObject(0);
+					MAXdistance = resJSon.getString("MaxDistance");
 
 					// JSONArray tokenList = result.getJSONArray("names");
 					// JSONObject oj = tokenList.getJSONObject(0);
@@ -721,35 +611,25 @@ public class AppSettingsFragment extends Fragment {
 
 			int maxdis;
 			try {
-				
-			
-			pd.dismiss();
-			
-			 maxdis=Integer.parseInt(MAXdistance);
-			
-			
-			if(maxdis<10)
-			{
-				maxdis=100;
-			}
-			
-			
-			
+
+				pd.dismiss();
+
+				maxdis = Integer.parseInt(MAXdistance);
+
+				if (maxdis < 10) {
+					maxdis = 100;
+				}
+
 			} catch (Exception e) {
-				maxdis=100;
+				maxdis = 100;
 			}
 			uiC_seekDistance.setMax(maxdis);
-			 uiC_seekDistance.setProgress(Utills.km);
+			uiC_seekDistance.setProgress(Utills.km);
 
 			super.onPostExecute(result);
 		}
 
 	}
-//	
-	
-	
-	
-	
-	
+	//
 
 }
