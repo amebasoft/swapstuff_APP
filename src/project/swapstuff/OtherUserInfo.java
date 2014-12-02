@@ -199,8 +199,7 @@ public class OtherUserInfo extends Activity {
 
 				DefaultHttpClient httpclient = new DefaultHttpClient();
 
-				HttpGet httppost = new HttpGet(
-						"http://116.193.163.158:8083/Items/GetItem/" + itemID);
+				HttpGet httppost = new HttpGet(Utills.URL+"Items/GetItem/" + itemID);
 				
 
 				httppost.setHeader("Content-type", "application/json");

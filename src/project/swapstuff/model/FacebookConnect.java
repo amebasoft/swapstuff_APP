@@ -63,6 +63,7 @@ public class FacebookConnect extends Activity {
 	ProgressDialog pd;
 	
 
+	@SuppressWarnings("deprecation")
 	public boolean saveCredentials(Facebook facebook) {
 		Editor editor = getApplicationContext().getSharedPreferences(KEY,
 				Context.MODE_PRIVATE).edit();
@@ -71,6 +72,7 @@ public class FacebookConnect extends Activity {
 		return editor.commit();
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean restoreCredentials(Facebook facebook) {
 		SharedPreferences sharedPreferences = getApplicationContext()
 				.getSharedPreferences(KEY, Context.MODE_PRIVATE);
@@ -218,10 +220,9 @@ public class FacebookConnect extends Activity {
 
 				DefaultHttpClient httpclient = new DefaultHttpClient();
 
-				HttpGet httppost = new HttpGet(
-						"http://116.193.163.158:8083/Profiles/GetProfileByUserName?UserName="+ Utills.FbID.replace("\"", ""));
+				HttpGet httppost = new HttpGet(Utills.URL+"Profiles/GetProfileByUserName?UserName="+ Utills.FbID.replace("\"", ""));
 				
-				Log.e("request json","http://116.193.163.158:8083/Profiles/GetProfileByUserName?UserName=/"+ Utills.FbID.replace("\"", ""));
+				Log.e("request json",Utills.URL+"Profiles/GetProfileByUserName?UserName=/"+ Utills.FbID.replace("\"", ""));
 				
 				httppost.setHeader("Content-type", "application/json");
 				// httppost.setHeader("Accept", "application/json");
@@ -236,20 +237,7 @@ public class FacebookConnect extends Activity {
 
 					
 					ResponseString=retSrc;
-					// JSONArray tokenList = result.getJSONArray("names");
-					// JSONObject oj = tokenList.getJSONObject(0);
-					// String token = oj.getString("Username");
-					
-//					if(ResponseString.equals(null))
-//					{
-//						new asyncSave().execute();
-//					}
-					
-					
-						
-					
-					
-					
+
 					
 					
 					
@@ -356,7 +344,7 @@ public class FacebookConnect extends Activity {
 		protected Void doInBackground(Void... params) {       
 			
 			 
-		     String HostUrl="http://116.193.163.158:8083/Profiles/SaveProfile"; 
+		     String HostUrl=Utills.URL+"Profiles/SaveProfile"; 
 
 		      HttpClient httpClient = new DefaultHttpClient();
 		      HttpPost httpPost = new HttpPost(HostUrl);

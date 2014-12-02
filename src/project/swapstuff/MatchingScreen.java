@@ -412,7 +412,7 @@ public class MatchingScreen extends Fragment {
 		protected Void doInBackground(Void... params) {
 			String result = "";
 
-			String HostUrl = "http://116.193.163.158:8083/Items/GetItemsNearBy";
+			String HostUrl = Utills.URL+"Items/GetItemsNearBy";
 			// String HostUrl =
 			// "http://116.193.163.156:8012/Items/GetItemsNearBy";
 
@@ -586,7 +586,7 @@ public class MatchingScreen extends Fragment {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			String HostUrl = "http://116.193.163.158:8083/ItemMatchs/SaveItemMatch";
+			String HostUrl = Utills.URL+"ItemMatchs/SaveItemMatch";
 			// String
 			// HostUrl="http://116.193.163.156:8012/ItemMatchs/SaveItemMatch";
 

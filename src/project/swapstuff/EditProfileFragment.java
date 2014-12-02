@@ -105,20 +105,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 			imgbytes = savedInstanceState.getString("byte");
 
 			ImageChanged = true;
-			// ArrayList<Profile_info> infoToinsert = new
-			// ArrayList<Profile_info>();
-			//
-			// Profile_info p_info = new Profile_info();
-			// p_info.setTitle("");
-			// p_info.setDesc("");
-			//
-			// p_info.setImgDp(imgbytes);
-			// p_info.setUser_id("1");
-			// p_info.setItem_id("1");
-			//
-			// infoToinsert.add(p_info);
-			// ControlDB.deleteuserdetails(getActivity());
-			// ControlDB.insertUserdetails(getActivity(), infoToinsert);
+			
 
 			System.out.println(Utills.itemid + "itemid");
 			SharedPreferences shared = getActivity().getSharedPreferences("",
@@ -148,11 +135,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 			uiC_imgDP = (ImageView) rootView.findViewById(R.id.uiC_imgVDP);
 			setValuesDB();
 
-			// uiC_btndone.setVisibility(View.VISIBLE);
-			// uiC_txtuploadPick.setVisibility(View.VISIBLE);
-			// uiC_edTitle.setEnabled(true);
-			// uiC_edDesc.setEnabled(true);
-			// edit = true;
+			
 		}
 
 		uiC_imgDP = (ImageView) rootView.findViewById(R.id.uiC_imgVDP);
@@ -178,20 +161,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
 
-		// if (preferences.contains("imagedate")) {
-		//
-		// tempImagePath = preferences.getString("imagedate", "");
-		// Log.i("imagedate--1-->",tempImagePath+"");
-		// Bitmap yourSelectedImage = BitmapFactory.decodeFile(tempImagePath);
-		// Bitmap photo = Bitmap.createScaledBitmap(yourSelectedImage,
-		// 350, 300, false);
-		//
-		// ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		// photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-		// uiC_imgDP.setImageBitmap(photo);
-		// imgbytes = "";
-		// imgbytes = BitMapToString(photo);
-		// }
+	
 
 		// uploadPick.getBackground().setAlpha(45);
 		uiC_imgDP.setOnClickListener(this);
@@ -227,28 +197,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 					.show();
 
 		}
-		// else if (v == uiC_imgbtneditProfile) {
-		// if (!edit) {
-		// // btneditProfile.setText("Cancel Edit");
-		// // uiC_btndone.setVisibility(View.VISIBLE);
-		// // uiC_txtuploadPick.setVisibility(View.VISIBLE);
-		// uiC_edTitle.setEnabled(true);
-		// uiC_edDesc.setEnabled(true);
-		// edit = true;
-		// } else {
-		// // btneditProfile.setText("Edit");
-		// // uiC_btndone.setVisibility(View.INVISIBLE);
-		// // uiC_txtuploadPick.setVisibility(View.INVISIBLE);
-		// uiC_edTitle.setText("");
-		// uiC_edDesc.setText("");
-		// edit = false;
-		// setValuesDB();
-		// uiC_edTitle.setEnabled(false);
-		// uiC_edDesc.setEnabled(false);
-		//
-		// }
-		//
-		// }
+	
 		else if (v == uiC_btndone) {
 
 			String title = uiC_edTitle.getText().toString();
@@ -509,53 +458,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 				if (tempFile.exists()) {
 					tempFile.delete();
 				}
-				// if (selectedImage != null) {
-				// String filemanagerstring = selectedImage.getPath();
-				// String selectedImagePath = getPath(selectedImage);
-				//
-				// if (selectedImagePath != null) {
-				// filePath = selectedImagePath;
-				// finalPicturePath = selectedImagePath;
-				// } else if (filemanagerstring != null) {
-				// filePath = filemanagerstring;
-				// finalPicturePath = filemanagerstring;
-				// } else {
-				//
-				// Log.e("Bitmap", "Unknown path");
-				// }
-				// System.out.println("file path---333---->" + filePath);
-				// if (filePath != null) {
-				// decodeFile(filePath);
-				// } else {
-				// bitmap = null;
-				// }
-				// }
-
-				// String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-				// Cursor cursor = getContentResolver().query(selectedImage,
-				// filePathColumn, null, null, null);
-				// cursor.moveToFirst();
-				//
-				// int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-				//
-				// String filePath = cursor.getString(columnIndex);
-				// cursor.close();
-				//
-				// // Log.i("file path", filePath+"");
-				// Bitmap yourSelectedImage =
-				// BitmapFactory.decodeFile(filePath);
-				// Bitmap photo = Bitmap.createScaledBitmap(yourSelectedImage,
-				// 450, 400, false);
-				//
-				// ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				// photo.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-				// uiC_imgV_DP.setImageBitmap(photo);
-				//
-				// imgbytes = Utills.BitMapToString(photo);
-
-				// byte [] b=baos.toByteArray();
-				// imgbytes=Base64.encodeToString(b, Base64.DEFAULT);
+				
 
 			}
 
@@ -632,38 +535,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 		uiC_edDesc.setText(itemDescDB + "");
 		uiC_imgDP.setImageBitmap(Utills.StringToBitMap(imgbytes));
 
-		// ArrayList<Profile_info> infoUser = ControlDB
-		// .SelectFromUserDetails(getActivity());
-
-		// if (infoUser.size() > 0) {
-		// if (!edit) {
-		// if (imgbytes.equals("")) {
-		// uiC_imgDP.setImageBitmap(Utills.StringToBitMap(infoUser
-		// .get(0).getImgDp()));
-		// imgbytes = infoUser.get(0).getImgDp();
-		// } else {
-		// uiC_edTitle.setText(infoUser.get(0).getTitle() + "");
-		// uiC_edDesc.setText(infoUser.get(0).getDesc() + "");
-		// uiC_imgDP.setImageBitmap(Utills.StringToBitMap(infoUser
-		// .get(0).getImgDp()));
-		//
-		// imgbytes = infoUser.get(0).getImgDp();
-		// itemTitleDB = infoUser.get(0).getTitle();
-		// itemDescDB = infoUser.get(0).getDesc();
-		// }
-		// } else {
-		// uiC_edTitle.setText(infoUser.get(0).getTitle() + "");
-		// uiC_edDesc.setText(infoUser.get(0).getDesc() + "");
-		// uiC_imgDP.setImageBitmap(Utills.StringToBitMap(infoUser.get(0)
-		// .getImgDp()));
-		//
-		// imgbytes = infoUser.get(0).getImgDp();
-		// itemTitleDB = infoUser.get(0).getTitle();
-		// itemDescDB = infoUser.get(0).getDesc();
-		//
-		// }
-		//
-		// }
+		
 
 	}
 
@@ -686,7 +558,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			String HostUrl = "http://116.193.163.158:8083/Items/SaveItem";
+			String HostUrl = Utills.URL+"Items/SaveItem";
 
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(HostUrl);

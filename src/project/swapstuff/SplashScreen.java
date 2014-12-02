@@ -133,7 +133,7 @@ public class SplashScreen extends Activity {
 		protected Void doInBackground(Void... params) {
 			String result = "";
 
-			String HostUrl = "http://116.193.163.158:8083/Profiles/SaveProfile";
+			String HostUrl = Utills.URL+"Profiles/SaveProfile";
 			// String HostUrl =
 			// "http://116.193.163.156:8012/Profiles/SaveProfile";
 

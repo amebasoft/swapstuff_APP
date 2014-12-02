@@ -395,11 +395,10 @@ public class AppSettingsFragment extends Fragment {
 
 				DefaultHttpClient httpclient = new DefaultHttpClient();
 
-				HttpGet httppost = new HttpGet(
-						"http://116.193.163.158:8083/Profiles/DeleteProfile/"
+				HttpGet httppost = new HttpGet(Utills.URL+"Profiles/DeleteProfile/"
 								+ profileID);
 				Log.e("request json",
-						"http://116.193.163.158:8083/Profiles/DeleteProfile/"
+						Utills.URL+"Profiles/DeleteProfile/"
 								+ profileID + "");
 
 				httppost.setHeader("Content-type", "application/json");
@@ -487,7 +486,7 @@ public class AppSettingsFragment extends Fragment {
 		protected Void doInBackground(Void... params) {
 			String result = "";
 
-			String HostUrl = "http://116.193.163.158:8083/Profiles/SaveProfile";
+			String HostUrl = Utills.URL+"Profiles/SaveProfile";
 			// String HostUrl =
 			// "http://116.193.163.156:8012/Profiles/SaveProfile";
 
@@ -565,7 +564,7 @@ public class AppSettingsFragment extends Fragment {
 				DefaultHttpClient httpclient = new DefaultHttpClient();
 
 				HttpGet httppost = new HttpGet(
-						"http://116.193.163.158:8083/AppSettings/GetAppSettings");
+						Utills.URL+"AppSettings/GetAppSettings");
 
 				httppost.setHeader("Content-type", "application/json");
 				// httppost.setHeader("Accept", "application/json");

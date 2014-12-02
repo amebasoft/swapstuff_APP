@@ -28,7 +28,7 @@ public class Utills {
 	
 	
 	
-	public static String NAMESPACE="http://tempuri.org/";
+
 	public static String URL="http://116.193.163.158:8083/";
 	public static String FbID="test";
 	public static String id,itemid,lati,longi;

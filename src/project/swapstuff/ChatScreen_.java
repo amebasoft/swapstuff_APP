@@ -369,7 +369,7 @@ public class ChatScreen_ extends Activity {
 		protected Void doInBackground(Void... params) {
 			String result = "";
 
-			String HostUrl = "http://116.193.163.158:8083/Chats/SaveChat";
+			String HostUrl = Utills.URL+"Chats/SaveChat";
 //			String HostUrl = "http://116.193.163.156:8012/Chats/SaveChat";
 			
 
@@ -511,7 +511,7 @@ public class ChatScreen_ extends Activity {
 		protected Void doInBackground(Void... params) {
 			
 
-			String HostUrl = "http://116.193.163.158:8083/Chats/GetChatList";
+			String HostUrl = Utills.URL+"Chats/GetChatList";
 //			String HostUrl = "http://116.193.163.156:8012/Chats/GetChatList";
 //			while (true) {
 				
@@ -675,22 +675,7 @@ public class ChatScreen_ extends Activity {
 			  
 			  new asyncRefreshChat().execute();
 			  
-//			TextView tv = new TextView(ChatScreen_.this);
-//
-//			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-//					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-//			lp.gravity = Gravity.LEFT;
-//			lp.setMargins(10, 10, 0, 0);
-//			tv.setText("" + chatMsg);
-//			tv.setTextSize(17);
-//			tv.setLayoutParams(lp);
-//
-//			uiC_layoutChat.addView(tv);
-//
-//			uiC_edChatmsg.setText("");
-//			
-//			
-//			new asyncReceiveMsg().execute();
+
 			super.onPostExecute(result);
 		}
 
@@ -717,7 +702,7 @@ public class ChatScreen_ extends Activity {
 		protected Void doInBackground(Void... params) {
 			
 			
-			String HostUrl = "http://116.193.163.158:8083/Chats/GetChatListUnread";
+			String HostUrl = Utills.URL+"Chats/GetChatListUnread";
 //			String HostUrl = "http://116.193.163.156:8012/Chats/GetChatListUnread";
 			
 //			while (true) {

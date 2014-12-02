@@ -461,7 +461,7 @@ public class ProfileCreate extends Activity implements OnClickListener {
 		protected Void doInBackground(Void... params) {
 			String result = "";
 
-			String HostUrl = "http://116.193.163.158:8083/Items/SaveItem";
+			String HostUrl = Utills.URL+"Items/SaveItem";
 //			http://116.193.163.158:8083
 //			String HostUrl = "http://116.193.163.156:8012/Items/SaveItem";
 			
@@ -530,21 +530,7 @@ public class ProfileCreate extends Activity implements OnClickListener {
 
 				try {
 					
-			
-//				Utills.CreateDB(ProfileCreate.this);
-//				
-//				ArrayList<Profile_info> infoToinsert = new ArrayList<Profile_info>();
-//
-//				Profile_info p_info = new Profile_info();
-//				p_info.setTitle(title);
-//				p_info.setDesc(desc);
-//				p_info.setImgDp(imgbytes);
-//				p_info.setUser_id("1");
-//				p_info.setItem_id("1");
-//				infoToinsert.add(p_info);
-//
-//				ControlDB.insertUserdetails(ProfileCreate.this, infoToinsert);
-				
+
 				
 				Utills.itemid = itemID;
 				shared = getSharedPreferences("", MODE_PRIVATE);

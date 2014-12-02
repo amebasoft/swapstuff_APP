@@ -208,7 +208,7 @@ public class Login extends Activity implements OnClickListener {
 		protected Void doInBackground(Void... params) {       
 			 String result = "";
 			 
-		     String HostUrl="http://116.193.163.158:8083/Profiles/SaveProfile"; 
+		     String HostUrl=Utills.URL+"Profiles/SaveProfile"; 
 //		     String HostUrl="http://116.193.163.156:8012/Profiles/SaveProfile"; 
 		 	
 		      HttpClient httpClient = new DefaultHttpClient();
@@ -345,54 +345,7 @@ public class Login extends Activity implements OnClickListener {
 	 
 	 
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-//-------------------------
-//		public void registerClient() {
-//		try {
-//			// Check that the device supports GCM (should be in a try / catch)
-//			GCMRegistrar.checkDevice(this);
-//
-//			// Check the manifest to be sure this app has all the required
-//			// permissions.
-//			GCMRegistrar.checkManifest(this);
-//
-//			// Get the existing registration id, if it exists.
-//			regId = GCMRegistrar.getRegistrationId(this);
-//
-//			System.out
-//					.println("******************************************************************");
-//			Log.v("Dashboard", "Device Id -> " + regId);
-//			System.out
-//					.println("******************************************************************");
-//			if (regId.equals("")) {
-//
-//				registrationStatus = "Registering...";
-//				
-//				// register this device for this project
-//				GCMRegistrar.register(this, CommonUtilities.SENDER_ID);
-//				regId = GCMRegistrar.getRegistrationId(this);
-//
-//				registrationStatus = "Registration Acquired";
-//			
-//			} else {
-//				GCMRegistrar.register(this, CommonUtilities.SENDER_ID);
-//				regId = GCMRegistrar.getRegistrationId(this);
-//				registrationStatus = "Already registered";
-//			
-//			}
-//
-//		} catch (Exception e) {
-//			
-//			registrationStatus = e.getMessage();
-//		}
-//	
-//	}
-//	------------------------
+
 	
 	
 	
@@ -418,9 +371,7 @@ public class Login extends Activity implements OnClickListener {
 			    
 			    } catch (IOException ex) {
 			     msg = "Error :" + ex.getMessage();
-			     // If there is an error, don't just keep trying to register.
-			     // Require the user to click a button again, or perform
-			     // exponential back-off.
+			  
 			    }
 			    return msg;
 			   }

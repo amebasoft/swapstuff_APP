@@ -22,12 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-
-import project.swapstuff.adapter.RoundedCornerBitmap;
 import project.swapstuff.model.Utills;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -43,7 +37,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings.Global;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -57,6 +50,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class YourMatchFragment extends Fragment {
 
@@ -226,8 +224,7 @@ public class YourMatchFragment extends Fragment {
 
 		
 
-			// Bitmap bitmap = ((BitmapDrawable)
-			// getResources().getDrawable(R.drawable.img)).getBitmap();
+			
 			String dateS=DateTimeCreated[position].substring(0, DateTimeCreated[position].indexOf("T"));
 //					String TimeS=DateTimeCreated[position].substring(DateTimeCreated[position].indexOf("T")+1,DateTimeCreated[position].length());
 			
@@ -366,7 +363,7 @@ public class YourMatchFragment extends Fragment {
 		protected Void doInBackground(Void... params) {
 			String result = "";
 
-			String HostUrl = "http://116.193.163.158:8083/ItemMatchs/GetItemMatchList";
+			String HostUrl = Utills.URL+"ItemMatchs/GetItemMatchList";
 
 		
 
@@ -520,7 +517,7 @@ public class YourMatchFragment extends Fragment {
 		protected Void doInBackground(Void... params) {       
 			 String result = "";
 			 
-		     String HostUrl="http://116.193.163.158:8083/ItemMatchs/SaveItemMatch"; 
+		     String HostUrl=Utills.URL+"ItemMatchs/SaveItemMatch"; 
 
 		      HttpClient httpClient = new DefaultHttpClient();
 		      HttpPost httpPost = new HttpPost(HostUrl);

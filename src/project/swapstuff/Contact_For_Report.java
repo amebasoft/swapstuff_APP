@@ -191,7 +191,7 @@ public class Contact_For_Report extends Activity {
 		protected Void doInBackground(Void... params) {       
 			 String result = "";
 			 
-		     String HostUrl="http://116.193.163.158:8083/ItemMatchs/SaveItemMatch"; 
+		     String HostUrl=Utills.URL+"ItemMatchs/SaveItemMatch"; 
 //		     String HostUrl="http://116.193.163.156:8012/ItemMatchs/SaveItemMatch"; 
 		 	
 		      HttpClient httpClient = new DefaultHttpClient();

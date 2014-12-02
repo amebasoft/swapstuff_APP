@@ -7,7 +7,6 @@ package project.swapstuff;
 
 
 import project.swapstuff.model.CommonUtilities;
-import project.swapstuff.model.ServerUtilities;
 import project.swapstuff.model.Utills;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -17,7 +16,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -40,14 +38,14 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	protected void onRegistered(Context context, String registrationId) {
 		Log.i(TAG, "Device registered: regId = " + registrationId);
-		ServerUtilities.register(context, registrationId);
+//		ServerUtilities.register(context, registrationId);
 	}
 
 	@Override
 	protected void onUnregistered(Context context, String registrationId) {
 		Log.i(TAG, "Device unregistered");
 		if (GCMRegistrar.isRegisteredOnServer(context)) {
-			ServerUtilities.unregister(context, registrationId);
+//			ServerUtilities.unregister(context, registrationId);
 		} else {
 			Log.i(TAG, "Ignoring unregister callback");
 		}
