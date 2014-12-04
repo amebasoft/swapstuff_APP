@@ -47,7 +47,7 @@ public class Login extends Activity implements OnClickListener {
 	String profileID="";
 	 GPSTracker gpsTracker;
 	 
-	 String regId,registrationStatus;
+	 String regId="",registrationStatus="";
 	 String RegGCM="";
 	 
 	 Toast toast;
@@ -93,7 +93,7 @@ public class Login extends Activity implements OnClickListener {
 		
 		gpsTracker=new GPSTracker(Login.this);
 
-		Utills.CreateDB(Login.this);
+//		Utills.CreateDB(Login.this);
 		if (Utills.haveNetworkConnection(Login.this))
 		{
 

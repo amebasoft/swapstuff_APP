@@ -29,7 +29,8 @@ public class Utills {
 	
 	
 
-	public static String URL="http://116.193.163.158:8083/";
+	public static String URL="http://www.swapstff.com/";
+//	public static String URL="http://116.193.163.158:8083/";
 	public static String FbID="test";
 	public static String id,itemid,lati,longi;
 	public static int km;
