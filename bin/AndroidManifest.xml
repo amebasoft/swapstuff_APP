@@ -105,7 +105,12 @@
         <activity
             android:name=".Privacy_policy"
             android:label="@string/title_activity_privacy_policy"
-              android:screenOrientation="sensorPortrait" >
+            android:screenOrientation="sensorPortrait" >
+        </activity>
+        <activity
+            android:name=".TestViewPager"
+            android:label="@string/title_activity_test_view_pager" 
+            android:screenOrientation="sensorPortrait">
         </activity>
     </application>
 
