@@ -12,21 +12,19 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" 
     android:layout_weight="9"
-    android:weightSum="10"
+ 
     android:id="@+id/uiC_layoutGotoChat">
 
     
     
     <ImageView
         android:id="@+id/uiC_imgVThumbnail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="65dp"
         android:src="@drawable/loding_img"
-        android:layout_weight="03" 
         android:layout_gravity="center_vertical"
         android:layout_margin="5dp"
-       
-        
+        android:scaleType="fitXY"
         />
 
     <LinearLayout
@@ -34,9 +32,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" 
         android:paddingLeft="5dp"
-        
         android:layout_gravity="center_vertical"
-        android:layout_weight="07">
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/uiC_txtvName"

@@ -68,7 +68,19 @@ public class SplashScreen extends Activity {
 				try {
 
 					sleep(2 * 1000); // 2 seconds
-
+					
+					
+					SharedPreferences SharedPref_StartUp=getSharedPreferences("Startup", MODE_PRIVATE);
+					if(!SharedPref_StartUp.contains("tutorial"))
+					{
+						Intent gotoHome = new Intent(getApplicationContext(),
+								TestViewPager.class);
+						startActivity(gotoHome);
+						finish();
+					}
+					else
+					{
+					
 					if (shared.contains("id")) {
 						Utills.id = shared.getString("id", "4");
 						Utills.km = shared.getInt("km", 1);
@@ -85,7 +97,7 @@ public class SplashScreen extends Activity {
 						{
 
 							Utills.itemid = shared.getString("itemid", "2");
-							// Log.e("Value in db",ControlDB.getCountuserDetails(SplashScreen.this)+"");
+						
 
 							new asyncUpdateLOCATION().execute();
 							System.out.println("location" + Utills.longitud  + "");
@@ -109,6 +121,16 @@ public class SplashScreen extends Activity {
 						startActivity(gotoHome);
 						finish();
 					}
+					
+					
+					
+					
+					}
+					
+					
+					
+					
+
 
 				} catch (Exception e) {
 

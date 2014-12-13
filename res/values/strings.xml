@@ -41,5 +41,6 @@
     <string name="gcm_deleted">gcm_deleted</string>
     <string name="title_activity_contact__for__report">Contact us</string>
     <string name="title_activity_privacy_policy">Privacy_policy</string>
+    <string name="title_activity_test_view_pager">TestViewPager</string>
 
 </resources>

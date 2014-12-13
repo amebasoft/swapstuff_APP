@@ -33,6 +33,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -340,11 +342,14 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 	}
 
 	public void decodeFile(String filePath) {
+		
+		
 		// Decode image size
 		BitmapFactory.Options o = new BitmapFactory.Options();
 		o.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(filePath, o);
-
+		
+		
 		// The new size we want to scale to
 		final int REQUIRED_SIZE = 1024;
 
@@ -363,9 +368,48 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 		BitmapFactory.Options o2 = new BitmapFactory.Options();
 		o2.inSampleSize = scale;
 		bitmap = BitmapFactory.decodeFile(filePath, o2);
+		
+		
+		
+
+		  try {
+            ExifInterface ei = new ExifInterface(filePath);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            Matrix matrix = new Matrix();
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    matrix.postRotate(90);
+                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    matrix.postRotate(180);
+                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    matrix.postRotate(270);
+                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    break;
+                default:
+                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    break;
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		
+		
 		uiC_imgDP.setImageBitmap(bitmap);
 		//
 		imgbytes = Utills.BitMapToString(bitmap);
@@ -374,6 +418,79 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 
 	}
 
+	
+	
+	
+	
+//	ROTATE IMAGE
+//	  private void rotateImage(final String path) {
+//	        runOnUiThread(new Runnable() {
+//	            @Override
+//	            public void run() {
+//	                Bitmap b = decodeFileFromPath(path);
+//	                try {
+//	                    ExifInterface ei = new ExifInterface(path);
+//	                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//	                    Matrix matrix = new Matrix();
+//	                    switch (orientation) {
+//	                        case ExifInterface.ORIENTATION_ROTATE_90:
+//	                            matrix.postRotate(90);
+//	                            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+//	                            break;
+//	                        case ExifInterface.ORIENTATION_ROTATE_180:
+//	                            matrix.postRotate(180);
+//	                            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+//	                            break;
+//	                        case ExifInterface.ORIENTATION_ROTATE_270:
+//	                            matrix.postRotate(270);
+//	                            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+//	                            break;
+//	                        default:
+//	                            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
+//	                            break;
+//	                    }
+//	                } catch (Throwable e) {
+//	                    e.printStackTrace();
+//	                }
+//
+//	                FileOutputStream out1 = null;
+//	                File file;
+//	                try {
+//	                    String state = Environment.getExternalStorageState();
+//	                    if (Environment.MEDIA_MOUNTED.equals(state)) {
+//	                        file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".jpg");
+//	                    }
+//	                    else {
+//	                        file = new File(getFilesDir() , "image" + new Date().getTime() + ".jpg");
+//	                    }
+//	                    out1 = new FileOutputStream(file);
+//	                    b.compress(Bitmap.CompressFormat.JPEG, 90, out1);
+//	                    imgFromCameraOrGallery.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+//	                } catch (Exception e) {
+//	                    e.printStackTrace();
+//	                } finally {
+//	                    try {
+//	                        out1.close();
+//	                    } catch (Throwable ignore) {
+//
+//	                    }
+//	                }
+//
+//	            }
+//	        });
+//
+//	    }
+//	END ROTATE IMAGE
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
 		Cursor cursor = getActivity().managedQuery(uri, projection, null, null,

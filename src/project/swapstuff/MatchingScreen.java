@@ -1,9 +1,7 @@
 package project.swapstuff;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,25 +19,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import project.swapstuff.YourMatchFragment.adaptermatchlist;
+import project.swapstuff.adapter.ViewPagerAdapter;
+import project.swapstuff.model.NearbyItems;
 import project.swapstuff.model.Utills;
 import android.app.ActionBar.LayoutParams;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Html;
 import android.util.Log;
 import android.view.DragEvent;
@@ -49,7 +46,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
@@ -66,6 +62,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +82,7 @@ public class MatchingScreen extends Fragment {
 
 	Context con;
 
-	SmartImageView  uiC_imgVMatchingDP;
+//	SmartImageView  uiC_imgVMatchingDP;
 	TextView uiC_txtvTitle, uiC_txtvKM, uiC_txtvDesc, uiC_txtvSearch;
 	ImageButton uiC_imgbtnLike, uiC_imgbtnDislike, uiC_ReportAbuse;
 
@@ -95,10 +92,13 @@ public class MatchingScreen extends Fragment {
 
 	String htmlText;
 
-	static String[] itmID, Distance, DateTimeCreated, itemName,
-			ItemDescription, ProfileID, imgs;
+//	static String[] itmID, Distance, DateTimeCreated, itemName,
+//			ItemDescription, ProfileID, imgs;
+	
+	ArrayList<NearbyItems> NearbyitemsList=new ArrayList<NearbyItems>();
 
-	static int itemposition = 0;
+	static int itemposition=0;
+	static int itempositionTEMP=0;
 
 	JSONArray jsnArray;
 
@@ -107,13 +107,29 @@ public class MatchingScreen extends Fragment {
 	FrameLayout uiClayout_frame;
 	Toast toast;
 
+	ProgressBar progressBarImageShow;
+	
+	 int  lastPage,  mCurrentSelectedScreen,mNextSelectedScreen=0; 
+	ViewPagerAdapter adapter;
+	 ViewPager myPager;
+	 
+	 @Override
+	public void onResume() {
+		   lastPage= mCurrentSelectedScreen=mNextSelectedScreen=itemposition=itempositionTEMP=0; 
+		super.onResume();
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_matchingscreen,
 				container, false);
-		uiC_imgVMatchingDP = (SmartImageView ) rootView
-				.findViewById(R.id.uiC_imgVMatchingScreen);
+//		uiC_imgVMatchingDP = (SmartImageView ) rootView
+//				.findViewById(R.id.uiC_imgVMatchingScreen);
+		
+		
+		   myPager = (ViewPager) rootView.findViewById(R.id.myfivepanelpager);
+		 
+		progressBarImageShow =(ProgressBar)rootView.findViewById(R.id.progressBarImageShow);
 		uiC_imgbtnLike = (ImageButton) rootView
 				.findViewById(R.id.uiC_imgbtn_like);
 		uiC_imgbtnDislike = (ImageButton) rootView
@@ -148,7 +164,7 @@ public class MatchingScreen extends Fragment {
 			uiC_txtvTitle.setVisibility(View.GONE);
 			uiC_txtvDesc.setVisibility(View.GONE);
 			uiC_txtvKM.setVisibility(View.GONE);
-			uiC_imgVMatchingDP.setVisibility(View.GONE);
+//			uiC_imgVMatchingDP.setVisibility(View.GONE);
 			uiC_txtvSearch.setVisibility(View.VISIBLE);
 
 			uiC_layoutDetailsContaoner.setBackgroundColor(Color.TRANSPARENT);
@@ -165,11 +181,11 @@ public class MatchingScreen extends Fragment {
 					likeDislike = "2";
 					Animation myRotation = AnimationUtils.loadAnimation(
 							getActivity(), R.anim.right_to_left);
-					uiC_imgVMatchingDP.startAnimation(myRotation);
+//					uiC_imgVMatchingDP.startAnimation(myRotation);
 //					uiC_imgVMatchingDP.setImageBitmap(Utills
 //							.StringToBitMap(imgs[itemposition]));
 					
-					uiC_imgVMatchingDP.setImageUrl(imgs[0]);
+//					uiC_imgVMatchingDP.setImageUrl(imgs[0]);
 					
 					new asyncLikeDislike().execute();
 				} else {
@@ -194,11 +210,11 @@ public class MatchingScreen extends Fragment {
 					likeDislike = "1";
 					Animation myRotation = AnimationUtils.loadAnimation(
 							getActivity(), R.anim.left_to_right_in);
-					uiC_imgVMatchingDP.startAnimation(myRotation);
+//					uiC_imgVMatchingDP.startAnimation(myRotation);
 //					uiC_imgVMatchingDP.setImageBitmap(Utills
 //							.StringToBitMap(imgs[itemposition]));
 
-					uiC_imgVMatchingDP.setImageUrl(imgs[0]);
+//					uiC_imgVMatchingDP.setImageUrl(imgs[0]);
 					
 					new asyncLikeDislike().execute();
 				} else {
@@ -235,7 +251,7 @@ public class MatchingScreen extends Fragment {
 												getActivity(),
 												Contact_For_Report.class);
 										gotoContactscreen.putExtra("id",
-												itmID[itemposition].replace(
+												NearbyitemsList.get(itemposition).getItmID().replace(
 														"\"", ""));
 										gotoContactscreen.putExtra("finish",
 												"y");
@@ -266,36 +282,144 @@ public class MatchingScreen extends Fragment {
 		});
 
 
-		uiC_imgVMatchingDP.setOnTouchListener(new OnSwipeTouchListener() {
-
-			public void onSwipeLeft() {
-				Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT)
-						.show();
-				System.out.println("left");
-				super.onSwipeLeft();
-			}
-
-			public void onSwipeRight() {
-				Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT)
-						.show();
-				System.out.println("right");
-				super.onSwipeRight();
-			}
-
-			public boolean onTouch(View view, MotionEvent event) {
-				
-				ClipData data = ClipData.newPlainText("", "");
-				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
-						view);
-				view.startDrag(data, shadowBuilder, view, 0);
-
-				// return gestureDetector.onTouchEvent(event);
-				return false;
-			}
-
-		});
+//		uiC_imgVMatchingDP.setOnTouchListener(new OnSwipeTouchListener() {
+//
+//			public void onSwipeLeft() {
+//				Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT)
+//						.show();
+//				System.out.println("left");
+//				super.onSwipeLeft();
+//			}
+//
+//			public void onSwipeRight() {
+//				Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT)
+//						.show();
+//				System.out.println("right");
+//				super.onSwipeRight();
+//			}
+//
+//			public boolean onTouch(View view, MotionEvent event) {
+//				
+//				ClipData data = ClipData.newPlainText("", "");
+//				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+//						view);
+//				view.startDrag(data, shadowBuilder, view, 0);
+//
+//				// return gestureDetector.onTouchEvent(event);
+//				return false;
+//			}
+//
+//		});
 
 		uiClayout_frame.setOnDragListener(new MyDragListener());
+		
+		
+		
+		myPager.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				 if(lastPage>arg0)
+			      {
+					//User Move to left
+					 itempositionTEMP++;
+					 if(itempositionTEMP<NearbyitemsList.size())
+					 {
+						 likeDislike = "1";
+						 new asyncLikeDislike().execute();
+					 }
+					 
+					
+			      }
+			    else if(lastPage<arg0) 
+			     {
+			    	//User Move to right
+			    	itempositionTEMP--;
+			    	
+			    	
+			    	likeDislike = "2";
+			    	new asyncLikeDislike().execute();
+			     }
+			      lastPage=arg0;
+			
+			     
+			      mCurrentSelectedScreen = arg0;
+			      mNextSelectedScreen = arg0;
+			}
+			
+			@Override
+			public void onPageScrolled( int position , float positionOffset , int positionOffsetPixels ) {
+				
+				
+				
+				 if ( position == lastPage )
+				    {
+				        // We are moving to next screen on right side
+				        if ( positionOffset > 0.2 )
+				        {   
+				        	
+				            // Closer to next screen than to current
+				            if ( position + 1 != mNextSelectedScreen )
+				            {
+				                mNextSelectedScreen = position + 1;
+
+				                showCustomAlert(R.drawable.dislike_toast);
+				            }
+				        }
+				        else
+				        {
+				        	
+				            // Closer to current screen than to next
+				            if ( position != mNextSelectedScreen )
+				            {
+				                mNextSelectedScreen = position;
+				                
+				                if(toast!=null)
+				                {
+				                	toast.cancel();
+				                }
+				            }
+				        }
+				    }
+				    else
+				    {
+				        // We are moving to next screen left side
+				        if ( positionOffset > 0.8 )
+				        {   
+				        	
+				            // Closer to current screen than to next
+				            if ( position + 1 != mNextSelectedScreen )
+				            {
+				                mNextSelectedScreen = position + 1;
+				               
+				                if(toast!=null)
+				                {
+				                	toast.cancel();
+				                }
+				            }
+				        }
+				        else
+				        {
+				        	
+				            // Closer to next screen than to current
+				            if ( position != mNextSelectedScreen )
+				            {
+				                mNextSelectedScreen = position;
+				                showCustomAlert(R.drawable.like_toast);
+				                
+				               
+				            }
+				        }
+				    }
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				progressBarImageShow.setVisibility(View.INVISIBLE);
+			}
+		});
 
 		return rootView;
 	}
@@ -398,7 +522,7 @@ public class MatchingScreen extends Fragment {
 			uiC_txtvTitle.setVisibility(View.GONE);
 			uiC_txtvDesc.setVisibility(View.GONE);
 			uiC_txtvKM.setVisibility(View.GONE);
-			uiC_imgVMatchingDP.setVisibility(View.GONE);
+//			uiC_imgVMatchingDP.setVisibility(View.GONE);
 			uiC_ReportAbuse.setVisibility(View.GONE);
 
 			uiC_layoutDetailsContaoner.setBackgroundColor(Color.TRANSPARENT);
@@ -448,35 +572,61 @@ public class MatchingScreen extends Fragment {
 
 				jsnArray = new JSONArray(result);
 
-				itmID = new String[jsnArray.length()];
-				Distance = new String[jsnArray.length()];
-				// DateTimeCreated = new String[jsnArray.length()];
-				itemName = new String[jsnArray.length()];
-				ItemDescription = new String[jsnArray.length()];
-				ProfileID = new String[jsnArray.length()];
-				imgs = new String[jsnArray.length()];
-
+//				itmID = new String[jsnArray.length()];
+//				Distance = new String[jsnArray.length()];
+//				// DateTimeCreated = new String[jsnArray.length()];
+//				itemName = new String[jsnArray.length()];
+//				ItemDescription = new String[jsnArray.length()];
+//				ProfileID = new String[jsnArray.length()];
+//				imgs = new String[jsnArray.length()];
+				NearbyItems nearByitemsFirst=new NearbyItems();
+				nearByitemsFirst.setItmID("");
+				nearByitemsFirst.setDistance("");
+				nearByitemsFirst.setImgs("");
+				nearByitemsFirst.setItemDescription("");
+				nearByitemsFirst.setItemName("");
+				nearByitemsFirst.setProfileID("");
+				
+				NearbyitemsList.add(nearByitemsFirst);
+				
 				for (int g = 0; g < jsnArray.length(); g++) {
+					
+					NearbyItems nearByitems=new NearbyItems();
 
 					JSONObject oj = jsnArray.getJSONObject(g);
 
-					itmID[g] = oj.getString("ItemID");
+//					itmID[g] = oj.getString("ItemID");
+					nearByitems.setItmID(oj.getString("ItemID"));
 
 					String dis = oj.getString("Distance");
 
-					Distance[g] = dis.substring(0, dis.indexOf(".") + 2);
+//					Distance[g] = dis.substring(0, dis.indexOf(".") + 2);
+					nearByitems.setDistance(dis.substring(0, dis.indexOf(".") + 2));
 					// DateTimeCreated[g] = oj.getString("DateTimeCreated");
-					itemName[g] = oj.getString("ItemTitle");
-					ItemDescription[g] = oj.getString("ItemDescription");
-					ProfileID[g] = oj.getString("ProfileID");
-					imgs[g] = oj.getString("ItemImage");
+//					nearByitems.setDateTimeCreated(oj.getString("DateTimeCreated"));
+					
+//					itemName[g] = oj.getString("ItemTitle");
+					nearByitems.setItemName(oj.getString("ItemTitle"));
+					
+//					ItemDescription[g] = oj.getString("ItemDescription");
+					nearByitems.setItemDescription(oj.getString("ItemDescription"));
+					
+//					ProfileID[g] = oj.getString("ProfileID");
+					nearByitems.setProfileID(oj.getString("ProfileID"));
+					
+//					imgs[g] = oj.getString("ItemImage");
+					nearByitems.setImgs(oj.getString("ItemImage"));
 
-					Log.e("TAG", "" + itmID[g]);
+					
+					
+					NearbyitemsList.add(nearByitems);
 
 				}
-				itemposition = 0;
+			
 
-				
+								
+				NearbyitemsList.add(nearByitemsFirst);
+				 lastPage= mCurrentSelectedScreen=mNextSelectedScreen=itemposition=itempositionTEMP =NearbyitemsList.size()/2;
 
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
@@ -507,7 +657,7 @@ public class MatchingScreen extends Fragment {
 				uiC_txtvTitle.setVisibility(View.VISIBLE);
 				uiC_txtvDesc.setVisibility(View.VISIBLE);
 				uiC_txtvKM.setVisibility(View.VISIBLE);
-				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
+//				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
 				uiC_ReportAbuse.setVisibility(View.VISIBLE);
 
 				progressdialog.dismiss();
@@ -521,7 +671,8 @@ public class MatchingScreen extends Fragment {
 					uiC_txtvTitle.setVisibility(View.GONE);
 					uiC_txtvDesc.setVisibility(View.GONE);
 					uiC_txtvKM.setVisibility(View.GONE);
-					uiC_imgVMatchingDP.setVisibility(View.GONE);
+//					uiC_imgVMatchingDP.setVisibility(View.GONE);
+					myPager.setVisibility(View.GONE);
 					uiC_ReportAbuse.setVisibility(View.GONE);
 					uiC_txtvSearch.setVisibility(View.VISIBLE);
 
@@ -529,11 +680,19 @@ public class MatchingScreen extends Fragment {
 							.setBackgroundColor(Color.TRANSPARENT);
 
 				} else {
-					String DescText = ItemDescription[0];
+					
+					 adapter = new ViewPagerAdapter(getActivity(), NearbyitemsList);
+					 myPager.setAdapter(adapter);
+					  myPager.setCurrentItem(itemposition);
+					  progressBarImageShow.setVisibility(View.VISIBLE);
+					  myPager.bringToFront();
+					  
+					
+					String DescText =NearbyitemsList.get(itemposition).getItemDescription();
 					htmlText = "<body><b>Description:</b><br><i>" + DescText
 							+ "</i></body>";
-					uiC_txtvTitle.setText(itemName[0]);
-					uiC_txtvKM.setText(Distance[0] + "-km away.");
+					uiC_txtvTitle.setText(NearbyitemsList.get(itemposition).getItemName());
+					uiC_txtvKM.setText(NearbyitemsList.get(itemposition).getDistance() + "-km away.");
 					uiC_txtvDesc.setText(Html.fromHtml(htmlText));
 
 					// uiC_imgVMatchingDP.setImageBitmap(Utills.StringToBitMap(imgs[0]));
@@ -542,7 +701,7 @@ public class MatchingScreen extends Fragment {
 //							.error(R.drawable.ic_photos)
 //							.into(uiC_imgVMatchingDP);
 					
-					uiC_imgVMatchingDP.setImageUrl(imgs[0]);
+//					uiC_imgVMatchingDP.setImageUrl(imgs[0]);
 
 				}
 			} catch (Exception e) {
@@ -555,7 +714,8 @@ public class MatchingScreen extends Fragment {
 				uiC_txtvTitle.setVisibility(View.GONE);
 				uiC_txtvDesc.setVisibility(View.GONE);
 				uiC_txtvKM.setVisibility(View.GONE);
-				uiC_imgVMatchingDP.setVisibility(View.GONE);
+				myPager.setVisibility(View.GONE);
+//				uiC_imgVMatchingDP.setVisibility(View.GONE);
 				uiC_txtvSearch.setVisibility(View.VISIBLE);
 			}
 			super.onPostExecute(result);
@@ -602,10 +762,10 @@ public class MatchingScreen extends Fragment {
 				// "Distance": 0,
 				// "IsLikeDislikeAbuseBy": 1,
 				// "DateTimeCreated": "2014-09-23T17:30:35.8"
-
+				
 				params1.add(new BasicNameValuePair("ItemMatchID", "-1"));
 				params1.add(new BasicNameValuePair("ItemID",
-						itmID[itemposition].replace("\"", "")));
+						NearbyitemsList.get(itemposition).getItmID().replace("\"", "")));
 				params1.add(new BasicNameValuePair("ProfileIdBy", (Utills.id)
 						.replace("\"", "")));
 				params1.add(new BasicNameValuePair("Distance", "0"));
@@ -651,7 +811,7 @@ public class MatchingScreen extends Fragment {
 
 			if (resuluresponse.equalsIgnoreCase("Matched")) {
 				
-				Utills.Imagebytee=imgs[itemposition];
+				Utills.Imagebytee=NearbyitemsList.get(itemposition).getImgs();
 				ShowDialog_matched();
 				
 			} else {
@@ -661,8 +821,23 @@ public class MatchingScreen extends Fragment {
 					ShowAnim(1);
 					itemposition = 1;
 				} else {
-					ShowAnim(itemposition + 1);
-					itemposition++;
+					
+					
+					if(NearbyitemsList.size()-1==2)
+					{
+						ShowAnim(0);
+					}
+					else
+					{
+						NearbyitemsList.remove(itemposition);
+						 adapter = new ViewPagerAdapter(getActivity(), NearbyitemsList);
+						 myPager.setAdapter(adapter);
+						 lastPage= mCurrentSelectedScreen=mNextSelectedScreen=itemposition=itempositionTEMP =NearbyitemsList.size()/2;
+						myPager.setCurrentItem(itemposition, true);
+						ShowAnim(itemposition);
+					}
+					
+					
 				}
 			}
 
@@ -705,10 +880,10 @@ public class MatchingScreen extends Fragment {
 				if (Utills.haveNetworkConnection(getActivity())) {
 					Intent gotochat = new Intent(getActivity(),
 							ChatScreen_.class);
-					gotochat.putExtra("itemid", itmID[itemposition]);
-					gotochat.putExtra("Title", itemName[itemposition]);
-					gotochat.putExtra("pid", ProfileID[itemposition]);
-					gotochat.putExtra("km", Distance[itemposition]);
+					gotochat.putExtra("itemid", NearbyitemsList.get(itemposition).getItmID());
+					gotochat.putExtra("Title", NearbyitemsList.get(itemposition).getItemName());
+					gotochat.putExtra("pid", NearbyitemsList.get(itemposition).getProfileID());
+					gotochat.putExtra("km", NearbyitemsList.get(itemposition).getDistance());
 //					Utills.Imagebytee = imgs[itemposition];
 					// gotochat.putExtra("img", imgs[position]);
 
@@ -716,8 +891,23 @@ public class MatchingScreen extends Fragment {
 						ShowAnim(1);
 						itemposition = 1;
 					} else {
-						ShowAnim(itemposition + 1);
-						itemposition++;
+						
+						
+						if(NearbyitemsList.size()-1==2)
+						{
+							ShowAnim(0);
+						}
+						else
+						{
+							NearbyitemsList.remove(itemposition);
+							 adapter = new ViewPagerAdapter(getActivity(), NearbyitemsList);
+							 myPager.setAdapter(adapter);
+							 lastPage= mCurrentSelectedScreen=mNextSelectedScreen=itemposition=itempositionTEMP =NearbyitemsList.size()/2;
+							myPager.setCurrentItem(itemposition, true);
+							ShowAnim(itemposition);
+						}
+						
+						
 					}
 					dialog.dismiss();
 					startActivity(gotochat);
@@ -743,8 +933,23 @@ public class MatchingScreen extends Fragment {
 					ShowAnim(1);
 					itemposition = 1;
 				} else {
-					ShowAnim(itemposition + 1);
-					itemposition++;
+					
+					
+					if(NearbyitemsList.size()-1==2)
+					{
+						ShowAnim(0);
+					}
+					else
+					{
+						NearbyitemsList.remove(itemposition);
+						 adapter = new ViewPagerAdapter(getActivity(), NearbyitemsList);
+						 myPager.setAdapter(adapter);
+						 lastPage= mCurrentSelectedScreen=mNextSelectedScreen=itemposition=itempositionTEMP =NearbyitemsList.size()/2;
+						myPager.setCurrentItem(itemposition, true);
+						ShowAnim(itemposition);
+					}
+					
+					
 				}
 
 				dialog.dismiss();
@@ -758,12 +963,12 @@ public class MatchingScreen extends Fragment {
 
 	public void ShowAnim(int position) {
 
-		if ((itemName.length) > position) {
+		if ((NearbyitemsList.size()) > position && position!=0 && position!=NearbyitemsList.size()) {
 
 //			uiC_imgVMatchingDP.setImageBitmap(Utills
 //					.StringToBitMap(imgs[position]));
-			uiC_imgVMatchingDP.setImageResource(R.drawable.loding_img);
-			uiC_imgVMatchingDP.setImageUrl(imgs[position]);
+//			uiC_imgVMatchingDP.setImageResource(R.drawable.loding_img);
+//			uiC_imgVMatchingDP.setImageUrl(imgs[position]);
 
 			Animation animupdown = AnimationUtils.loadAnimation(getActivity(),
 					R.anim.top_to_bottomin);
@@ -771,11 +976,11 @@ public class MatchingScreen extends Fragment {
 			uiC_txtvKM.startAnimation(animupdown);
 			uiC_txtvDesc.startAnimation(animupdown);
 
-			String DescText = ItemDescription[position];
+			String DescText = NearbyitemsList.get(position).getItemDescription();
 			htmlText = "<body><h1>Description:</h1><br><i>" + DescText
 					+ "</i></body>";
-			uiC_txtvTitle.setText(itemName[position]);
-			uiC_txtvKM.setText(Distance[position] + "-km away.");
+			uiC_txtvTitle.setText(NearbyitemsList.get(position).getItemName());
+			uiC_txtvKM.setText(NearbyitemsList.get(position).getDistance() + "-km away.");
 			uiC_txtvDesc.setText(Html.fromHtml(htmlText));
 
 			// uiC_imgVMatchingDP.setImageBitmap(Utills.StringToBitMap(imgs[itemposition]));
@@ -789,10 +994,10 @@ public class MatchingScreen extends Fragment {
 			uiC_txtvTitle.setVisibility(View.GONE);
 			uiC_txtvDesc.setVisibility(View.GONE);
 			uiC_txtvKM.setVisibility(View.GONE);
-			uiC_imgVMatchingDP.setVisibility(View.GONE);
+//			uiC_imgVMatchingDP.setVisibility(View.GONE);
 			uiC_ReportAbuse.setVisibility(View.GONE);
 			uiC_txtvSearch.setVisibility(View.VISIBLE);
-
+			myPager.setVisibility(View.INVISIBLE);
 			uiC_layoutDetailsContaoner.setBackgroundColor(Color.TRANSPARENT);
 		}
 
@@ -809,7 +1014,7 @@ public class MatchingScreen extends Fragment {
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_STARTED:
 				// do nothing
-				uiC_imgVMatchingDP.setVisibility(View.INVISIBLE);
+//				uiC_imgVMatchingDP.setVisibility(View.INVISIBLE);
 
 				endX = event.getX();
 
@@ -829,7 +1034,7 @@ public class MatchingScreen extends Fragment {
 				}
 				System.out.println("exited");
 
-				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
+//				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
 				
 				System.out.println("exited ended" + Math.abs(endX)
 						+ Math.abs(positionX) + "");
@@ -837,7 +1042,7 @@ public class MatchingScreen extends Fragment {
 
 			case DragEvent.ACTION_DROP:
 				// Dropped, reassign View to ViewGroup
-				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
+//				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
 				if (toast != null) {
 					toast.cancel();
 				}
@@ -907,7 +1112,7 @@ public class MatchingScreen extends Fragment {
 
 			case DragEvent.ACTION_DRAG_ENDED:
 
-				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
+//				uiC_imgVMatchingDP.setVisibility(View.VISIBLE);
 			
 				if (toast != null) {
 					toast.cancel();
@@ -1099,12 +1304,14 @@ public class MatchingScreen extends Fragment {
 
 		Context context = getActivity();
 
+		
 		// Create layout inflator object to inflate toast.xml file
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 
 		// Call toast.xml file for toast layout
 		View toastRoot = inflater.inflate(R.layout.toast_like, null);
 
+		
 		ImageView imglike_dislike = (ImageView) toastRoot
 				.findViewById(R.id.imgVL_D);
 		imglike_dislike.bringToFront();
@@ -1113,7 +1320,16 @@ public class MatchingScreen extends Fragment {
 
 		// Set layout to toast
 		toast.setView(toastRoot);
-		toast.setGravity(Gravity.TOP | Gravity.CENTER, 0, 90);
+		
+		if(res==R.drawable.like_toast)
+		{
+			toast.setGravity(Gravity.TOP | Gravity.RIGHT, 90, 50);
+		}
+		else
+		{
+			toast.setGravity(Gravity.TOP | Gravity.LEFT, 90, 50);
+		}
+		
 		toast.setDuration(Toast.LENGTH_SHORT);
 		toast.show();
 

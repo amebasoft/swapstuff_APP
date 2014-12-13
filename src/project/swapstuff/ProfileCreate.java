@@ -38,7 +38,9 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -428,6 +430,37 @@ public class ProfileCreate extends Activity implements OnClickListener {
 		  BitmapFactory.Options o2 = new BitmapFactory.Options();
 		  o2.inSampleSize = scale;
 		  bitmap = BitmapFactory.decodeFile(filePath, o2);
+		  
+		  
+		  
+		  try {
+	            ExifInterface ei = new ExifInterface(filePath);
+	            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+	            Matrix matrix = new Matrix();
+	            switch (orientation) {
+	                case ExifInterface.ORIENTATION_ROTATE_90:
+	                    matrix.postRotate(90);
+	                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+	                    break;
+	                case ExifInterface.ORIENTATION_ROTATE_180:
+	                    matrix.postRotate(180);
+	                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+	                    break;
+	                case ExifInterface.ORIENTATION_ROTATE_270:
+	                    matrix.postRotate(270);
+	                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+	                    break;
+	                default:
+	                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+	                    break;
+	            }
+	        } catch (Throwable e) {
+	            e.printStackTrace();
+	        }
+		  
+		  
+		  
+		  
 		  
 		  
 		  ByteArrayOutputStream baos = new ByteArrayOutputStream();

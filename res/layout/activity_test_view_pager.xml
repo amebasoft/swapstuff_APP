@@ -1,0 +1,38 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FrameLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="project.swapstuff.TestViewPager" xmlns:app="http://schemas.android.com/apk/res/project.swapstuff">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/myfivepanelpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    
+    
+     <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/circlePageIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom" 
+            android:layout_marginBottom="45dp"
+            app:centered="true"
+            app:fillColor="@color/baseColor"
+            />
+
+     <Button
+         android:id="@+id/btnTutorialExit"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Continue.."
+         android:layout_gravity="bottom|right" />
+
+</FrameLayout>
