@@ -89,7 +89,7 @@ public class Login extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-
+		getRegisterationID();
 		
 		gpsTracker=new GPSTracker(Login.this);
 
@@ -120,8 +120,7 @@ public class Login extends Activity implements OnClickListener {
 						{
 							getRegisterationID();
 							Log.e("gcm", regId+"");	
-							Toast.makeText(Login.this, "Please wait...and try again..!", Toast.LENGTH_SHORT).show();
-
+							
 						}
 						else
 						{

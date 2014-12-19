@@ -17,6 +17,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import eu.janmuller.android.simplecropimage.CropImage;
+
 import project.swapstuff.model.Utills;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
@@ -24,6 +26,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -421,66 +424,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 	
 	
 	
-	
-//	ROTATE IMAGE
-//	  private void rotateImage(final String path) {
-//	        runOnUiThread(new Runnable() {
-//	            @Override
-//	            public void run() {
-//	                Bitmap b = decodeFileFromPath(path);
-//	                try {
-//	                    ExifInterface ei = new ExifInterface(path);
-//	                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//	                    Matrix matrix = new Matrix();
-//	                    switch (orientation) {
-//	                        case ExifInterface.ORIENTATION_ROTATE_90:
-//	                            matrix.postRotate(90);
-//	                            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
-//	                            break;
-//	                        case ExifInterface.ORIENTATION_ROTATE_180:
-//	                            matrix.postRotate(180);
-//	                            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
-//	                            break;
-//	                        case ExifInterface.ORIENTATION_ROTATE_270:
-//	                            matrix.postRotate(270);
-//	                            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
-//	                            break;
-//	                        default:
-//	                            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), matrix, true);
-//	                            break;
-//	                    }
-//	                } catch (Throwable e) {
-//	                    e.printStackTrace();
-//	                }
-//
-//	                FileOutputStream out1 = null;
-//	                File file;
-//	                try {
-//	                    String state = Environment.getExternalStorageState();
-//	                    if (Environment.MEDIA_MOUNTED.equals(state)) {
-//	                        file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".jpg");
-//	                    }
-//	                    else {
-//	                        file = new File(getFilesDir() , "image" + new Date().getTime() + ".jpg");
-//	                    }
-//	                    out1 = new FileOutputStream(file);
-//	                    b.compress(Bitmap.CompressFormat.JPEG, 90, out1);
-//	                    imgFromCameraOrGallery.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
-//	                } catch (Exception e) {
-//	                    e.printStackTrace();
-//	                } finally {
-//	                    try {
-//	                        out1.close();
-//	                    } catch (Throwable ignore) {
-//
-//	                    }
-//	                }
-//
-//	            }
-//	        });
-//
-//	    }
-//	END ROTATE IMAGE
+
 	
 	
 	
@@ -580,6 +524,37 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 			}
 
 			break;
+			
+		case 77:
+			
+			try {
+		
+			if (resultCode == Activity.RESULT_OK) {
+				 String path = data.getStringExtra(CropImage.IMAGE_PATH);
+
+		          
+					if (path != null) {
+						
+							decodeFile(path);
+					}
+			}
+			else
+			{
+				String filePathC = Environment.getExternalStorageDirectory() + "/"
+						+ TEMP_PHOTO_FILE;
+				decodeFile(filePathC);
+			}
+			
+			File tempFile = getTempFile();		
+			if (tempFile.exists()) {
+			tempFile.delete();
+		}
+		
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+						
+			break;
 
 		case 1888:
 
@@ -588,7 +563,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 				DeleteFirst = 1;
 
 				
-				String finalPicturePath;
+				
 				String filePath = null;
 				File tempFile = getTempFile();
 
@@ -597,13 +572,13 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 
 				if (filePath != null) {
 
-					
-						decodeFile(filePath);
+					performCrop(filePath);
+//						decodeFile(filePath);
 				}
 				
-				if (tempFile.exists()) {
-					tempFile.delete();
-				}
+//				if (tempFile.exists()) {
+//					tempFile.delete();
+//				}
 				
 			} catch (RuntimeException e) {
 				e.printStackTrace();
@@ -779,5 +754,34 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 		}
 
 	}
+	
+	
+	
+	
+	
+	
+	
+	private void performCrop(String filePath){
+		
+		
+		 Intent intent = new Intent(getActivity(), CropImage.class);
+
+		    // tell CropImage activity to look for image to crop 
+		  
+		    intent.putExtra(CropImage.IMAGE_PATH, filePath);
+
+		    intent.putExtra(CropImage.SCALE, true);
+
+		    // if the aspect ratio is fixed to ratio 3/2
+		    intent.putExtra(CropImage.ASPECT_X, 3);
+		    intent.putExtra(CropImage.ASPECT_Y, 2);
+
+		    startActivityForResult(intent, 77);
+		
+
+	}
+	
+	
+	
 
 }

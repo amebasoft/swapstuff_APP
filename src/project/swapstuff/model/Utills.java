@@ -88,11 +88,17 @@ public class Utills {
 	
 	
 	
-	
+	public static Toast tmsg;
 	
 	public static void showToast(Context con,String msg) {
 		
-		Toast tmsg=Toast.makeText(con, msg, Toast.LENGTH_LONG);
+		if(tmsg!=null)
+		{
+			tmsg.cancel();
+		}
+		
+		
+		 tmsg=Toast.makeText(con, msg, Toast.LENGTH_LONG);
 		tmsg.setGravity(Gravity.CENTER,0, 0);
 		tmsg.show();
 		

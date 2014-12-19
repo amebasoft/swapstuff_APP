@@ -109,9 +109,15 @@
         </activity>
         <activity
             android:name=".TestViewPager"
-            android:label="@string/title_activity_test_view_pager" 
-            android:screenOrientation="sensorPortrait">
+            android:label="@string/title_activity_test_view_pager"
+            android:screenOrientation="sensorPortrait" >
         </activity>
+        <activity android:name="eu.janmuller.android.simplecropimage.CropImage" />
+
+        <provider
+            android:name="InternalStorageContentProvider"
+            android:authorities="eu.janmuller.android.simplecropimage.example"
+            android:exported="true" />
     </application>
 
 </manifest>

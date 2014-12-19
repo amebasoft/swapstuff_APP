@@ -11,154 +11,148 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical" >
-        
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Distance" />
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Distance" />
 
-        <TextView
-            android:id="@+id/uiC_txtvKm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textStyle="bold"
-            android:text="0Km" />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/uiC_txtvKm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="0Km"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-    <SeekBar
-        android:id="@+id/uiC_seekdistance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp" />
+            <SeekBar
+                android:id="@+id/uiC_seekdistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#CCCCCC"
-        android:gravity="center_vertical"
-        android:text="     NOTIFICATIONS" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#CCCCCC"
+                android:gravity="center_vertical"
+                android:text="     NOTIFICATIONS" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp" >
 
-        <TextView
-            android:id="@+id/tvnmatch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:text="New Matches" />
+                <TextView
+                    android:id="@+id/tvnmatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:text="New Matches" />
 
-        <ToggleButton
-            android:id="@+id/uiC_tgbtnMatchNotify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:textOn=""
-            android:textOff=""
-            android:background="@drawable/btn_on_off" />
-    </RelativeLayout>
+                <ToggleButton
+                    android:id="@+id/uiC_tgbtnMatchNotify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/btn_on_off"
+                    android:textOff=""
+                    android:textOn="" />
+            </RelativeLayout>
 
-    
-     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#CCCCCC" />
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp" >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#CCCCCC" />
 
-        <TextView
-            android:id="@+id/tvmsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:text="Messages" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp" >
 
-        <ToggleButton
-            android:id="@+id/uiC_tgbtnmsgs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:textOn=""
-            android:textOff=""
-            android:background="@drawable/btn_on_off" />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvmsg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:text="Messages" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#CCCCCC" >
-    </RelativeLayout>
+                <ToggleButton
+                    android:id="@+id/uiC_tgbtnmsgs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/btn_on_off"
+                    android:textOff=""
+                    android:textOn="" />
+            </RelativeLayout>
 
-    <TextView
-        android:id="@+id/uiC_txtvneedhelp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Need help ? Contact Us" 
-        android:layout_margin="10dp"/>
-    
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="10dp"
-        android:background="#CCCCCC" />
-    
-    
-    <RelativeLayout
-          android:id="@+id/uiC_txtvPrivacy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#CCCCCC" >
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/uiC_txtvPrivacyTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:text="Privacy Policy" />
+            <TextView
+                android:id="@+id/uiC_txtvneedhelp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Need help ? Contact Us" />
 
-        <ImageView
-            android:id="@+id/uiC_imgView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-         android:layout_marginRight="10dp"
-            android:src="@drawable/arrow" />
-          
-    </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="#CCCCCC" />
 
-    <Button
+            <RelativeLayout
+                android:id="@+id/uiC_txtvPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp" >
 
-        android:id="@+id/uiC_btndel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Account" 
-        android:layout_margin="5dp"
-        android:background="@drawable/btn_background"/>
-    
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/uiC_txtvPrivacyTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:text="Privacy Policy" />
+
+                <ImageView
+                    android:id="@+id/uiC_imgView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/arrow" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/uiC_btndel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_background"
+                android:text="Delete Account"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
     </ScrollView>
-    
-    
+
 </LinearLayout>

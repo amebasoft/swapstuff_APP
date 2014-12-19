@@ -19,6 +19,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import eu.janmuller.android.simplecropimage.CropImage;
+
 import project.swapstuff.model.CommonUtilities;
 import project.swapstuff.model.ControlDB;
 import project.swapstuff.model.Profile_info;
@@ -67,41 +69,42 @@ public class ProfileCreate extends Activity implements OnClickListener {
 	TextView uiC_uploadPick;
 	static ImageView uiC_imgV_DP;
 	static String imgbytes = "";
-	boolean imgORnot=false;
+	boolean imgORnot = false;
 	String itemID = "";
 	SharedPreferences shared;
 
 	String title = "";
 	String desc = "";
 
-	
 	List<Intent> targetedShareIntents;
-	
-	
+
 	Bitmap bitmap;
-	
+
 	Toast toast;
-	
+
 	@Override
 	public void onBackPressed() {
 		new AlertDialog.Builder(this)
-	    .setTitle("Exit")
-	    .setMessage("Are you sure you want Exit?")
-	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) { 
-	        
-	           finish();
-	        }
-	     })
-	    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) { 
-	           dialog.dismiss();
-	        }
-	     })
-	    .setIcon(android.R.drawable.ic_dialog_alert)
-	     .show();
-		
+				.setTitle("Exit")
+				.setMessage("Are you sure you want Exit?")
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+								finish();
+							}
+						})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						}).setIcon(android.R.drawable.ic_dialog_alert).show();
+
 	}
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 
@@ -111,24 +114,18 @@ public class ProfileCreate extends Activity implements OnClickListener {
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		
-		
+
 		shared = getSharedPreferences("", MODE_PRIVATE);
 		Utills.id = shared.getString("id", "4");
 		Utills.km = shared.getInt("km", 1);
 
-		Utills.NotificationEnabled = shared.getString("noti",
-				"1");
-		Utills.MatchNotificationEnabled = shared.getString(
-				"matchnoti", "1");
+		Utills.NotificationEnabled = shared.getString("noti", "1");
+		Utills.MatchNotificationEnabled = shared.getString("matchnoti", "1");
 
 		Utills.FbID = shared.getString("fbid", "test");
-		
-	
-		
-		
-		imgORnot=true;
-		
+
+		imgORnot = true;
+
 		imgbytes = savedInstanceState.getString("img");
 
 		uiC_imgV_DP.setImageBitmap(Utills.StringToBitMap(imgbytes));
@@ -145,9 +142,8 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				new ColorDrawable(getResources().getColor(
 						android.R.color.transparent)));
 
-		getActionBar().setTitle((Html.fromHtml("<font color='#ffffff'>Create Profile</font>")));
-		
-		
+		getActionBar().setTitle(
+				(Html.fromHtml("<font color='#ffffff'>Create Profile</font>")));
 
 		uiC_imgV_DP = (ImageView) findViewById(R.id.uiC_imgVDPCreateProfile);
 		uiC_btndone = (Button) findViewById(R.id.uiC_btnCreateProfile);
@@ -161,10 +157,8 @@ public class ProfileCreate extends Activity implements OnClickListener {
 		StrictMode.ThreadPolicy pol = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(pol);
-		
-		
-		
-		CommonUtilities.FragmentToOpen=0;
+
+		CommonUtilities.FragmentToOpen = 0;
 
 	}
 
@@ -186,18 +180,16 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				// TODO Auto-generated method stub
 				dialogLoader.dismiss();
 
-				Intent pickPhoto = new Intent(Intent.ACTION_PICK );
-//				pickPhoto.setPackage("com.android.gallery3d");
+				Intent pickPhoto = new Intent(Intent.ACTION_PICK);
+				// pickPhoto.setPackage("com.android.gallery3d");
 				pickPhoto.setType("image/*");
 				pickPhoto.putExtra("crop", "true");
 				pickPhoto.putExtra("return-data", false);
 				pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
-				pickPhoto.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+				pickPhoto.putExtra("outputFormat",
+						Bitmap.CompressFormat.JPEG.toString());
 				startActivityForResult(pickPhoto, 22);
 
-				
-				
-			
 			}
 		});
 
@@ -208,14 +200,12 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				dialogLoader.dismiss();
 				Intent cameraIntent = new Intent(
 						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,getTempUri());
+				cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+						getTempUri());
 
 				cameraIntent.putExtra("return-data", true);
 				// cameraIntent.putExtra(MediaStore.extra_, 1);
 				startActivityForResult(cameraIntent, 1888);
-				
-				
-				
 
 			}
 		});
@@ -223,57 +213,52 @@ public class ProfileCreate extends Activity implements OnClickListener {
 		dialogLoader.show();
 	}
 
-	
-	 static final String TEMP_PHOTO_FILE = "temporary_holder.jpg";  
+	static final String TEMP_PHOTO_FILE = "temporary_holder.jpg";
 
 	private Uri getTempUri() {
-	    return Uri.fromFile(getTempFile());
+		return Uri.fromFile(getTempFile());
 	}
+
 	private File getTempFile() {
 
-	    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 
-	        File file = new File(Environment.getExternalStorageDirectory(),TEMP_PHOTO_FILE);
-	        try {
-	            file.createNewFile();
-	        } catch (IOException e) {}
+			File file = new File(Environment.getExternalStorageDirectory(),
+					TEMP_PHOTO_FILE);
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+			}
 
-	        return file;
-	    } else {
+			return file;
+		} else {
 
-	        return null;
-	    }
+			return null;
+		}
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if (v == uiC_imgV_DP) {
 			DialogoChoose();
-		} 
-		else if (v == uiC_btndone) {
-			
-			
-			
-			
-			InputMethodManager imm = (InputMethodManager)getSystemService(
-				      Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(uiC_edDesc.getWindowToken(), 0);
-			
-			
+		} else if (v == uiC_btndone) {
+
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(uiC_edDesc.getWindowToken(), 0);
 
 			title = uiC_edTitle.getText().toString();
 			desc = uiC_edDesc.getText().toString();
-			if (!imgORnot || title.trim().equals("")
-					|| desc.trim().equals("")) {
+			if (!imgORnot || title.trim().equals("") || desc.trim().equals("")) {
 				if (!imgORnot) {
-					if(toast!=null)
-					{
+					if (toast != null) {
 						toast.cancel();
 					}
-					
-					toast=Toast.makeText(ProfileCreate.this, "Please select a image", Toast.LENGTH_LONG);
-					toast.setGravity(Gravity.CENTER,0, 0);
+
+					toast = Toast.makeText(ProfileCreate.this,
+							"Please select a image", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				} else if (title.trim().equals("")) {
 					uiC_edTitle.setHint("*Enter a title");
@@ -287,94 +272,118 @@ public class ProfileCreate extends Activity implements OnClickListener {
 
 			else {
 
-				
-
-				if(Utills.haveNetworkConnection(ProfileCreate.this))
-				{
+				if (Utills.haveNetworkConnection(ProfileCreate.this)) {
 					new asyncCreateItem().execute();
-				}
-				else
-				{
-					if(toast!=null)
-					{
+				} else {
+					if (toast != null) {
 						toast.cancel();
 					}
-					
-					toast=Toast.makeText(ProfileCreate.this, "No network connection..!", Toast.LENGTH_LONG);
-					toast.setGravity(Gravity.CENTER,0, 0);
+
+					toast = Toast.makeText(ProfileCreate.this,
+							"No network connection..!", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}
-				
+
 			}
 
-		
 		}
 
 	}
+
 	public String getPath(Uri uri) {
-		  String[] projection = { MediaStore.Images.Media.DATA };
-		  Cursor cursor = managedQuery(uri, projection, null, null, null);
-		  if (cursor != null) {
-		   // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-		   // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
-		   int column_index = cursor
-		     .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-		   cursor.moveToFirst();
-		   return cursor.getString(column_index);
-		  } else
-		   return null;
-		 }
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if (cursor != null) {
+			// HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+			// THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+			return cursor.getString(column_index);
+		} else
+			return null;
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case 22:
 			if (resultCode == Activity.RESULT_OK) {
-				data=null;
+				data = null;
 				String finalPicturePath;
 				String filePath = null;
-//				Uri selectedImage = data.getData();
-				
-				  File tempFile = getTempFile();
+				// Uri selectedImage = data.getData();
 
-                  filePath= Environment.getExternalStorageDirectory()
-                      +"/"+TEMP_PHOTO_FILE;
-				
-                  if (filePath != null) {
-                	  
-                	  try {
-                		  decodeFile(filePath);
+				File tempFile = getTempFile();
+
+				filePath = Environment.getExternalStorageDirectory() + "/"
+						+ TEMP_PHOTO_FILE;
+
+				if (filePath != null) {
+
+					try {
+						decodeFile(filePath);
 					} catch (Exception e) {
 						e.printStackTrace();
-						Utills.showToast(ProfileCreate.this, "Please select some other Source..!");
-						Intent pickPhoto = new Intent(Intent.ACTION_PICK );
+						Utills.showToast(ProfileCreate.this,
+								"Please select some other Source..!");
+						Intent pickPhoto = new Intent(Intent.ACTION_PICK);
 						pickPhoto.setType("image/*");
 						pickPhoto.putExtra("crop", "true");
 						pickPhoto.putExtra("return-data", false);
-						pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
-						pickPhoto.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+						pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT,
+								getTempUri());
+						pickPhoto.putExtra("outputFormat",
+								Bitmap.CompressFormat.JPEG.toString());
 						startActivityForResult(pickPhoto, 22);
-//						startActivityForResult(Intent.createChooser(targetedShareIntents.remove(0), "Select a picture"), 22);
+						// startActivityForResult(Intent.createChooser(targetedShareIntents.remove(0),
+						// "Select a picture"), 22);
 					}
-			           
-			           } 
-                  
-                  
-                  if (tempFile.exists()) tempFile.delete();
-                  
 
+				}
+
+				if (tempFile.exists())
+					tempFile.delete();
 
 			}
 
 			break;
+		case 77:
 
+			try {
+
+				if (resultCode == Activity.RESULT_OK) {
+					String path = data.getStringExtra(CropImage.IMAGE_PATH);
+
+					if (path != null) {
+
+						decodeFile(path);
+					}
+				} else {
+					String filePathC = Environment
+							.getExternalStorageDirectory()
+							+ "/"
+							+ TEMP_PHOTO_FILE;
+					decodeFile(filePathC);
+				}
+
+				File tempFile = getTempFile();
+				if (tempFile.exists()) {
+					tempFile.delete();
+				}
+
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+			break;
 		case 1888:
 
 			try {
 
-				imgORnot=true;
-				
+				imgORnot = true;
 
-				String finalPicturePath;
 				String filePath = null;
 				File tempFile = getTempFile();
 
@@ -383,14 +392,14 @@ public class ProfileCreate extends Activity implements OnClickListener {
 
 				if (filePath != null) {
 
-					
-						decodeFile(filePath);
+					performCrop(filePath);
+					// decodeFile(filePath);
 				}
-				
-				if (tempFile.exists()) {
-					tempFile.delete();
-				}
-				
+
+				// if (tempFile.exists()) {
+				// tempFile.delete();
+				// }
+
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
@@ -401,83 +410,79 @@ public class ProfileCreate extends Activity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	
-//	-------------------------------------------
-	
-	
+	// -------------------------------------------
+
 	public void decodeFile(String filePath) {
-		
-		  // Decode image size
-		  BitmapFactory.Options o = new BitmapFactory.Options();
-		  o.inJustDecodeBounds = true;
-		  BitmapFactory.decodeFile(filePath, o);
 
-		  // The new size we want to scale to
-		  final int REQUIRED_SIZE = 1024;
+		// Decode image size
+		BitmapFactory.Options o = new BitmapFactory.Options();
+		o.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(filePath, o);
 
-		  // Find the correct scale value. It should be the power of 2.
-		  int width_tmp = o.outWidth, height_tmp = o.outHeight;
-		  int scale = 1;
-		  while (true) {
-		   if (width_tmp < REQUIRED_SIZE && height_tmp < REQUIRED_SIZE)
-		    break;
-		   width_tmp /= 2;
-		   height_tmp /= 2;
-		   scale *= 2;
-		  }
+		// The new size we want to scale to
+		final int REQUIRED_SIZE = 1024;
 
-		  // Decode with inSampleSize
-		  BitmapFactory.Options o2 = new BitmapFactory.Options();
-		  o2.inSampleSize = scale;
-		  bitmap = BitmapFactory.decodeFile(filePath, o2);
-		  
-		  
-		  
-		  try {
-	            ExifInterface ei = new ExifInterface(filePath);
-	            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-	            Matrix matrix = new Matrix();
-	            switch (orientation) {
-	                case ExifInterface.ORIENTATION_ROTATE_90:
-	                    matrix.postRotate(90);
-	                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-	                    break;
-	                case ExifInterface.ORIENTATION_ROTATE_180:
-	                    matrix.postRotate(180);
-	                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-	                    break;
-	                case ExifInterface.ORIENTATION_ROTATE_270:
-	                    matrix.postRotate(270);
-	                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-	                    break;
-	                default:
-	                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-	                    break;
-	            }
-	        } catch (Throwable e) {
-	            e.printStackTrace();
-	        }
-		  
-		  
-		  
-		  
-		  
-		  
-		  ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		  bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-			uiC_imgV_DP.setImageBitmap(bitmap);
-//
-			imgbytes = Utills.BitMapToString(bitmap);
+		// Find the correct scale value. It should be the power of 2.
+		int width_tmp = o.outWidth, height_tmp = o.outHeight;
+		int scale = 1;
+		while (true) {
+			if (width_tmp < REQUIRED_SIZE && height_tmp < REQUIRED_SIZE)
+				break;
+			width_tmp /= 2;
+			height_tmp /= 2;
+			scale *= 2;
+		}
 
-//			 byte [] b=baos.toByteArray();
-//			 imgbytes=Base64.encodeToString(b, Base64.DEFAULT);
-		
-			imgORnot=true;
-		  System.out.println("bitmat image--->" + bitmap.toString());
-		  uiC_imgV_DP.setImageBitmap(bitmap);
+		// Decode with inSampleSize
+		BitmapFactory.Options o2 = new BitmapFactory.Options();
+		o2.inSampleSize = scale;
+		bitmap = BitmapFactory.decodeFile(filePath, o2);
 
-		 }
-	
+		try {
+			ExifInterface ei = new ExifInterface(filePath);
+			int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+					ExifInterface.ORIENTATION_NORMAL);
+			Matrix matrix = new Matrix();
+			switch (orientation) {
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				matrix.postRotate(90);
+				bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+						bitmap.getHeight(), matrix, true);
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				matrix.postRotate(180);
+				bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+						bitmap.getHeight(), matrix, true);
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				matrix.postRotate(270);
+				bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+						bitmap.getHeight(), matrix, true);
+				break;
+			default:
+				bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+						bitmap.getHeight(), matrix, true);
+				break;
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		uiC_imgV_DP.setImageBitmap(bitmap);
+		//
+		imgbytes = Utills.BitMapToString(bitmap);
+
+		// byte [] b=baos.toByteArray();
+		// imgbytes=Base64.encodeToString(b, Base64.DEFAULT);
+
+		imgORnot = true;
+		System.out.println("bitmat image--->" + bitmap.toString());
+		uiC_imgV_DP.setImageBitmap(bitmap);
+
+	}
+
 	// ----------------------------------------
 	class asyncCreateItem extends AsyncTask<Void, Void, Void> {
 
@@ -494,10 +499,9 @@ public class ProfileCreate extends Activity implements OnClickListener {
 		protected Void doInBackground(Void... params) {
 			String result = "";
 
-			String HostUrl = Utills.URL+"Items/SaveItem";
-//			http://116.193.163.158:8083
-//			String HostUrl = "http://116.193.163.156:8012/Items/SaveItem";
-			
+			String HostUrl = Utills.URL + "Items/SaveItem";
+			// http://116.193.163.158:8083
+			// String HostUrl = "http://116.193.163.156:8012/Items/SaveItem";
 
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(HostUrl);
@@ -515,10 +519,11 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				// public Nullable<bool> IsActive { get; set; }
 
 				params1.add(new BasicNameValuePair("ItemID", "-1"));
-				params1.add(new BasicNameValuePair("ProfileID", Utills.id.replace("\"", "")+""));
+				params1.add(new BasicNameValuePair("ProfileID", Utills.id
+						.replace("\"", "") + ""));
 				params1.add(new BasicNameValuePair("ItemTitle", title));
 				params1.add(new BasicNameValuePair("ItemDescription", desc));
-				params1.add(new BasicNameValuePair("ItemImage", imgbytes+""));
+				params1.add(new BasicNameValuePair("ItemImage", imgbytes + ""));
 				params1.add(new BasicNameValuePair("ItemDateTimeCreated", ""));
 				params1.add(new BasicNameValuePair("IsActive", "true"));
 
@@ -526,7 +531,7 @@ public class ProfileCreate extends Activity implements OnClickListener {
 						"application/x-www-form-urlencoded");
 				httpPost.setHeader("Accept", "application/json");
 
-//				Log.e("Response", params1.toString() + "");
+				// Log.e("Response", params1.toString() + "");
 
 				HttpEntity entity2 = new UrlEncodedFormEntity(params1, "UTF-8");
 				httpPost.setEntity(entity2);
@@ -538,14 +543,14 @@ public class ProfileCreate extends Activity implements OnClickListener {
 				Log.e("Response", itemID + "");
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
-				
-			}
-			catch (Exception e) {
+
+			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("profile id"+ Utills.id.replace("\"", "")+"");
+				System.out.println("profile id" + Utills.id.replace("\"", "")
+						+ "");
 			}
 
 			return null;
@@ -562,23 +567,20 @@ public class ProfileCreate extends Activity implements OnClickListener {
 			} else {
 
 				try {
-					
 
-				
-				Utills.itemid = itemID;
-				shared = getSharedPreferences("", MODE_PRIVATE);
-				Editor ed = shared.edit();
-				ed.putString("itemid", itemID);
-				ed.putString("imgITEM", imgbytes);
-				ed.putString("imgTITLE", title);
-				ed.putString("imgDESC", desc);
-				ed.commit();
-				Intent gotoHome = new Intent(getApplicationContext(),
-						MainActivitySwapStuff.class);
-				startActivity(gotoHome);
-				finish();
-				
-				
+					Utills.itemid = itemID;
+					shared = getSharedPreferences("", MODE_PRIVATE);
+					Editor ed = shared.edit();
+					ed.putString("itemid", itemID);
+					ed.putString("imgITEM", imgbytes);
+					ed.putString("imgTITLE", title);
+					ed.putString("imgDESC", desc);
+					ed.commit();
+					Intent gotoHome = new Intent(getApplicationContext(),
+							MainActivitySwapStuff.class);
+					startActivity(gotoHome);
+					finish();
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -586,6 +588,24 @@ public class ProfileCreate extends Activity implements OnClickListener {
 
 			super.onPostExecute(result);
 		}
+
+	}
+
+	private void performCrop(String filePath) {
+
+		Intent intent = new Intent(ProfileCreate.this, CropImage.class);
+
+		// tell CropImage activity to look for image to crop
+
+		intent.putExtra(CropImage.IMAGE_PATH, filePath);
+
+		intent.putExtra(CropImage.SCALE, true);
+
+		// if the aspect ratio is fixed to ratio 3/2
+		intent.putExtra(CropImage.ASPECT_X, 3);
+		intent.putExtra(CropImage.ASPECT_Y, 2);
+
+		startActivityForResult(intent, 77);
 
 	}
 

@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-  >
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,92 +16,119 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="05" >
+            
+              <ImageView
+                    android:id="@+id/imageViewZOOM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" 
+                    android:visibility="gone"/>
+            
 
             <TextView
                 android:id="@+id/uiC_txtVSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:text="No new nearby items available.."
                 android:textSize="40dp"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-<!--             <ImageView -->
-<!--                 android:id="@+id/uiC_imgVMatchingScreen" -->
-<!--                 android:layout_width="match_parent" -->
-<!--                 android:layout_height="match_parent" -->
-<!--                 android:layout_gravity="center" -->
-<!--               android:layout_marginBottom="20dp" -->
-<!--                 android:layout_marginTop="10dp" -->
-<!--                 android:src="@null" /> -->
-            
-<!--             <com.loopj.android.image.SmartImageView -->
-<!--                  android:id="@+id/uiC_imgVMatchingScreen" -->
-<!--                 android:layout_width="match_parent" -->
-<!--                 android:layout_height="match_parent" -->
-<!--                 android:layout_gravity="center" -->
-<!--               android:layout_marginBottom="20dp" -->
-<!--                 android:layout_marginTop="10dp" -->
-<!--                 android:src="@drawable/loding_img" -->
-<!--                 /> -->
-            
-             <android.support.v4.view.ViewPager
-        android:id="@+id/myfivepanelpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-         android:layout_marginBottom="20dp" 
-         android:layout_marginTop="10dp"
-          />
-            
+            <!-- <ImageView -->
+            <!-- android:id="@+id/uiC_imgVMatchingScreen" -->
+            <!-- android:layout_width="match_parent" -->
+            <!-- android:layout_height="match_parent" -->
+            <!-- android:layout_gravity="center" -->
+            <!-- android:layout_marginBottom="20dp" -->
+            <!-- android:layout_marginTop="10dp" -->
+            <!-- android:src="@null" /> -->
+
+
+            <!-- <com.loopj.android.image.SmartImageView -->
+            <!-- android:id="@+id/uiC_imgVMatchingScreen" -->
+            <!-- android:layout_width="match_parent" -->
+            <!-- android:layout_height="match_parent" -->
+            <!-- android:layout_gravity="center" -->
+            <!-- android:layout_marginBottom="20dp" -->
+            <!-- android:layout_marginTop="10dp" -->
+            <!-- android:src="@drawable/loding_img" -->
+            <!-- /> -->
+
+            <LinearLayout
+                android:id="@+id/linearlayout_ViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/imgV_dislike"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:padding="5dp"
+                    android:src="@drawable/dislike_icon_blank" />
+
+              
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pagerMatching"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imgV_like"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:padding="5dp"
+                    android:src="@drawable/like_icon_blank" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|bottom"
-              
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal" >
 
                 <ImageButton
                     android:id="@+id/uiC_imgbtn_close"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/dislike" 
-                    android:background="@drawable/dislike_bg"/>
+                    android:background="@drawable/dislike_bg"
+                    android:src="@drawable/dislike"
+                    android:visibility="gone" />
 
                 <ImageButton
                     android:id="@+id/uiC_imgbtnReportAbuse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/report"
-                    android:background="@null" />
+                    android:background="@null"
+                    android:src="@drawable/report" />
 
                 <ImageButton
                     android:id="@+id/uiC_imgbtn_like"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:background="@drawable/like_bg"
                     android:src="@drawable/like_btn"
-                    android:background="@drawable/like_bg" />
+                    android:visibility="gone" />
             </LinearLayout>
 
-<!--             <ProgressBar -->
-<!--                 android:id="@+id/progressBar1" -->
-<!--                 style="?android:attr/progressBarStyleLarge" -->
-<!--                 android:layout_width="wrap_content" -->
-<!--                 android:layout_height="wrap_content"  -->
-<!--                 android:layout_gravity="center" -->
-<!--                 /> -->
-
-            <ProgressBar
-                android:id="@+id/progressBarImageShow"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:layout_gravity="center"
-                android:visibility="invisible"/>
+            <!-- <ProgressBar -->
+            <!-- android:id="@+id/progressBar1" -->
+            <!-- style="?android:attr/progressBarStyleLarge" -->
+            <!-- android:layout_width="wrap_content" -->
+            <!-- android:layout_height="wrap_content" -->
+            <!-- android:layout_gravity="center" -->
+            <!-- /> -->
 
         </FrameLayout>
 
@@ -117,81 +143,70 @@
                 android:layout_height="match_parent" >
 
                 <LinearLayout
+                    android:id="@+id/uiClayoutDetailContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" 
-                    
-                       android:layout_margin="10dp"
-                      
-                       android:id="@+id/uiClayoutDetailContainer"
-                    >
+                    android:layout_margin="10dp"
+                    android:orientation="vertical" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
-                        android:orientation="horizontal"
+                        android:background="#CCCCCC"
                         android:gravity="center"
-                          android:background="#CCCCCC">
+                        android:orientation="horizontal" >
 
                         <TextView
                             android:id="@+id/uiC_txtVtitlematching"
-                           android:layout_width="0dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                           android:layout_margin="10dp"
-                        android:layout_weight="1"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
                             android:gravity="left"
                             android:text="Title"
                             android:textSize="25dp"
-                     
-                            android:textStyle="bold" 
-                            
-                            />
-  
-                         <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                       
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                          android:background="#CCCCCC">
-                        <TextView
-                            android:id="@+id/uiC_txtvKMmatching"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#CCCCCC"
                             android:gravity="right"
-                         android:layout_gravity="center"
-                            android:text="Km away"
-                            android:textStyle="italic"
-                            android:paddingRight="10dp" />
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/uiC_txtvKMmatching"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="10dp"
+                                android:gravity="right"
+                                android:paddingRight="10dp"
+                                android:text="Km away"
+                                android:textStyle="italic" />
                         </LinearLayout>
                     </LinearLayout>
 
-                    
-                      <LinearLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
-                        android:orientation="horizontal" 
-                          android:background="#CCCCCC">
-                    
-                    
-                    <TextView
-                        android:id="@+id/uiC_txtvdescMatching"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Description" 
-                          android:textSize="17dp"
-                           
+                        android:background="#CCCCCC"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/uiC_txtvdescMatching"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
                             android:paddingBottom="40dp"
-                              />
+                            android:text="Description"
+                            android:textSize="17dp" />
                     </LinearLayout>
-                      
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
