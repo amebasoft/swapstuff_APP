@@ -12,6 +12,6 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:scaleType="fitXY"
-        android:src="@drawable/splashscreen" />
+        android:src="@drawable/splash_screen" />
 
 </LinearLayout>
