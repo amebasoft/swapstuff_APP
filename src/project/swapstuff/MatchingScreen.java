@@ -97,6 +97,8 @@ public class MatchingScreen extends Fragment {
 
 	ArrayList<NearbyItems> NearbyitemsList = new ArrayList<NearbyItems>();
 
+	ArrayList<NearbyItems> TEMP_NearbyitemsList = new ArrayList<NearbyItems>();
+	
 	static int itemposition = 0;
 	static int itempositionTEMP = 0;
 
@@ -270,17 +272,13 @@ public class MatchingScreen extends Fragment {
 			public void onPageScrolled(int position, float positionOffset,
 					int positionOffsetPixels) {
 
-				if(animate1!=null)
-				{
-					animate1.cancel();
-					
-				}
-				
-
+			
 				if (position == lastPage) {
 					
+				
+					
 					// We are moving to next screen on right side
-					if (positionOffset > 0.2) {
+					if (positionOffset > 0.4) {
 
 						// Closer to next screen than to current
 						if (position + 1 != mNextSelectedScreen) {
@@ -291,6 +289,11 @@ public class MatchingScreen extends Fragment {
 						}
 					} else {
 
+						if(whichToanimate!=null)
+						{
+							whichToanimate.setAnimation(null);	
+						}
+
 						// Closer to current screen than to next
 						if (position != mNextSelectedScreen) {
 							mNextSelectedScreen = position;
@@ -298,13 +301,14 @@ public class MatchingScreen extends Fragment {
 							if (toast != null) {
 								toast.cancel();
 							}
+						
 //							imgv_dislike.startAnimation(null);
 						
 						}
 					}
 				} else {
 					// We are moving to next screen left side
-					if (positionOffset > 0.8) {
+					if (positionOffset > 0.6) {
 
 						// Closer to current screen than to next
 						if (position + 1 != mNextSelectedScreen) {
@@ -470,7 +474,7 @@ public class MatchingScreen extends Fragment {
 				}
 
 				NearbyitemsList.add(nearByitemsFirst);
-				lastPage = mCurrentSelectedScreen = mNextSelectedScreen = itemposition = itempositionTEMP = NearbyitemsList
+			 itemposition = itempositionTEMP = NearbyitemsList
 						.size() / 2;
 
 			} catch (ClientProtocolException e) {
@@ -530,10 +534,25 @@ public class MatchingScreen extends Fragment {
 
 				} else {
 
+//					TEMP_NearbyitemsList.addAll(NearbyitemsList);
+					
+					NearbyItems nearByitemsFirst = new NearbyItems();
+					nearByitemsFirst.setItmID("");
+					nearByitemsFirst.setDistance("");
+					nearByitemsFirst.setImgs("");
+					nearByitemsFirst.setItemDescription("");
+					nearByitemsFirst.setItemName("");
+					nearByitemsFirst.setProfileID("");
+					TEMP_NearbyitemsList.add(nearByitemsFirst);
+					TEMP_NearbyitemsList.add(NearbyitemsList.get(itemposition));
+					TEMP_NearbyitemsList.add(nearByitemsFirst);
+					
+					
 					adapter = new ViewPagerAdapter(getActivity(),
-							NearbyitemsList);
+							TEMP_NearbyitemsList);
 					myPager.setAdapter(adapter);
-					myPager.setCurrentItem(itemposition);
+					lastPage = mCurrentSelectedScreen = mNextSelectedScreen =1;
+					myPager.setCurrentItem(1);
 					
 
 					String DescText = NearbyitemsList.get(itemposition)
@@ -590,6 +609,14 @@ public class MatchingScreen extends Fragment {
 
 		@Override
 		protected void onPreExecute() {
+			
+			if(TEMP_NearbyitemsList.size()>1)
+			{
+				TEMP_NearbyitemsList.clear();
+			}
+			
+			
+			myPager.setVisibility(View.INVISIBLE);
 			
 			if(animate1!=null)
 			{
@@ -663,6 +690,7 @@ public class MatchingScreen extends Fragment {
 			pd.dismiss();
 
 			if (resuluresponse.equalsIgnoreCase("Matched")) {
+				myPager.setVisibility(View.VISIBLE);
 
 				Utills.Imagebytee = NearbyitemsList.get(itemposition).getImgs();
 				ShowDialog_matched();
@@ -670,7 +698,7 @@ public class MatchingScreen extends Fragment {
 			} else {
 
 				
-				zoomEffetct();
+				
 				
 				
 
@@ -683,13 +711,28 @@ public class MatchingScreen extends Fragment {
 						ShowAnim(0);
 					} else {
 						NearbyitemsList.remove(itemposition);
+						itemposition = itempositionTEMP = NearbyitemsList.size() / 2;
+						
+						NearbyItems nearByitemsFirst = new NearbyItems();
+						nearByitemsFirst.setItmID("");
+						nearByitemsFirst.setDistance("");
+						nearByitemsFirst.setImgs("");
+						nearByitemsFirst.setItemDescription("");
+						nearByitemsFirst.setItemName("");
+						nearByitemsFirst.setProfileID("");
+						TEMP_NearbyitemsList.add(nearByitemsFirst);
+						TEMP_NearbyitemsList.add(NearbyitemsList.get(itemposition));
+						TEMP_NearbyitemsList.add(nearByitemsFirst);
+						
+						
 						adapter = new ViewPagerAdapter(getActivity(),
-								NearbyitemsList);
+								TEMP_NearbyitemsList);
 						myPager.setAdapter(adapter);
-						lastPage = mCurrentSelectedScreen = mNextSelectedScreen = itemposition = itempositionTEMP = NearbyitemsList
-								.size() / 2;
-						myPager.setCurrentItem(itemposition, true);
-						ShowAnim(itemposition);
+						lastPage = mCurrentSelectedScreen = mNextSelectedScreen =1;
+						myPager.setCurrentItem(1,true);
+						
+						zoomEffetct();
+						
 					}
 
 				}
@@ -741,6 +784,8 @@ public class MatchingScreen extends Fragment {
 				
 					imgVZoom.setAnimation(null);
 					imgVZoom.setVisibility(View.GONE);
+					myPager.setVisibility(View.VISIBLE);
+					ShowAnim(itemposition);
 				}
 			});
 			
@@ -803,14 +848,30 @@ public class MatchingScreen extends Fragment {
 						if (NearbyitemsList.size() - 1 == 2) {
 							ShowAnim(0);
 						} else {
+
 							NearbyitemsList.remove(itemposition);
+							itemposition = itempositionTEMP = NearbyitemsList.size() / 2;
+							
+							NearbyItems nearByitemsFirst = new NearbyItems();
+							nearByitemsFirst.setItmID("");
+							nearByitemsFirst.setDistance("");
+							nearByitemsFirst.setImgs("");
+							nearByitemsFirst.setItemDescription("");
+							nearByitemsFirst.setItemName("");
+							nearByitemsFirst.setProfileID("");
+							TEMP_NearbyitemsList.add(nearByitemsFirst);
+							TEMP_NearbyitemsList.add(NearbyitemsList.get(itemposition));
+							TEMP_NearbyitemsList.add(nearByitemsFirst);
+							
+							
 							adapter = new ViewPagerAdapter(getActivity(),
-									NearbyitemsList);
+									TEMP_NearbyitemsList);
 							myPager.setAdapter(adapter);
-							lastPage = mCurrentSelectedScreen = mNextSelectedScreen = itemposition = itempositionTEMP = NearbyitemsList
-									.size() / 2;
-							myPager.setCurrentItem(itemposition, true);
+							lastPage = mCurrentSelectedScreen = mNextSelectedScreen =1;
+							myPager.setCurrentItem(1,true);
+							
 							ShowAnim(itemposition);
+						
 						}
 
 					}
@@ -844,14 +905,30 @@ public class MatchingScreen extends Fragment {
 					if (NearbyitemsList.size() - 1 == 2) {
 						ShowAnim(0);
 					} else {
+
 						NearbyitemsList.remove(itemposition);
+						itemposition = itempositionTEMP = NearbyitemsList.size() / 2;
+						
+						NearbyItems nearByitemsFirst = new NearbyItems();
+						nearByitemsFirst.setItmID("");
+						nearByitemsFirst.setDistance("");
+						nearByitemsFirst.setImgs("");
+						nearByitemsFirst.setItemDescription("");
+						nearByitemsFirst.setItemName("");
+						nearByitemsFirst.setProfileID("");
+						TEMP_NearbyitemsList.add(nearByitemsFirst);
+						TEMP_NearbyitemsList.add(NearbyitemsList.get(itemposition));
+						TEMP_NearbyitemsList.add(nearByitemsFirst);
+						
+						
 						adapter = new ViewPagerAdapter(getActivity(),
-								NearbyitemsList);
+								TEMP_NearbyitemsList);
 						myPager.setAdapter(adapter);
-						lastPage = mCurrentSelectedScreen = mNextSelectedScreen = itemposition = itempositionTEMP = NearbyitemsList
-								.size() / 2;
-						myPager.setCurrentItem(itemposition, true);
+						lastPage = mCurrentSelectedScreen = mNextSelectedScreen =1;
+						myPager.setCurrentItem(1,true);
+						
 						ShowAnim(itemposition);
+					
 					}
 
 				}
@@ -906,7 +983,13 @@ public class MatchingScreen extends Fragment {
 			myPager.setVisibility(View.INVISIBLE);
 			imgv_like.setVisibility(View.INVISIBLE);
 			imgv_dislike.setVisibility(View.INVISIBLE);
+			imgVZoom.setVisibility(View.INVISIBLE);
 			uiC_layoutDetailsContaoner.setBackgroundColor(Color.TRANSPARENT);
+			
+			if(whichToanimate!=null)
+			{
+				whichToanimate.setVisibility(View.INVISIBLE);
+			}
 		}
 
 	}
@@ -1245,11 +1328,11 @@ public class MatchingScreen extends Fragment {
 		
 		if(res==0)
 		{
-			imgv_dislike.setAnimation(animate1);
+			whichToanimate.setAnimation(animate1);
 		}
 		else
 		{
-			imgv_like.setAnimation(animate1);
+			whichToanimate.setAnimation(animate1);
 		}
 
 //		Context context = getActivity();

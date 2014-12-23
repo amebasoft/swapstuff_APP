@@ -2,7 +2,9 @@ package project.swapstuff;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,8 +19,6 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import eu.janmuller.android.simplecropimage.CropImage;
-
 import project.swapstuff.model.Utills;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
@@ -26,7 +26,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,8 +35,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -56,6 +53,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import eu.janmuller.android.simplecropimage.CropImage;
 
 public class EditProfileFragment extends Fragment implements OnClickListener {
 
@@ -310,12 +308,6 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 
 				Intent pickPhoto = new Intent(Intent.ACTION_PICK);
 				pickPhoto.setType("image/*");
-				pickPhoto.putExtra("crop", "true");
-				pickPhoto.putExtra("return-data", false);
-				pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
-				pickPhoto.putExtra("outputFormat",
-						Bitmap.CompressFormat.JPEG.toString());
-
 				startActivityForResult(pickPhoto, 22);
 
 			}
@@ -375,40 +367,32 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 		
 		
 
-		  try {
-            ExifInterface ei = new ExifInterface(filePath);
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            Matrix matrix = new Matrix();
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    matrix.postRotate(90);
-                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    matrix.postRotate(180);
-                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    matrix.postRotate(270);
-                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                    break;
-                default:
-                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                    break;
-            }
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
+//		  try {
+//            ExifInterface ei = new ExifInterface(filePath);
+//            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//            Matrix matrix = new Matrix();
+//            switch (orientation) {
+//                case ExifInterface.ORIENTATION_ROTATE_90:
+//                    matrix.postRotate(90);
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//                    break;
+//                case ExifInterface.ORIENTATION_ROTATE_180:
+//                    matrix.postRotate(180);
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//                    break;
+//                case ExifInterface.ORIENTATION_ROTATE_270:
+//                    matrix.postRotate(270);
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//                    break;
+//                default:
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//                    break;
+//            }
+//        } catch (Throwable e) {
+//            e.printStackTrace();
+//        }
 		
 		
-		
-		
-		
-		
-		
-		
-		
-
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 		
@@ -418,6 +402,11 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 		imgbytes = Utills.BitMapToString(bitmap);
 		System.out.println("bitmat image--->" + bitmap.toString());
 		uiC_imgDP.setImageBitmap(bitmap);
+		
+		File tempFile = getTempFile();		
+		if (tempFile.exists()) {
+		tempFile.delete();
+	}
 
 	}
 
@@ -479,49 +468,33 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case 22:
-			if (resultCode == Activity.RESULT_OK) {
+			
 
 				ImageChanged = true;
 				DeleteFirst = 1;
+				try {
+					String filePathG = Environment.getExternalStorageDirectory() + "/"
+							+ TEMP_PHOTO_FILE;
+					
+					  InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());
+	                    FileOutputStream fileOutputStream = new FileOutputStream(filePathG);
+	                    Utills.copyStream(inputStream, fileOutputStream);
+	                    fileOutputStream.close();
+	                    inputStream.close();
 
-				data = null;
+	                    performCrop(filePathG);
+						
+					
+				
+				} catch (Exception e) {
+					e.printStackTrace();}
 
-				String finalPicturePath;
-				String filePath = null;
-				// Uri selectedImage = data.getData();
-
-				File tempFile = getTempFile();
-
-				filePath = Environment.getExternalStorageDirectory() + "/"
-						+ TEMP_PHOTO_FILE;
-
-				if (filePath != null) {
-
-					try {
-						decodeFile(filePath);
-					} catch (Exception e) {
-						e.printStackTrace();
-						Utills.showToast(con,
-								"Please select some other Source..!");
-						Intent pickPhoto = new Intent(Intent.ACTION_PICK);
-						pickPhoto.setType("image/*");
-						pickPhoto.putExtra("crop", "true");
-						pickPhoto.putExtra("return-data", false);
-						pickPhoto.putExtra(MediaStore.EXTRA_OUTPUT,
-								getTempUri());
-						pickPhoto.putExtra("outputFormat",
-								Bitmap.CompressFormat.JPEG.toString());
-						startActivityForResult(pickPhoto, 22);
-					}
-
-				}
-
-				if (tempFile.exists()) {
-					tempFile.delete();
-				}
+//				if (tempFile.exists()) {
+//					tempFile.delete();
+//				}
 				
 
-			}
+		
 
 			break;
 			
@@ -532,7 +505,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 			if (resultCode == Activity.RESULT_OK) {
 				 String path = data.getStringExtra(CropImage.IMAGE_PATH);
 
-		          
+				
 					if (path != null) {
 						
 							decodeFile(path);
@@ -545,13 +518,10 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 				decodeFile(filePathC);
 			}
 			
-			File tempFile = getTempFile();		
-			if (tempFile.exists()) {
-			tempFile.delete();
-		}
+			
 		
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 						
 			break;
@@ -565,8 +535,6 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 				
 				
 				String filePath = null;
-				File tempFile = getTempFile();
-
 				filePath = Environment.getExternalStorageDirectory() + "/"
 						+ TEMP_PHOTO_FILE;
 
@@ -734,20 +702,12 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 				setValuesDB();
 
 				ImageChanged = false;
-				// btneditProfile.setText("Edit");
-				// uiC_btndone.setVisibility(View.INVISIBLE);
-				// uiC_txtuploadPick.setVisibility(View.INVISIBLE);
-				// uiC_edTitle.setEnabled(false);
-				// uiC_edDesc.setEnabled(false);
-				// edit = false;
+				
 
 				Toast.makeText(getActivity(), "Changes Saved !",
 						Toast.LENGTH_LONG).show();
 
-				// Intent intentrefresh = new Intent(con,
-				// MainActivitySwapStuff.class);
-				// startActivity(intentrefresh);
-				// getActivity().finish();
+				
 			}
 
 			super.onPostExecute(result1);

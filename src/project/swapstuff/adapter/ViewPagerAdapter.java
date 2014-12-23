@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.ProgressBar;
@@ -46,6 +47,20 @@ public class ViewPagerAdapter extends PagerAdapter {
 		
 		 SmartImageView viewImg = (SmartImageView) view
 		 .findViewById(R.id.uiC_imgVViewPager);
+		 
+		 if(position==0 || position==2)
+		 {
+			 if(position==0)
+			 {
+				 viewImg.setImageResource(R.drawable.like_icon) ;
+			 }
+			 else
+			 {
+				 viewImg.setImageResource(R.drawable.dislike_icon) ;
+			 }
+			 ((ProgressBar)view.findViewById(R.id.progressBarViewPager)).setVisibility(View.INVISIBLE);
+		 }
+		 
 		 viewImg.setImageUrl(imageArray.get(position).getImgs());
 		 viewImg.bringToFront();
 		
