@@ -19,6 +19,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.loopj.android.image.SmartImageView;
+
 import project.swapstuff.model.Utills;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
@@ -69,7 +71,7 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 	// ImageButton uiC_imgbtneditProfile;
 	EditText uiC_edTitle, uiC_edDesc;
 	// TextView uiC_txtuploadPick;
-	static ImageView uiC_imgDP;
+	static SmartImageView uiC_imgDP;
 	static Context con;
 	boolean edit = true;
 	static String imgbytes = "", itemTitleDB = "", itemDescDB = "";
@@ -135,13 +137,13 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 			uiC_edDesc = (EditText) rootView.findViewById(R.id.uiC_edEditDesc);
 			// uiC_txtuploadPick = (TextView) rootView
 			// .findViewById(R.id.uiC_txtvuploadd);
-			uiC_imgDP = (ImageView) rootView.findViewById(R.id.uiC_imgVDP);
+			uiC_imgDP = (SmartImageView) rootView.findViewById(R.id.uiC_imgVDP);
 			setValuesDB();
 
 			
 		}
 
-		uiC_imgDP = (ImageView) rootView.findViewById(R.id.uiC_imgVDP);
+		uiC_imgDP = (SmartImageView) rootView.findViewById(R.id.uiC_imgVDP);
 		uiC_btndone = (Button) rootView.findViewById(R.id.uiC_btndoneEdit);
 		// uiC_imgbtneditProfile = (ImageButton) rootView
 		// .findViewById(R.id.uiC_imgbtneditprofile);
@@ -584,6 +586,10 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 
 	public void setValuesDB() {
 
+		try {
+			
+		
+		
 		SharedPreferences shared = getActivity().getSharedPreferences("",
 				getActivity().MODE_PRIVATE);
 
@@ -593,8 +599,24 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 
 		uiC_edTitle.setText(itemTitleDB + "");
 		uiC_edDesc.setText(itemDescDB + "");
-		uiC_imgDP.setImageBitmap(Utills.StringToBitMap(imgbytes));
+		
+		
+		if(!imgbytes.contains("."))
+		{
+			uiC_imgDP.setImageBitmap(Utills.StringToBitMap(imgbytes));
+	
+		}
+		else
+		{
+			uiC_imgDP.setImageUrl(imgbytes);
+		}
+		
+		} catch (Exception e) {
+			SharedPreferences shared = getActivity().getSharedPreferences("",
+					getActivity().MODE_PRIVATE);
 
+			uiC_imgDP.setImageUrl(shared.getString("imgITEM", ""));
+		}
 		
 
 	}
@@ -730,11 +752,11 @@ public class EditProfileFragment extends Fragment implements OnClickListener {
 		  
 		    intent.putExtra(CropImage.IMAGE_PATH, filePath);
 
-		    intent.putExtra(CropImage.SCALE, true);
+		    intent.putExtra(CropImage.SCALE, false);
 
 		    // if the aspect ratio is fixed to ratio 3/2
-		    intent.putExtra(CropImage.ASPECT_X, 3);
-		    intent.putExtra(CropImage.ASPECT_Y, 2);
+		    intent.putExtra(CropImage.ASPECT_X, 1);
+		    intent.putExtra(CropImage.ASPECT_Y, 1);
 
 		    startActivityForResult(intent, 77);
 		

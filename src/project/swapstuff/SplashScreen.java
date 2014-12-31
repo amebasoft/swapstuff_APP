@@ -1,7 +1,6 @@
 package project.swapstuff;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,19 +16,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import project.swapstuff.model.CommonUtilities;
-import project.swapstuff.model.ControlDB;
 import project.swapstuff.model.GPSTracker;
-import project.swapstuff.model.Profile_info;
 import project.swapstuff.model.Utills;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 

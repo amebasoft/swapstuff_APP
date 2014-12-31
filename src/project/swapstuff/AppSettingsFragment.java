@@ -22,7 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import project.swapstuff.model.ControlDB;
 import project.swapstuff.model.GPSTracker;
 import project.swapstuff.model.Utills;
 import android.app.ActionBar;
@@ -35,8 +34,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -50,7 +47,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -255,8 +251,7 @@ public class AppSettingsFragment extends Fragment {
 												Editor ed = shared.edit();
 												ed.clear();
 												ed.commit();
-												ControlDB
-														.deleteuserdetails(getActivity());
+											
 												Utills.FbID = "test";
 												Utills.showToast(getActivity(),
 														"Profile deleted Successfully !");

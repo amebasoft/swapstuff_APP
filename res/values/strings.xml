@@ -42,5 +42,8 @@
     <string name="title_activity_contact__for__report">Contact us</string>
     <string name="title_activity_privacy_policy">Privacy_policy</string>
     <string name="title_activity_test_view_pager">TestViewPager</string>
+    
+    
+     <string name="app_id">969874523029786</string>
 
 </resources>

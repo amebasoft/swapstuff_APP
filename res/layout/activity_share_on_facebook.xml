@@ -1,73 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="235dp"
-    android:background="#3B5998"
-     >
+    android:layout_height="wrap_content"
+    android:background="#7f3B5998" >
 
     <LinearLayout
+        android:id="@+id/textFB"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"
-        android:padding="5dp" 
-        android:layout_marginBottom="5dp">
+        android:padding="5dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:padding="5dp"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
             android:gravity="center"
+            android:padding="5dp"
             android:text="Do you want to login via Facebook..?"
-            />
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/loginbuttons"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textFB"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/FacebookShareButton"
-            android:layout_width="120dp"
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="2dp"
-            android:onClick="share"
-            android:padding="5dp"
-            android:textColor="#ffffff"
-            android:text="Yes" />
+            android:layout_marginBottom="05dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/facebook_icon" />
+
+       
+
+        <com.facebook.widget.LoginButton
+            android:id="@+id/loginButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LoginButton" 
+            android:layout_margin="10dp"/>
 
         <Button
             android:id="@+id/FacebookShareNotButton"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_margin="2dp"
             android:onClick="doNotShare"
             android:padding="5dp"
-            android:textColor="#ffffff"
-            android:text="No" />
+            android:text="Cancel"
+            android:textColor="#3B5998"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/facebook_icon" 
-        android:layout_marginTop="5dp"/>
 
 </RelativeLayout>

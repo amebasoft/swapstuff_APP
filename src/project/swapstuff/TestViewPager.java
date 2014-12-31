@@ -80,8 +80,18 @@ public class TestViewPager extends Activity {
 				}
 
 				else {
-					currentPage++;
-					myPager.setCurrentItem(currentPage, true);
+//					currentPage++;
+//					myPager.setCurrentItem(currentPage, true);
+					SharedPreferences SharedPref_StartUp = getSharedPreferences(
+							"Startup", MODE_PRIVATE);
+					Editor editTutorial = SharedPref_StartUp.edit();
+					editTutorial.putString("tutorial", "Y");
+					editTutorial.commit();
+
+					Intent gotoHome = new Intent(getApplicationContext(),
+							Login.class);
+					startActivity(gotoHome);
+					finish();
 
 				}
 			}

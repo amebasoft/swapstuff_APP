@@ -16,7 +16,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import project.swapstuff.model.CommonUtilities;
-import project.swapstuff.model.FacebookConnect;
 import project.swapstuff.model.GPSTracker;
 import project.swapstuff.model.Utills;
 import android.app.Activity;
