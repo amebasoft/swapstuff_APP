@@ -53,7 +53,7 @@ import com.facebook.widget.LoginButton;
 
 @SuppressWarnings("deprecation")
 public class FacebookConnect extends Activity {
-	private static String FACEBOOK_APP_ID = "969874523029786";
+	private static String FACEBOOK_APP_ID = "566342256830253";
 	// "769007259830480";
 	private static final String[] PERMISSIONS = new String[] { "email,read_stream,user_about_me" };
 
