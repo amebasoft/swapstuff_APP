@@ -800,6 +800,20 @@ public class MatchingScreen extends Fragment {
 
 	// popup matched
 	public void ShowDialog_matched() {
+		
+		
+		try {
+			
+			myPager.setVisibility(View.INVISIBLE);
+			imgv_like.setVisibility(View.INVISIBLE);
+			imgv_dislike.setVisibility(View.INVISIBLE);
+			
+			if(whichToanimate!=null)
+			{
+				whichToanimate.setAnimation(null);	
+				whichToanimate.setVisibility(View.INVISIBLE);
+				
+			}
 
 		SharedPreferences shared = getActivity().getSharedPreferences("",
 				getActivity().MODE_PRIVATE);
@@ -809,7 +823,7 @@ public class MatchingScreen extends Fragment {
 		final Dialog dialog = Utills.prepararDialog(getActivity(),
 				R.layout.there_is_match);
 
-		ImageView uiC_imgVmyItem = (ImageView) dialog
+		SmartImageView uiC_imgVmyItem = (SmartImageView) dialog
 				.findViewById(R.id.uiCimgVitem1);
 		SmartImageView uiC_imgVotherItem = (SmartImageView) dialog
 				.findViewById(R.id.uiCimgVitem2);
@@ -818,6 +832,16 @@ public class MatchingScreen extends Fragment {
 		Button uiC_btnCancel = (Button) dialog.findViewById(R.id.uiCbtnCancel);
 
 		uiC_imgVmyItem.setImageBitmap(Utills.StringToBitMap(imgbytes));
+		
+		if(!imgbytes.contains("."))
+		{
+			uiC_imgVmyItem.setImageBitmap(Utills.StringToBitMap(imgbytes));
+	
+		}
+		else
+		{
+			uiC_imgVmyItem.setImageUrl(imgbytes);
+		}
 
 		uiC_imgVotherItem.setImageUrl(Utills.Imagebytee);
 
@@ -827,6 +851,13 @@ public class MatchingScreen extends Fragment {
 			public void onClick(View v) {
 
 				if (Utills.haveNetworkConnection(getActivity())) {
+					
+					myPager.setVisibility(View.VISIBLE);
+					imgv_like.setVisibility(View.VISIBLE);
+					imgv_dislike.setVisibility(View.VISIBLE);
+					
+					
+					
 					Intent gotochat = new Intent(getActivity(),
 							ChatScreen_.class);
 					gotochat.putExtra("itemid",
@@ -896,6 +927,9 @@ public class MatchingScreen extends Fragment {
 			public void onClick(View v) {
 				
 				
+				myPager.setVisibility(View.VISIBLE);
+				imgv_like.setVisibility(View.VISIBLE);
+				imgv_dislike.setVisibility(View.VISIBLE);
 
 				if (itemposition == 0) {
 					ShowAnim(1);
@@ -939,6 +973,12 @@ public class MatchingScreen extends Fragment {
 		});
 
 		dialog.show();
+		
+		
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -949,7 +989,7 @@ public class MatchingScreen extends Fragment {
 
 			// uiC_imgVMatchingDP.setImageBitmap(Utills
 			// .StringToBitMap(imgs[position]));
-			// uiC_imgVMatchingDP.setImageResource(R.drawable.loding_img);
+			// uiC_imgVMatchingDP.setImageResource(R.drawable. loding_img);
 			// uiC_imgVMatchingDP.setImageUrl(imgs[position]);
 
 			Animation animupdown = AnimationUtils.loadAnimation(getActivity(),
