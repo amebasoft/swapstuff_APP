@@ -54,6 +54,8 @@ import com.facebook.widget.LoginButton;
 @SuppressWarnings("deprecation")
 public class FacebookConnect extends Activity {
 	private static String FACEBOOK_APP_ID = "566342256830253";
+//	private static String FACEBOOK_APP_ID = "969874523029786";
+	
 	// "769007259830480";
 	private static final String[] PERMISSIONS = new String[] { "email,read_stream,user_about_me" };
 
@@ -338,6 +340,9 @@ public class FacebookConnect extends Activity {
 				gotoHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 						| Intent.FLAG_ACTIVITY_CLEAR_TASK);
 				startActivity(gotoHome);
+				
+				new asyncUpdateNOTI().execute();
+				
 				finish();
 
 			} catch (JSONException e) {
@@ -350,6 +355,88 @@ public class FacebookConnect extends Activity {
 
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+//	updatee noti 
+	// --------------update noti according to profileID
+		class asyncUpdateNOTI extends AsyncTask<Void, Void, Void> {
+
+			@Override
+			protected void onPreExecute() {
+
+				super.onPreExecute();
+			}
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				String result = "";
+
+				String HostUrl = Utills.URL+"Profiles/SaveProfile";
+				// String HostUrl =
+				// "http://116.193.163.156:8012/Profiles/SaveProfile";
+
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpPost httpPost = new HttpPost(HostUrl);
+
+				try {
+					List<NameValuePair> params1 = new LinkedList<NameValuePair>();
+
+					params1.add(new BasicNameValuePair("ProfileId", (Utills.id)
+							.replace("\"", "")));
+					params1.add(new BasicNameValuePair("Username", Utills.FbID));
+					params1.add(new BasicNameValuePair("Latitude", Utills.latitud+ ""));
+					params1.add(new BasicNameValuePair("Longitude", Utills.longitud+ ""));
+					params1.add(new BasicNameValuePair("DateTimeCreated", ""));
+					params1.add(new BasicNameValuePair("Distance", "100"));
+					params1.add(new BasicNameValuePair("ItemMatchNotification","1"));
+					params1.add(new BasicNameValuePair("ChatNotification","1"));
+
+					
+					httpPost.setHeader("Content-Type",
+							"application/x-www-form-urlencoded");
+					httpPost.setHeader("Accept", "application/json");
+
+					HttpEntity entity = new UrlEncodedFormEntity(params1, "UTF-8");
+					httpPost.setEntity(entity);
+
+					ResponseHandler<String> handler = new BasicResponseHandler();
+					result = httpClient.execute(httpPost, handler);
+
+					Log.e("Response", result + "");
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				
+				} catch (IOException e) {
+					e.printStackTrace();
+					
+				}
+
+				return null;
+
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+
+				super.onPostExecute(result);
+			}
+
+		}
+//	end update noti
+	
+	
+	
+	
+	
+	
+	
+	
 	class asyncSave extends AsyncTask<Void, Void, Void> {
 
 		String resultf = "";

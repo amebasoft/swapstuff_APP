@@ -244,6 +244,16 @@ public class AppSettingsFragment extends Fragment {
 											if (Utills.FbID.equals("test")) {
 												new deleteProfile().execute();
 											} else {
+												
+											
+												Utills.latitud = gpsTracker.getLatitude();
+												Utills.longitud = gpsTracker.getLongitude();
+												Utills.NotificationEnabled = "0";
+												Utills.MatchNotificationEnabled = "0";
+												
+												new asyncUpdateKM().execute();
+												
+												
 												shared = getActivity()
 														.getSharedPreferences(
 																"",
